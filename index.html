@@ -229,9 +229,67 @@ footer a:hover{color:var(--accent)}
 </div></section>
 
 <section id="features"><div class="wrap">
-  <p class="kicker"><span class="hash">##</span> 03 &middot; feature grid</p>
+  <p class="kicker"><span class="hash">##</span> 03 · feature grid</p>
   <h2>What's in the box</h2>
-  <p class="lede">Every capability below is quoted from the repo's README and FEATURES roadmap &mdash; including the one that is still queued, because a harness that keeps honest books about what it hasn't done yet is the whole point.</p>
+  <p class="lede">Every capability below is quoted from the repo's README and FEATURES roadmap — including the one that is still queued, because a harness that keeps honest books about what it hasn't done yet is the whole point.</p>
+  <div class="grid">
+    <div class="card">
+      <h3><span>×</span>13 built-in tools</h3>
+      <p><code>read_file</code> <code>write_file</code> <code>edit_file</code> <code>bash</code> <code>grep</code> <code>tgrep</code> <code>glob</code> <code>list_dir</code> <code>update_ledger</code> <code>decision_log</code> <code>delegate</code> <code>web_fetch</code> <code>goal_complete</code> — all paths sandboxed to the run's working directory.</p>
+    </div>
+    <div class="card">
+      <h3><span>delegate</span> sub-agents</h3>
+      <p>Launch, observe, and collect bounded child chug runs in git worktrees: <code>launch</code> / <code>status</code> / <code>collect</code>, long-poll <code>wait_secs</code>, terminal-wait mode, and <code>resume</code> of an aborted child.</p>
+    </div>
+    <div class="card">
+      <h3><span>plan</span> mode</h3>
+      <p><code>chug plan</code> explores the repo and drafts an implementation plan with a read-only contract: exactly five tools plus <code>submit_plan</code>, its only write and exit path.</p>
+    </div>
+    <div class="card">
+      <h3><span>hooks</span></h3>
+      <p><code>.chug/hooks.json</code> policy-as-config: PreToolUse hooks can veto a tool call before it executes; PostToolUse hooks advise. Fails open, per-checkout, never fires a hook from a hook.</p>
+    </div>
+    <div class="card">
+      <h3><span>permissions</span><i class="q">queued</i></h3>
+      <p>Per-tool allow/deny/ask rules evaluated before execution — deny-lists for autonomous runs, ask-mode for chat. Phase 1 (an in-process deny-list) is the top item in the queue, spec already written.</p>
+    </div>
+    <div class="card">
+      <h3><span>risk gate</span> (Laya)</h3>
+      <p>Every bash command is classified destructive / risky / safe by a local Laya judge server before it runs; destructive is blocked with an error the model can route around. Verdicts logged to <code>.chug/risk_verdicts.jsonl</code>.</p>
+    </div>
+    <div class="card">
+      <h3><span>MCP</span> servers</h3>
+      <p>Consumes tools from MCP servers over stdio or streamable HTTP with Claude Code-compatible config. Server tools appear as <code>mcp__name__tool</code> alongside the builtins; per-server fail-soft.</p>
+    </div>
+    <div class="card">
+      <h3><span>Langfuse</span> observability</h3>
+      <p>Optional tracing to self-hosted Langfuse v3: a trace per run, a generation per LLM call, a span per tool call, outcome and iteration scores. Fire-and-forget — off means zero cost, telemetry never changes run behavior.</p>
+    </div>
+    <div class="card">
+      <h3><span>TUI</span></h3>
+      <p><code>--tui</code>: live activity stream, LEDGER.md panel, and a status bar with model, iteration/budget, elapsed time, and cumulative tokens. <code>i</code> steers, <code>q</code> aborts gracefully.</p>
+    </div>
+    <div class="card">
+      <h3><span>web_fetch</span></h3>
+      <p>Read-only HTTP(S) GET with hard bounds: 5 redirects, 10s connect / 30s total, output capped and HTML stripped to text, binary types refused. Bounded and audited where raw curl is neither.</p>
+    </div>
+    <div class="card">
+      <h3><span>tgrep</span></h3>
+      <p>Token-budgeted ranked context search: ranked match clusters with ±3-line windows, quoted phrases, a symbols mode for Rust signatures. Deterministic scoring — no embeddings, no LLM.</p>
+    </div>
+    <div class="card">
+      <h3><span>chat</span></h3>
+      <p>Interactive TUI sessions: <code>@file</code> attachments, tab autocomplete for commands and paths, slash commands, esc to interrupt. Steering notes pass into autonomous runs at iteration boundaries.</p>
+    </div>
+    <div class="card">
+      <h3><span>decision_log</span></h3>
+      <p>Every loop judgment — validation verdicts, routing calls, recoveries — emits a structured record with class, inputs, options, choice, and a confidence score, building the corpus for confidence-gated routing.</p>
+    </div>
+    <div class="card">
+      <h3><span>loop hardening</span></h3>
+      <p>Driver lock against concurrent runs, transcript trimming that keeps the cached prefix byte-stable, jq-mineable events.jsonl, budget-low warnings, a stuck tripwire, and an anti-stall kick.</p>
+    </div>
+  </div>
 </div></section>
 
 <section id="doctrine"><div class="wrap">
