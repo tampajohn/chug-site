@@ -293,9 +293,20 @@ footer a:hover{color:var(--accent)}
 </div></section>
 
 <section id="doctrine"><div class="wrap">
-  <p class="kicker"><span class="hash">##</span> 04 &middot; the loop doctrine</p>
+  <p class="kicker"><span class="hash">##</span> 04 · the loop doctrine</p>
   <h2>One cycle, start to push</h2>
-  <p class="lede" style="margin-bottom:0">Evaluate the corpus, queue the work with per-item specs, implement in bounded child runs, validate adversarially with a second model family, merge, push. The full protocol is one file: <a href="https://github.com/tampajohn/chug/blob/main/LOOP-SPEC.md">LOOP-SPEC.md</a>.</p>
+  <div class="pipe">
+    <span>evaluate</span><i>→</i>
+    <span>queue</span><i>→</i>
+    <span>implement · glm</span><i>→</i>
+    <span>validate · kimi + mutation testing</span><i>→</i>
+    <span>merge</span><i>→</i>
+    <span>push</span>
+  </div>
+  <div class="doctext">
+    <p>The evaluator reads the corpus — events, ledgers, specs, code — and writes the assessment plus the next queue rows, each with its own spec before any child is dispatched. Children implement in git worktrees, one at a time, under iteration and token budgets; <b>glm-5-3-flash implements</b>. Then <b>validation is always kimi-k3</b> — a different model family, so the verdict is an independent second opinion, and it is adversarial by design: gates re-run from a clean checkout, mutants are injected to prove the tests can actually fail, weak pins get called out. <b>A FAIL verdict is not a crisis; it is the pipeline working.</b> Only then: merge, flip the queue row, push. The doctrine is written down, versioned, and pinned by tests — the loop edits its own rules in the open, never by vibes.</p>
+  </div>
+  <p class="lede" style="margin-bottom:0">The full protocol — phases, budgets, recovery recipes, hard rules — is one file: <a href="https://github.com/tampajohn/chug/blob/main/LOOP-SPEC.md">LOOP-SPEC.md</a>.</p>
 </div></section>
 
 <section id="get-started"><div class="wrap">
