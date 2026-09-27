@@ -200,9 +200,32 @@ footer a:hover{color:var(--accent)}
 </div></section>
 
 <section id="proof"><div class="wrap">
-  <p class="kicker"><span class="hash">##</span> 02 &middot; proof it runs itself</p>
+  <p class="kicker"><span class="hash">##</span> 02 · proof it runs itself</p>
   <h2>Built by its own loop, measured by its own gates</h2>
-  <p class="lede">chug improves chug. The <code>loopd</code> supervisor runs the self-improvement cycle back to back; every number below is quoted from the repo's own ledgers (cycle 51, 2026-09-27) &mdash; never invented, never rounded up.</p>
+  <p class="lede">chug improves chug. The <code>loopd</code> supervisor runs the self-improvement cycle back to back; every number below is quoted from the repo's own ledgers (cycle 51, 2026-09-27) — never invented, never rounded up.</p>
+  <div class="stats">
+    <div class="stat"><b>51</b><span>self-improvement cycles logged by the loopd supervisor</span></div>
+    <div class="stat"><b>86/87</b><span>queue items landed, T1–T89 done; T90 queued with its spec already written</span></div>
+    <div class="stat"><b>318 → 721</b><span>tests green: first recorded gate run to the latest cycle's gates</span></div>
+    <div class="stat"><b>131</b><span>structured decision records in .chug/decisions.jsonl</span></div>
+    <div class="stat"><b>31,890</b><span>lines of Rust across 27 modules in src/</span></div>
+    <div class="stat"><b>18/18</b><span>budget-death recoveries landed by the resume recipe, all-time</span></div>
+  </div>
+  <div class="sagas">
+    <div class="saga">
+      <h3>The tgrep arc: five validation rounds</h3>
+      <p>When the loop built its own token-budgeted context search, the adversarial validator refused to pass it — four times. <span class="v">R1 FAIL</span> merge-radius contradiction, <span class="v">R2 FAIL</span> symbols-mode dropping declarations, <span class="v">R3 FAIL</span> vacuous pins, <span class="v">R4 FAIL</span> one flaky perf pin (21/21 mutants red). Each FAIL forced a fix-up round; <span class="v">R5 PASS</span> closed it with 8 fresh mutants all dead. Sixteen artifacts harvested; post-merge gates 627/627.</p>
+    </div>
+    <div class="saga">
+      <h3>The bug the pipeline existed to catch</h3>
+      <p>Building its own hooks system, the implementer passed gates — and the validator still failed it. <span class="v">R1 FAIL</span>: PostToolUse was firing on calls that PreToolUse had vetoed, a real semantic bug no test had pinned. The fix-up swept the whole class (the sibling risk-gate-block path had the same hole) with two RED-proven killing tests. <span class="v">R2 PASS</span>, zero blocking findings.</p>
+    </div>
+  </div>
+  <div class="dog">
+    <h3>Dogfood, verbatim</h3>
+    <p>Its interactive chat mode: written for it, by it. Its delegate tool — 887 lines launching child chug runs in git worktrees: written by a child run, validated by another model family, then grown through wait_secs long-polling, resume, collect, and terminal-wait mode across later cycles. Its decision_log, hooks, plan mode, TUI, MCP client, Langfuse tracing: same story. And this very page — the one you are reading — was written by chug running its own loop, with this site's check gate re-running on every claim.</p>
+  </div>
+  <p class="honest">Honest failure books: cycle 45 hit its 160-iteration ceiling mid-wrap and the wrap was lost — cycle 46 reconstructed it from git history and ledgers alone. Failed validation rounds are the norm, not the exception; the tgrep arc alone logged four before its PASS.</p>
 </div></section>
 
 <section id="features"><div class="wrap">
