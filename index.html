@@ -163,9 +163,40 @@ footer a:hover{color:var(--accent)}
 </div></header>
 
 <section id="how-it-works"><div class="wrap">
-  <p class="kicker"><span class="hash">##</span> 01 &middot; how it works</p>
+  <p class="kicker"><span class="hash">##</span> 01 · how it works</p>
   <h2>The loop is code, not conversation</h2>
-  <p class="lede">A run takes a spec file with a <code>check:</code> line and a goal, and drives a fixed loop until the check exits 0. Goal and progress live in files on disk, re-read every iteration &mdash; so context trimming can never kill the run.</p>
+  <p class="lede">A run takes a spec file with a <code>check:</code> line and a goal, and drives a fixed loop until the check exits 0. Goal and progress live in files on disk, re-read every iteration — so context trimming can never kill the run.</p>
+  <div class="flow">
+    <div class="node">
+      <h3>SPEC + GOAL</h3>
+      <p><code>SPEC.md</code> with a <code>check:</code> line, plus <code>--goal</code>. Plain files — the driver re-reads them every iteration.</p>
+    </div>
+    <span class="arr">→</span>
+    <div class="node">
+      <h3>DRIVER LOOP</h3>
+      <p>Continue/stop is the driver's call, never the model's. Anti-stall kick, stuck tripwire, budget-low warnings, same-cwd driver lock.</p>
+    </div>
+    <span class="arr">→</span>
+    <div class="node">
+      <h3>TOOLS ×13</h3>
+      <p>read_file, write_file, edit_file, bash, grep, tgrep, glob, list_dir, update_ledger, decision_log, delegate, web_fetch, goal_complete — sandboxed to <code>--cwd</code>.</p>
+    </div>
+    <span class="arr">→</span>
+    <div class="node">
+      <h3>GOAL_COMPLETE</h3>
+      <p>Verified, not taken on faith: the spec's <code>check:</code> re-runs and the claim is accepted only on exit 0.</p>
+    </div>
+  </div>
+  <div class="note">
+    <div class="ncard">
+      <h4><b>✗ check fails →</b> keep chugging</h4>
+      <p>The failure goes back to the model with the loop still in charge. It fixes, re-runs, re-claims. Rejected claims never end the run — the budget does, and a budget death prints a resume line and leaves the ledger intact.</p>
+    </div>
+    <div class="ncard">
+      <h4><b>LEDGER.md →</b> external memory</h4>
+      <p>Updated every iteration, injected into every turn, so transcript trimming never loses progress. A fresh run archives and reseeds it; <code>--resume</code> keeps it.</p>
+    </div>
+  </div>
 </div></section>
 
 <section id="proof"><div class="wrap">
