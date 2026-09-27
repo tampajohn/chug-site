@@ -100,6 +100,18 @@ pre.code{background:var(--bg2);border:1px solid var(--border2);border-radius:10p
 pre.code .cmt{color:var(--faint)}
 pre.code .pr{color:var(--accent)}
 .step .note-line{font-size:13.5px;color:var(--muted);margin:10px 0 0;line-height:1.6}
+.tl{position:relative;max-width:860px;margin:0 auto}
+.tl::before{content:"";position:absolute;top:10px;bottom:10px;left:101px;width:1px;background:var(--border2)}
+.tl-item{position:relative;display:grid;grid-template-columns:86px 30px 1fr;padding:11px 0}
+.tl-date{font-family:var(--mono);font-size:11.5px;color:var(--faint);text-align:right;padding-top:4px;white-space:nowrap}
+.tl-rail{display:flex;justify-content:center;padding-top:6px;position:relative;z-index:1}
+.tl-dot{width:9px;height:9px;border-radius:50%;background:var(--bg);border:2px solid var(--accent)}
+.tl-item.major .tl-dot{background:var(--accent)}
+.tl-body{padding-left:16px;min-width:0}
+.tl-body h3{font-family:var(--mono);font-size:14px;margin:0 0 4px;color:var(--text);line-height:1.45}
+.tl-body h3 .hash{color:var(--accent);font-size:11.5px;font-weight:400;margin-left:7px;letter-spacing:.02em}
+.tl-body p{font-size:13.5px;color:var(--muted);margin:0;line-height:1.6}
+.tl-body p code{font-size:11.5px;color:var(--text);background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:0 4px}
 footer{padding:40px 0 64px;color:var(--faint);font-family:var(--mono);font-size:12.5px;line-height:1.8}
 footer a{color:var(--muted)}
 footer a:hover{color:var(--accent)}
@@ -116,6 +128,10 @@ footer a:hover{color:var(--accent)}
   .nav-links{gap:12px}
   .nav-links a{font-size:11.5px}
   section{padding:60px 0}
+  .tl::before{left:66px}
+  .tl-item{grid-template-columns:54px 24px 1fr}
+  .tl-date{font-size:9.5px}
+  .tl-body{padding-left:12px}
 }
 </style>
 </head>
@@ -125,6 +141,7 @@ footer a:hover{color:var(--accent)}
   <div class="nav-links">
     <a href="#how-it-works">how it works</a>
     <a href="#proof">proof</a>
+    <a href="#timeline">timeline</a>
     <a href="#features">features</a>
     <a href="#doctrine">doctrine</a>
     <a href="#get-started">get started</a>
@@ -228,10 +245,147 @@ footer a:hover{color:var(--accent)}
   <p class="honest">Honest failure books: cycle 45 hit its 160-iteration ceiling mid-wrap and the wrap was lost — cycle 46 reconstructed it from git history and ledgers alone. Failed validation rounds are the norm, not the exception; the tgrep arc alone logged four before its PASS.</p>
 </div></section>
 
+<section id="timeline"><div class="wrap">
+  <p class="kicker"><span class="hash">##</span> 03 · the timeline</p>
+  <h2>Seven days, first commit to chug.sh</h2>
+  <p class="lede">Every date and hash below is quoted straight from git history — the harness repo and this site's own repo. The loop wrote this page too, so this timeline is the loop reading its own commit log back to you.</p>
+  <div class="tl">
+    <div class="tl-item major">
+      <div class="tl-date">2026-09-20</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>Day one — the core harness <span class="hash">f911488</span></h3>
+        <p>First commit at 17:42: a driver-in-code loop, <code>LEDGER.md</code> as external memory, and goal completion that only counts when the check exits 0. Thirty-one commits land before midnight.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-20</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>The TUI, eight minutes later <span class="hash">76ac019</span></h3>
+        <p>A ratatui dashboard at 17:50 — live activity stream, LEDGER panel, steering input, operator abort.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-20</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>The risk gate <span class="hash">db6fea6</span></h3>
+        <p><code>glob</code>, <code>list_dir</code> and <code>replace_all</code> join the tools, and laya starts classifying every bash command before it runs — destructive calls are blocked with an error the model can route around.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-20</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>Chat mode, dogfooded <span class="hash">fb842f2</span></h3>
+        <p>Interactive mode lands with the claim in the commit message itself: "dogfooded by chug itself".</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-20</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>The meta-loop era begins <span class="hash">7deb7f0</span></h3>
+        <p>META-SPEC writes down chug-orchestrating-chug; SELF-SPEC makes improvement continuous. That evening "muse implements + kimi validates" becomes the default round policy <span class="hash" style="margin-left:0">(0611c33)</span>.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-21</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>MCP — stdio, then streamable HTTP <span class="hash">3386d2b</span></h3>
+        <p>SPEC-7 merges: config discovery, handshake, tools/list registry, seven review fixes. The streamable-HTTP/SSE transport (SPEC-9) lands the same day — remote servers appear as <code>mcp__name__tool</code> too.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-21</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>Langfuse observability <span class="hash">25a36c1</span></h3>
+        <p>SPEC-8 merges: a trace per run, a generation per LLM call, spans and scores per tool call. Fire-and-forget — telemetry never changes run behavior.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-21</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>The doctrine becomes code <span class="hash">672d04a · aac3629 · 3c795b3</span></h3>
+        <p>Mutation testing enters the validation template — every landing must now prove its tests can fail. LOOP-SPEC writes the whole evaluate→queue→implement→validate→merge→push loop into one file. glm-5-3-flash takes the implementer seat; kimi-k3 keeps the verdicts.</p>
+      </div>
+    </div>
+    <div class="tl-item major">
+      <div class="tl-date">2026-09-25</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>loopd goes continuous <span class="hash">548d494</span></h3>
+        <p>The supervisor lands at 14:02 and starts its first cycle the same minute (18:02:52Z): cycles run back-to-back, each wrap the next cycle's input. It is still running today.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-25</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>delegate — chug spawns chug <span class="hash">1012dca</span></h3>
+        <p>T23: launch and status for bounded child runs in git worktrees. Later cycles grow <code>wait_secs</code> long-polling, zombie reaping, resume, collect, and terminal-wait mode.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-26</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>Plan mode <span class="hash">87fe53f</span></h3>
+        <p><code>chug plan</code> (T73): read-only exploration under a five-tool contract — read_file, grep, glob, list_dir — with <code>submit_plan</code> as the single write and exit path.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-27</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>Hooks <span class="hash">ccb828a</span></h3>
+        <p>PreToolUse veto + PostToolUse advisory (T83). Validation round 1 FAIL caught PostToolUse firing on calls that never executed — a real bug — and the class sweep fixed the sibling risk-gate path with it.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-27</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>Permissions <span class="hash">e9afed9</span></h3>
+        <p>The deny-list lands (T90): <code>.chug/permissions.json</code>, first-match-wins, fail-closed on match, first in the policy chain before hooks and the risk gate. FEATURES.md F4 flips to LANDED.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-27</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>Per-phase model routing <span class="hash">c1daaca</span></h3>
+        <p>T81: glm orchestrates routine cycles, kimi takes the judgment calls — a mechanical freshness predicate in loopd.sh, never model vibes.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-27</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>The move to K7 — always-on <span class="hash">com.tampajohn.chug-loopd.plist</span></h3>
+        <p>loopd moves under launchd on the operator's host (K7HC2K125R): the plist wraps loopd.sh in <code>caffeinate -dims</code> with RunAtLoad. The improvement loop no longer lives in a terminal.</p>
+      </div>
+    </div>
+    <div class="tl-item major">
+      <div class="tl-date">2026-09-27</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>chug.sh — this site <span class="hash">e998d45</span></h3>
+        <p>chug builds its own public site: eight commits in one evening, every section landed against the verify.sh check gate, GitHub Pages serving a CNAME. You are reading the dogfood.</p>
+      </div>
+    </div>
+  </div>
+  <p class="honest">The quiet patch stays on the chart: zero commits Sep 23–24, between the last cycle-3 landing and loopd's first start. Honest books include the blank pages.</p>
+</div></section>
+
 <section id="features"><div class="wrap">
-  <p class="kicker"><span class="hash">##</span> 03 · feature grid</p>
+  <p class="kicker"><span class="hash">##</span> 04 · feature grid</p>
   <h2>What's in the box</h2>
-  <p class="lede">Every capability below is quoted from the repo's README and FEATURES roadmap — including the one that is still queued, because a harness that keeps honest books about what it hasn't done yet is the whole point.</p>
+  <p class="lede">Every capability below is quoted from the repo's README and FEATURES roadmap — including the phases still deferred with written reasons, because a harness that keeps honest books about what it hasn't done yet is the whole point.</p>
   <div class="grid">
     <div class="card">
       <h3><span>×</span>13 built-in tools</h3>
@@ -250,8 +404,8 @@ footer a:hover{color:var(--accent)}
       <p><code>.chug/hooks.json</code> policy-as-config: PreToolUse hooks can veto a tool call before it executes; PostToolUse hooks advise. Fails open, per-checkout, never fires a hook from a hook.</p>
     </div>
     <div class="card">
-      <h3><span>permissions</span><i class="q">queued</i></h3>
-      <p>Per-tool allow/deny/ask rules evaluated before execution — deny-lists for autonomous runs, ask-mode for chat. Phase 1 (an in-process deny-list) is the top item in the queue, spec already written.</p>
+      <h3><span>permissions</span><i class="q">phase 1 landed</i></h3>
+      <p><code>.chug/permissions.json</code> deny rules evaluated first in the policy chain — before hooks and the risk gate; fail-closed on match, first-match-wins. Phase 1 landed 2026-09-27; ask-mode and settings.json unification are deferred phases with written reasons.</p>
     </div>
     <div class="card">
       <h3><span>risk gate</span> (Laya)</h3>
@@ -293,7 +447,7 @@ footer a:hover{color:var(--accent)}
 </div></section>
 
 <section id="doctrine"><div class="wrap">
-  <p class="kicker"><span class="hash">##</span> 04 · the loop doctrine</p>
+  <p class="kicker"><span class="hash">##</span> 05 · the loop doctrine</p>
   <h2>One cycle, start to push</h2>
   <div class="pipe">
     <span>evaluate</span><i>→</i>
@@ -310,7 +464,7 @@ footer a:hover{color:var(--accent)}
 </div></section>
 
 <section id="get-started"><div class="wrap">
-  <p class="kicker"><span class="hash">##</span> 05 · get started</p>
+  <p class="kicker"><span class="hash">##</span> 06 · get started</p>
   <h2>Clone, build, chug</h2>
   <p class="lede">Everything below is the repo's own quickstart, verbatim. Put a <code>check:</code> line in your spec — <code>goal_complete</code> is only accepted when the check exits 0.</p>
   <div class="steps">

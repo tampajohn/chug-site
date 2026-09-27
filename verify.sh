@@ -20,9 +20,13 @@ fi
 
 # 2. all 6 section markers present (stable ids)
 if [ -f index.html ]; then
-  for id in hero how-it-works proof features doctrine get-started; do
+  for id in hero how-it-works proof timeline features doctrine get-started; do
     grep -q "id=\"$id\"" index.html || fail "missing section marker id=\"$id\""
   done
+  # 2b. timeline section: rail + at least 12 dated entries
+  n=$(grep -c 'class="tl-item' index.html)
+  [ "$n" -ge 12 ] || fail "timeline has $n entries (need >= 12)"
+  grep -q 'class="tl"' index.html || fail "timeline rail (.tl) missing"
 fi
 
 # 3. no lorem/placeholder/TODO strings
