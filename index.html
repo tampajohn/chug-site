@@ -137,8 +137,28 @@ footer a:hover{color:var(--accent)}
     <p class="kicker"><span class="hash">##</span> autonomous coding harness</p>
     <h1>chug<span class="cursor"></span></h1>
     <p class="promise">Given a spec and a goal, it keeps on chugging.</p>
-    <p class="tagline">design rule #1 &mdash; <em>the loop is code, not conversation.</em> the model never decides whether to continue: the driver does.</p>
-    <div class="ctas"><a class="btn primary" href="https://github.com/tampajohn/chug">github.com/tampajohn/chug</a></div>
+    <p class="tagline">design rule #1 — <em>the loop is code, not conversation.</em> the model never decides whether to continue: the driver does.</p>
+    <div class="ctas">
+      <a class="btn primary" href="https://github.com/tampajohn/chug">github.com/tampajohn/chug</a>
+      <a class="btn" href="#how-it-works">see the loop ↓</a>
+    </div>
+    <div class="chips">
+      <span class="chip"><b>51</b> self-improvement cycles</span>
+      <span class="chip"><b>86/87</b> queue items landed</span>
+      <span class="chip"><b>721</b> tests green</span>
+    </div>
+  </div>
+  <div class="term">
+    <div class="term-head"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+    <div class="term-body"><span class="p">$</span> <span class="c">chug run --spec SPEC.md \</span>
+<span class="c">    --goal "Build X and make the check pass"</span>
+<span class="dim">chug &lt;version&gt; (&lt;commit&gt;) cwd=/srv/app spec=SPEC.md model=…</span>
+
+<span class="dim">▪</span> iter 01  read SPEC.md · seeded LEDGER.md
+<span class="dim">▪</span> iter 07  edit_file src/api.rs · bash: cargo test ✓
+<span class="dim">▪</span> iter 12  chug: budget low — 8 iteration(s) remain
+<span class="c">✓ goal_complete accepted — check exited 0</span></div>
+    <div class="term-cap">one run, sketched — the real driver appends every event to .chug/events.jsonl</div>
   </div>
 </div></header>
 
