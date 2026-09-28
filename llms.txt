@@ -39,7 +39,7 @@ every turn, so transcript trimming never loses progress.
 
 No installer yet — a one-line `curl | sh` install (to be served at
 `chug.sh/install.sh`, alongside prebuilt GitHub release binaries) is TODO
-item T100 in the source repo and has not landed. Build from source today:
+item T100 in the source repo and has not landed. Build from source:
 
 ```bash
 git clone https://github.com/tampajohn/chug

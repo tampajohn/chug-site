@@ -116,6 +116,26 @@ if [ -f index.html ]; then
   if [ -n "$bad" ]; then
     fail "hardcoded metric outside the STATS region (digit chip adjacent to its unit across markup/lines): $(echo "$bad" | head -2 | tr '\n' ' ' | cut -c1-200)"
   fi
+
+  # 2f. Living-site rule: no time-relative claims (day/week/month counts) in
+  #     hand-written prose — a day/week/month duration rots by definition
+  #     ("seven days" shipped in the timeline H2 and was stale the day it
+  #     turned eight). Durations may appear only inside the machine-synced
+  #     STATS/TIMELINE regions (computed from git dates by site-sync.sh) or
+  #     inside code blocks — all already dropped from the 2e masked stream.
+  #     Two forms, each over the line stream AND the line-joined stream
+  #     (chip markup and wrapped titles can split a phrase across lines):
+  #       (a) digit:       [0-9]+ (day|week|month)s?  (also hyphenated "3-day")
+  #       (b) spelled out: one..twelve / few / several / couple / many /
+  #           dozen + day/week/month — the real failure shipped spelled out,
+  #           so digits alone would miss it. \b guards keep today/weekend/
+  #           monthly/fortnight/day-one clear.
+  timerel=$(printf '%s\n' "$masked" \
+    | grep -iE '[0-9]+[[:space:]]+(days?|weeks?|months?)\b|\b(one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|few|several|couple|many|dozen)([[:space:]]+of[[:space:]]+)?[[:space:]]+(days?|weeks?|months?)\b')
+  [ -n "$timerel" ] && fail "time-relative claim outside the synced regions (day/week/month counts rot by definition): $(echo "$timerel" | head -2 | tr '\n' ' ' | cut -c1-200)"
+  timerel=$(printf '%s' "$masked" | tr '\n' ' ' \
+    | grep -ioE '[0-9]+([[:space:]]+|-)(days?|weeks?|months?)\b|\b(one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|few|several|couple|many|dozen)([[:space:]]+of[[:space:]]+)?[[:space:]]+(days?|weeks?|months?)\b')
+  [ -n "$timerel" ] && fail "time-relative claim outside the synced regions (wrapped across lines): $(echo "$timerel" | head -2 | tr '\n' ' ' | cut -c1-200)"
 fi
 
 # 3. no lorem/placeholder/TODO strings — hand-written parts only: the
