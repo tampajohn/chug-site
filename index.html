@@ -29,14 +29,22 @@
   --accent-dim:rgba(63,185,80,.13);
   --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
   --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  /* layout scale — the only widths/spacing sections may use (verify.sh #7) */
+  --wrap:1060px;   /* page container: every section sits inside .wrap */
+  --content:760px; /* shared inner column: timeline, get-started steps, stats list */
+  --measure:47em;  /* prose measure: .lede, .doctext p */
+  /* vertical rhythm scale */
+  --s1:8px;--s2:12px;--s3:16px;--s4:24px;--s5:36px;
+  --pad-y:76px;    /* section padding, desktop */
+  --pad-y-sm:56px; /* section padding, mobile */
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 var(--sans);-webkit-font-smoothing:antialiased}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 var(--sans);-webkit-font-smoothing:antialiased;overflow-wrap:break-word}
 a{color:var(--accent);text-decoration:none}
 a:hover{text-decoration:underline}
 code,pre{font-family:var(--mono)}
-.wrap{max-width:1060px;margin:0 auto;padding:0 22px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 22px}
 .nav{position:sticky;top:0;z-index:20;background:rgba(13,17,23,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
 .nav-in{display:flex;align-items:center;gap:20px;min-height:54px;flex-wrap:wrap;padding:8px 0}
 .brand{font-family:var(--mono);font-weight:700;font-size:17px;color:var(--text)}
@@ -67,15 +75,17 @@ a.chip:hover{border-color:var(--accent);color:var(--text);text-decoration:none}
 .term{background:var(--bg2);border:1px solid var(--border2);border-radius:10px;overflow:hidden;box-shadow:0 18px 50px rgba(0,0,0,.45)}
 .term-head{display:flex;gap:6px;padding:10px 12px;border-bottom:1px solid var(--border);background:#0f141b}
 .dot{width:10px;height:10px;border-radius:50%;background:#2d333b}
-.term-body{font-family:var(--mono);font-size:12.8px;line-height:1.8;padding:16px 18px;color:var(--muted);overflow-x:auto;white-space:pre}
+.term-body{font-family:var(--mono);font-size:12.8px;line-height:1.8;padding:16px 18px;color:var(--muted);overflow-x:auto;-webkit-overflow-scrolling:touch;white-space:pre}
 .term-body .p{color:var(--accent)}
 .term-body .c{color:var(--text)}
 .term-body .dim{color:var(--faint)}
 .term-cap{font-family:var(--mono);font-size:11.5px;color:var(--faint);padding:9px 18px;border-top:1px solid var(--border)}
-section{padding:76px 0;border-bottom:1px solid var(--border)}
+section{padding:var(--pad-y) 0;border-bottom:1px solid var(--border)}
 h2{font-family:var(--mono);font-size:clamp(24px,3.4vw,32px);margin:0 0 14px;letter-spacing:-.01em}
-.lede{color:var(--muted);max-width:47em;margin:0 0 36px}
+.lede{color:var(--muted);max-width:var(--measure);margin:0 0 var(--s5)}
 .lede code{color:var(--text);font-size:.92em;background:var(--panel);border:1px solid var(--border);border-radius:5px;padding:1px 6px}
+.lede.after{margin:var(--s3) 0 0}
+.lede.flush{margin-bottom:0}
 .flow{display:flex;gap:10px;align-items:stretch;margin:6px 0 4px}
 .node{flex:1;background:var(--panel);border:1px solid var(--border2);border-radius:10px;padding:16px 15px;min-width:0}
 .node h3{font-family:var(--mono);font-size:13px;margin:0 0 8px;color:var(--accent);letter-spacing:.04em}
@@ -91,23 +101,24 @@ h2{font-family:var(--mono);font-size:clamp(24px,3.4vw,32px);margin:0 0 14px;lett
 .stat{background:var(--panel);border:1px solid var(--border2);border-radius:10px;padding:18px 18px 15px}
 .stat b{display:block;font-family:var(--mono);font-size:30px;color:var(--accent);letter-spacing:-.02em;line-height:1.15;margin-bottom:5px}
 .stat span{font-size:13px;color:var(--muted);line-height:1.45;display:block}
-.live-stats{padding:52px 0;border-bottom:1px solid var(--border)}
-.live-stats .stats{grid-template-columns:repeat(4,1fr);margin:0 0 26px}
-.live-stats .lede{margin:0 0 8px}
-.live-stats ul{list-style:none;margin:0;padding:0;max-width:860px}
+/* .live-stats keeps no padding override of its own — the stats band is a
+   section like any other and rides the shared --pad-y rhythm */
+.live-stats .stats{grid-template-columns:repeat(4,1fr);margin:0 0 var(--s4)}
+.live-stats .lede{margin:0 0 var(--s1)}
+.live-stats ul{list-style:none;margin:0;padding:0;max-width:var(--content)}
 .live-stats li{position:relative;font-size:13.5px;color:var(--muted);line-height:1.6;padding:11px 0 11px 16px;border-bottom:1px solid var(--border)}
 .live-stats li:last-child{border-bottom:0}
 .live-stats li::before{content:"›";position:absolute;left:0;top:9px;font-family:var(--mono);color:var(--accent)}
 .live-stats li code{font-size:11.5px;color:var(--text);background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:0 4px}
-.sagas{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.sagas{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:var(--s2)}
 .saga{background:var(--panel);border:1px solid var(--border2);border-radius:10px;padding:18px 20px}
 .saga h3{font-family:var(--mono);font-size:14px;margin:0 0 9px;color:var(--text)}
 .saga p{font-size:13.5px;color:var(--muted);margin:0;line-height:1.62}
 .saga .v{font-family:var(--mono);font-size:12px;color:var(--accent)}
-.dog{background:transparent;border:1px dashed var(--border2);border-radius:10px;padding:16px 20px;margin-top:12px}
+.dog{background:transparent;border:1px dashed var(--border2);border-radius:10px;padding:16px 20px;margin-top:var(--s2)}
 .dog h3{font-family:var(--mono);font-size:13px;margin:0 0 8px;color:var(--text)}
 .dog p{font-size:13.5px;color:var(--muted);margin:0;line-height:1.7}
-.honest{font-size:13px;color:var(--faint);margin:18px 0 0;line-height:1.6}
+.honest{font-size:13px;color:var(--faint);margin:var(--s3) 0 0;line-height:1.6}
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 .card{background:var(--panel);border:1px solid var(--border2);border-radius:10px;padding:17px 18px}
 .card h3{font-family:var(--mono);font-size:14px;margin:0 0 8px;color:var(--text)}
@@ -118,15 +129,15 @@ h2{font-family:var(--mono);font-size:clamp(24px,3.4vw,32px);margin:0 0 14px;lett
 .pipe{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-family:var(--mono);font-size:12.5px;margin:0 0 26px}
 .pipe span{border:1px solid var(--border2);background:var(--panel);border-radius:999px;padding:6px 13px;color:var(--text)}
 .pipe i{color:var(--accent);font-style:normal}
-.doctext p{color:var(--muted);max-width:52em;line-height:1.75;margin:0 0 14px}
+.doctext p{color:var(--muted);max-width:var(--measure);line-height:1.75;margin:0 0 14px}
 .doctext p b{color:var(--text)}
-.steps{display:grid;gap:30px;max-width:760px}
+.steps{display:grid;gap:var(--s4);max-width:var(--content)}
 .step h3{font-family:var(--mono);font-size:13px;margin:0 0 10px;color:var(--accent);letter-spacing:.05em}
-pre.code{background:var(--bg2);border:1px solid var(--border2);border-radius:10px;padding:14px 17px;overflow-x:auto;font-size:13px;line-height:1.75;color:var(--text);margin:0}
+pre.code{background:var(--bg2);border:1px solid var(--border2);border-radius:10px;padding:14px 17px;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:13px;line-height:1.75;color:var(--text);margin:0}
 pre.code .cmt{color:var(--faint)}
 pre.code .pr{color:var(--accent)}
 .step .note-line{font-size:13.5px;color:var(--muted);margin:10px 0 0;line-height:1.6}
-.tl{position:relative;max-width:860px;margin:0 auto}
+.tl{position:relative;max-width:var(--content)}
 .tl::before{content:"";position:absolute;top:10px;bottom:10px;left:101px;width:1px;background:var(--border2)}
 .tl-item{position:relative;display:grid;grid-template-columns:86px 30px 1fr;padding:11px 0}
 .tl-date{font-family:var(--mono);font-size:11.5px;color:var(--faint);text-align:right;padding-top:4px;white-space:nowrap}
@@ -156,11 +167,19 @@ footer .attribution{margin:0}
   .live-stats .stats{grid-template-columns:1fr}
   .nav-links{gap:12px}
   .nav-links a{font-size:11.5px}
-  section{padding:60px 0}
+  section{padding:var(--pad-y-sm) 0}
+  .hero{padding:48px 0 var(--s5)}
   .tl::before{left:66px}
   .tl-item{grid-template-columns:54px 24px 1fr}
   .tl-date{font-size:9.5px}
   .tl-body{padding-left:12px}
+}
+@media (max-width:480px){
+  /* narrow tier: code/terminal blocks scroll in place, page never does */
+  .wrap{padding:0 16px}
+  pre.code{font-size:12px;padding:12px 14px}
+  .term-body{font-size:11.5px;padding:13px 14px}
+  .term-cap{padding:8px 14px}
 }
 </style>
 </head>
@@ -265,7 +284,7 @@ footer .attribution{margin:0}
     <p>Its interactive chat mode: written for it, by it. Its delegate tool — a Rust module of its own, launching child chug runs in git worktrees: written by a child run, validated by another model family, then grown through wait_secs long-polling, resume, collect, and terminal-wait mode across later cycles. Its decision_log, hooks, plan mode, TUI, MCP client, Langfuse tracing: same story. And this very page — the one you are reading — was written by chug running its own loop, with this site's check gate re-running on every claim.</p>
   </div>
   <p class="honest">Honest failure books: one cycle hit its iteration ceiling mid-wrap and the wrap was lost — the next cycle reconstructed it from git history and ledgers alone. Failed validation rounds are the norm, not the exception; the tgrep arc alone logged refusal after refusal before its pass.</p>
-  <p class="lede" style="margin:18px 0 0"><a href="#stats">→ live counts: queue, tests, cycles — rewritten at every wrap</a></p>
+  <p class="lede after"><a href="#stats">→ live counts: queue, tests, cycles — rewritten at every wrap</a></p>
 </div></section>
 
 <section id="stats" class="live-stats"><div class="wrap">
@@ -687,7 +706,7 @@ footer .attribution{margin:0}
   <div class="doctext">
     <p>The evaluator reads the corpus — events, ledgers, specs, code — and writes the assessment plus the next queue rows, each with its own spec before any child is dispatched. Children implement in git worktrees, one at a time, under iteration and token budgets; <b>glm-5-3-flash implements</b>. Then <b>validation is always kimi-k3</b> — a different model family, so the verdict is an independent second opinion, and it is adversarial by design: gates re-run from a clean checkout, mutants are injected to prove the tests can actually fail, weak pins get called out. <b>A FAIL verdict is not a crisis; it is the pipeline working.</b> Only then: merge, flip the queue row, push. The doctrine is written down, versioned, and pinned by tests — the loop edits its own rules in the open, never by vibes.</p>
   </div>
-  <p class="lede" style="margin-bottom:0">The full protocol — phases, budgets, recovery recipes, hard rules — is one file: <a href="https://github.com/tampajohn/chug/blob/main/LOOP-SPEC.md">LOOP-SPEC.md</a>.</p>
+  <p class="lede flush">The full protocol — phases, budgets, recovery recipes, hard rules — is one file: <a href="https://github.com/tampajohn/chug/blob/main/LOOP-SPEC.md">LOOP-SPEC.md</a>.</p>
 </div></section>
 
 <section id="get-started"><div class="wrap">

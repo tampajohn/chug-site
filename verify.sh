@@ -56,13 +56,19 @@ if [ -f index.html ]; then
     grep -q "href=\"#$id\"" index.html || fail "section id=\"$id\" is not navigable (no href=\"#$id\" anywhere)"
   done
 
-  # 2e. Living-site rule: no hardcoded metrics outside the STATS:BEGIN/END region.
-  #     Grep heuristic, not a parser: body-only, skip the machine-synced STATS
-  #     region, verbatim <pre> command samples, the hero terminal sketch, and
-  #     HTML comments; strip tags; strip identifier-like tokens (queue T-ids,
-  #     validation R-labels, SPEC-N, 7+ char hex hashes, dates, clock times) —
-  #     those are cited git history, not rotting page stats. Two greps run over
-  #     the one masked stream:
+  # 2e. Living-site rule: no hardcoded metrics outside the machine-synced
+  #     STATS/TIMELINE regions. The TIMELINE:BEGIN/END region quotes real
+  #     commit titles straight from git history (site-sync.sh), so digits
+  #     there are cited history — the same class the strip-list below
+  #     already carves out for T-ids, hashes and dates — never rotting
+  #     page stats. Hand-written prose has no such exemption.
+  #     Grep heuristic, not a parser: body-only, skip the machine-synced
+  #     STATS and TIMELINE regions, verbatim <pre> command samples, the
+  #     hero terminal sketch, and HTML comments; strip tags; strip
+  #     identifier-like tokens (queue T-ids, validation R-labels, SPEC-N,
+  #     7+ char hex hashes, dates, clock times) — those are cited git
+  #     history, not rotting page stats. Two greps run over the one masked
+  #     stream:
   #       (a) same-line: a digit and a metric claim word share a line
   #           (catches inline prose like "721 tests green");
   #       (b) cross-line adjacency: in the line-joined stream a digit and a
@@ -80,7 +86,9 @@ if [ -f index.html ]; then
     | awk '
         /^[[:space:]]*<!-- STATS:BEGIN -->[[:space:]]*$/{instats=1; next}
         /^[[:space:]]*<!-- STATS:END -->[[:space:]]*$/{instats=0; next}
-        instats{next}
+        /^[[:space:]]*<!-- TIMELINE:BEGIN -->[[:space:]]*$/{intl=1; next}
+        /^[[:space:]]*<!-- TIMELINE:END -->[[:space:]]*$/{intl=0; next}
+        instats||intl{next}
         /<pre/{inpre=1}
         inpre{if(/<\/pre>/) inpre=0; next}
         /class="term-body"/{interm=1}
@@ -412,6 +420,30 @@ if errs:
 print("  llms.txt: OK (%d bytes, %d sections, %d links all https + structurally resolved%s)" % (
     len(text.encode()), len(h2), len(links), "; source checkout verified" if src_avail else ""))
 PY
+fi
+
+# 7. layout gate (responsive-consistency fix): every section must collapse
+#    on a phone, so nothing may be pinned wider than the page container and
+#    no element may carry a fixed pixel width that cannot fit a 480px
+#    viewport. (a) any width/max-width/min-width px value above the --wrap
+#    container fails; (b) any bare width: >= 480px fails (max-/min- are
+#    swapped out first so only fixed widths count). @media prelude lines are
+#    exempt — those are viewport gates, not element widths.
+if [ -f index.html ]; then
+  wrap=$(grep -oE -- '--wrap:[0-9]+px' index.html | grep -oE '[0-9]+' | head -1)
+  [ -n "$wrap" ] || wrap=1060
+  over=$(grep -v '@media' index.html \
+    | grep -oE '(max-|min-)?width:[0-9]+px' | grep -oE '[0-9]+' \
+    | awk -v w="$wrap" '$1>w{print $1}')
+  [ -z "$over" ] || fail "width over the ${wrap}px container: ${over}px"
+  fixed=$(grep -v '@media' index.html \
+    | sed -E 's/(max|min)-width/XWIDTH/g' \
+    | grep -oE '(^|[^Xa-zA-Z-])width:[0-9]+px' | grep -oE '[0-9]+' \
+    | awk '$1>=480{print $1}')
+  [ -z "$fixed" ] || fail "fixed width >= 480px (cannot collapse on mobile): ${fixed}px"
+  if [ -z "$over" ] && [ -z "$fixed" ]; then
+    echo "  layout gate: OK (container ${wrap}px, no width over it, no fixed width >= 480px)"
+  fi
 fi
 
 if [ "$fails" -eq 0 ]; then
