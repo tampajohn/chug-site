@@ -103,9 +103,106 @@ if [ -f index.html ]; then
   fi
 fi
 
-# 4. hrefs: https://github.com/tampajohn/... or in-page #anchor that exists
+# 3b. social meta pack + local assets: the og card must be referenced by its
+#     ABSOLUTE https://chug.sh URL (Slack/Twitter fetch it after deploy) while
+#     every referenced file exists on disk (living-site rule: local assets
+#     only). og.png dims are read from the PNG IHDR header — the gate does
+#     not need Pillow.
+if [ -f index.html ]; then
+python3 - <<'PY' || fail "meta pack / asset checks failed"
+import os, re, struct, sys
+import xml.etree.ElementTree as ET
+
+src = open("index.html", encoding="utf-8").read()
+head = src.split("</head>")[0]
+errs = []
+
+def tag(attr, key):
+    m = re.search(r"<(?:meta|link)\b[^>]*\b%s=[\"']%s[\"'][^>]*>" % (attr, re.escape(key)), head)
+    if not m:
+        return None
+    t = m.group(0)
+    for a in ("content", "href"):
+        c = re.search(r'\b%s=["\']([^"\']*)["\']' % a, t)
+        if c:
+            return c.group(1)
+    return ""
+
+def want(kind, key, val, label, nonempty_ok=False):
+    got = tag(kind, key)
+    if got is None:
+        errs.append("missing %s" % label)
+    elif nonempty_ok and not got.strip():
+        errs.append("%s is empty" % label)
+    elif not nonempty_ok and got != val:
+        errs.append("%s: got %r, want %r" % (label, got, val))
+
+want("name", "description", None, "meta description", nonempty_ok=True)
+want("property", "og:title", None, "og:title", nonempty_ok=True)
+want("property", "og:description", None, "og:description", nonempty_ok=True)
+want("property", "og:type", "website", "og:type=website")
+want("property", "og:url", "https://chug.sh/", "og:url")
+want("property", "og:image", "https://chug.sh/assets/og.png", "og:image (absolute chug.sh URL)")
+want("property", "og:image:width", "1200", "og:image:width")
+want("property", "og:image:height", "630", "og:image:height")
+want("property", "og:image:alt", None, "og:image:alt", nonempty_ok=True)
+want("name", "twitter:card", "summary_large_image", "twitter:card=summary_large_image")
+want("name", "twitter:title", None, "twitter:title", nonempty_ok=True)
+want("name", "twitter:description", None, "twitter:description", nonempty_ok=True)
+want("name", "twitter:image", "https://chug.sh/assets/og.png", "twitter:image")
+want("rel", "canonical", "https://chug.sh/", "canonical link")
+want("name", "theme-color", "#0d1117", "theme-color matching bg")
+want("rel", "icon", "/assets/favicon.svg", "svg favicon link")
+want("rel", "apple-touch-icon", "/assets/apple-touch-icon.png", "apple-touch-icon link")
+
+def png_size(path):
+    with open(path, "rb") as f:
+        sig = f.read(8)
+        if sig != b"\x89PNG\r\n\x1a\n":
+            raise ValueError("%s: not a PNG" % path)
+        f.read(8)  # IHDR length + chunk type
+        w, h = struct.unpack(">II", f.read(8))
+        return w, h
+
+for p in ("assets/og.png", "assets/favicon.svg", "assets/apple-touch-icon.png"):
+    if not os.path.isfile(p):
+        errs.append("referenced asset missing on disk: %s" % p)
+
+if os.path.isfile("assets/og.png"):
+    try:
+        w, h = png_size("assets/og.png")
+        if (w, h) != (1200, 630):
+            errs.append("assets/og.png is %dx%d, must be exactly 1200x630" % (w, h))
+    except ValueError as e:
+        errs.append(str(e))
+if os.path.isfile("assets/apple-touch-icon.png"):
+    try:
+        w, h = png_size("assets/apple-touch-icon.png")
+        if (w, h) != (180, 180):
+            errs.append("assets/apple-touch-icon.png is %dx%d, must be 180x180" % (w, h))
+    except ValueError as e:
+        errs.append(str(e))
+if os.path.isfile("assets/favicon.svg"):
+    try:
+        root = ET.parse("assets/favicon.svg").getroot()
+        if root.tag.rsplit("}", 1)[-1] != "svg":
+            errs.append("assets/favicon.svg: root element is not <svg>")
+    except ET.ParseError as e:
+        errs.append("assets/favicon.svg is not valid XML: %s" % e)
+    body = open("assets/favicon.svg", encoding="utf-8").read()
+    body_check = body.replace("http://www.w3.org/2000/svg", "")
+    if "http://" in body_check or "https://" in body_check:
+        errs.append("assets/favicon.svg contains an external URL (assets must be local)")
+
+if errs:
+    print("\n".join("  - " + e for e in errs))
+    sys.exit(1)
+print("  meta pack + assets: OK (og.png 1200x630, favicon.svg, apple-touch-icon 180x180)")
+PY
+fi
 # 5. python3 html.parser validation passes
 python3 - <<'PY' || fail "html checks (hrefs / html.parser) failed"
+import os
 import sys
 from html.parser import HTMLParser
 
@@ -151,6 +248,12 @@ for h in c.hrefs:
         continue
     if h == "https://videoamp.com":
         continue
+    if h == "https://chug.sh/" or h.startswith("https://chug.sh/"):
+        continue  # canonical site origin (og/canonical targets)
+    if h.startswith("/assets/"):
+        if os.path.isfile(h.lstrip("/")):
+            continue
+        errs.append("asset href points at a missing file: %r" % h)
     if h.startswith("#") and len(h) > 1 and c.ids.get(h[1:]):
         continue
     errs.append("bad href: %r" % h)
