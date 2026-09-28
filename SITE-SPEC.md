@@ -59,6 +59,12 @@ check: bash verify.sh
   chugging", "adversarial validation") or link to #stats. The
   sync script owns all numbers; anything else rots (header went stale
   within a day of launch).
+
+- **No time-relative claims anywhere** ("seven days", "N weeks", "this
+  month") unless the text is inside a synced region and computed by the
+  sync from git dates. Titles and prose go timeless ("The journey so
+  far") or the region computes it ("day N" from the day-one
+  commit). A hardcoded day count is stale by definition tomorrow.
 - **Every section is navigable.** Each top-level section has a stable id
   and an entry in the page nav (stats/timeline/features/doctrine/get-
   started all reachable). verify.sh checks: every section id appears in a
