@@ -61,9 +61,22 @@ if [ -f index.html ]; then
   #     region, verbatim <pre> command samples, the hero terminal sketch, and
   #     HTML comments; strip tags; strip identifier-like tokens (queue T-ids,
   #     validation R-labels, SPEC-N, 7+ char hex hashes, dates, clock times) —
-  #     those are cited git history, not rotting page stats. What remains is
-  #     flagged when one line carries BOTH a digit and a metric claim word.
-  bad=$(sed -n '/<body>/,/<\/body>/p' index.html \
+  #     those are cited git history, not rotting page stats. Two greps run over
+  #     the one masked stream:
+  #       (a) same-line: a digit and a metric claim word share a line
+  #           (catches inline prose like "721 tests green");
+  #       (b) cross-line adjacency: in the line-joined stream a digit and a
+  #           count unit sit within two short words of each other, either
+  #           direction, with an optional :/= separator — this is the
+  #           literal-digit-chip hole: chip/card markup routinely puts the
+  #           number and its label on separate source lines
+  #           (<span class="chip"><b>721</b></span> / "tests green"), which
+  #           (a) cannot see. Periods/other punctuation break the window, so
+  #           ordinary sentences stay clear.
+  #     Code blocks stay exempt: <pre> lines are dropped above, so commands
+  #     with flags/versions (--max-iters 40, cargo test) never reach either
+  #     grep; the synced STATS region is the one home of real numbers.
+  masked=$(sed -n '/<body>/,/<\/body>/p' index.html \
     | awk '
         /^[[:space:]]*<!-- STATS:BEGIN -->[[:space:]]*$/{instats=1; next}
         /^[[:space:]]*<!-- STATS:END -->[[:space:]]*$/{instats=0; next}
@@ -83,10 +96,17 @@ if [ -f index.html ]; then
               s/kimi-k[0-9][0-9a-z-]*/ MODEL /g;
               s/[0-9a-f]{7,}/ HASH /g;
               s/20[0-9]{2}-[0-9]{2}-[0-9]{2}/ DATE /g;
-              s/[0-9]{1,2}:[0-9]{2}(:[0-9]{2})?Z?/ TIME /g' \
-    | grep -iE '[0-9].*(tests?|items?|land(ed|ing|s)?|cycles?|green|lines|mutants?|rounds?|recoveries|iterations?|records?|queue)|(tests?|items?|land(ed|ing|s)?|cycles?|green|lines|mutants?|rounds?|recoveries|iterations?|records?|queue).*[0-9]')
+              s/[0-9]{1,2}:[0-9]{2}(:[0-9]{2})?Z?/ TIME /g')
+  units='tests?|items?|land(ed|ing|s)?|cycles?|green|lines|mutants?|rounds?|recoveries|iterations?|records?|commits?|tools?|queue'
+  bad=$(printf '%s\n' "$masked" \
+    | grep -iE "[0-9].*($units)|($units).*[0-9]")
   if [ -n "$bad" ]; then
-    fail "hardcoded metric outside the STATS region (digit + claim word): $(echo "$bad" | head -2 | tr '\n' ' ' | cut -c1-200)"
+    fail "hardcoded metric outside the STATS region (digit + claim word on one line): $(echo "$bad" | head -2 | tr '\n' ' ' | cut -c1-200)"
+  fi
+  bad=$(printf '%s' "$masked" | tr '\n' ' ' \
+    | grep -ioE "[0-9][0-9.,/%x]*([ ]+[a-z-]{1,20}){0,2}[ ]+($units)\b|\b($units)([ ]+[a-z-]{1,20}){0,2}([ ]*[:=][ ]*|[ ]+)[0-9]")
+  if [ -n "$bad" ]; then
+    fail "hardcoded metric outside the STATS region (digit chip adjacent to its unit across markup/lines): $(echo "$bad" | head -2 | tr '\n' ' ' | cut -c1-200)"
   fi
 fi
 
