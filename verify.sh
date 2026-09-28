@@ -27,11 +27,41 @@ if [ -f index.html ]; then
   n=$(grep -c 'class="tl-item' index.html)
   [ "$n" -ge 12 ] || fail "timeline has $n entries (need >= 12)"
   grep -q 'class="tl"' index.html || fail "timeline rail (.tl) missing"
+
+  # 2c. stats sync region: scripts/site-sync.sh (tampajohn/chug T98) rewrites
+  #     ONLY between the markers, so the page must carry exactly one
+  #     BEGIN/END pair (same line grammar the sync script greps for), inside
+  #     <body>, positioned after the proof section and before the timeline.
+  nb=$(grep -cE '^[[:space:]]*<!-- STATS:BEGIN -->[[:space:]]*$' index.html)
+  ne=$(grep -cE '^[[:space:]]*<!-- STATS:END -->[[:space:]]*$' index.html)
+  bl=$(grep -nE '^[[:space:]]*<!-- STATS:BEGIN -->[[:space:]]*$' index.html | head -1 | cut -d: -f1)
+  el=$(grep -nE '^[[:space:]]*<!-- STATS:END -->[[:space:]]*$' index.html | head -1 | cut -d: -f1)
+  if [ "$nb" -ne 1 ] || [ "$ne" -ne 1 ] || [ -z "$bl" ] || [ -z "$el" ] || [ "$bl" -ge "$el" ]; then
+    fail "stats markers malformed: BEGIN x$nb (line ${bl:-none}), END x$ne (line ${el:-none}) — need exactly one of each, BEGIN before END"
+  else
+    body=$(grep -n '<body>' index.html | head -1 | cut -d: -f1)
+    endbody=$(grep -n '</body>' index.html | head -1 | cut -d: -f1)
+    proof=$(grep -n 'id="proof"' index.html | head -1 | cut -d: -f1)
+    tline=$(grep -n 'id="timeline"' index.html | head -1 | cut -d: -f1)
+    if [ -z "$body" ] || [ -z "$endbody" ] || [ "$bl" -le "$body" ] || [ "$el" -ge "$endbody" ]; then
+      fail "stats region not inside <body> (BEGIN line $bl, END line $el, body ${body:-?}..${endbody:-?})"
+    elif [ "$bl" -le "$proof" ] || [ "$el" -ge "$tline" ]; then
+      fail "stats region not between the proof and timeline sections (BEGIN line $bl, END line $el, proof $proof, timeline $tline)"
+    fi
+  fi
 fi
 
-# 3. no lorem/placeholder/TODO strings
-if [ -f index.html ] && grep -qiE 'lorem|ipsum|placeholder|TODO|FIXME|TBD' index.html; then
-  fail "placeholder-like string found in index.html"
+# 3. no lorem/placeholder/TODO strings — hand-written parts only: the
+#    machine-written stats region between the STATS markers is regenerated
+#    by chug's scripts/site-sync.sh and legitimately cites real repo files
+#    (TODO.md, git refs); sweeping it would red-flag honest facts.
+if [ -f index.html ]; then
+  if awk '/^[[:space:]]*<!-- STATS:BEGIN -->[[:space:]]*$/{skip=1}
+          !skip{print}
+          /^[[:space:]]*<!-- STATS:END -->[[:space:]]*$/{skip=0}' index.html \
+     | grep -qiE 'lorem|ipsum|placeholder|TODO|FIXME|TBD'; then
+    fail "placeholder-like string found in index.html"
+  fi
 fi
 
 # 4. hrefs: https://github.com/tampajohn/... or in-page #anchor that exists

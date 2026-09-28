@@ -73,6 +73,14 @@ h2{font-family:var(--mono);font-size:clamp(24px,3.4vw,32px);margin:0 0 14px;lett
 .stat{background:var(--panel);border:1px solid var(--border2);border-radius:10px;padding:18px 18px 15px}
 .stat b{display:block;font-family:var(--mono);font-size:30px;color:var(--accent);letter-spacing:-.02em;line-height:1.15;margin-bottom:5px}
 .stat span{font-size:13px;color:var(--muted);line-height:1.45;display:block}
+.live-stats{padding:52px 0;border-bottom:1px solid var(--border)}
+.live-stats .stats{grid-template-columns:repeat(4,1fr);margin:0 0 26px}
+.live-stats .lede{margin:0 0 8px}
+.live-stats ul{list-style:none;margin:0;padding:0;max-width:860px}
+.live-stats li{position:relative;font-size:13.5px;color:var(--muted);line-height:1.6;padding:11px 0 11px 16px;border-bottom:1px solid var(--border)}
+.live-stats li:last-child{border-bottom:0}
+.live-stats li::before{content:"›";position:absolute;left:0;top:9px;font-family:var(--mono);color:var(--accent)}
+.live-stats li code{font-size:11.5px;color:var(--text);background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:0 4px}
 .sagas{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
 .saga{background:var(--panel);border:1px solid var(--border2);border-radius:10px;padding:18px 20px}
 .saga h3{font-family:var(--mono);font-size:14px;margin:0 0 9px;color:var(--text)}
@@ -122,10 +130,12 @@ footer .attribution{margin:0}
   .arr{transform:rotate(90deg)}
   .note,.sagas{grid-template-columns:1fr}
   .stats{grid-template-columns:repeat(2,1fr)}
+  .live-stats .stats{grid-template-columns:repeat(2,1fr)}
   .grid{grid-template-columns:repeat(2,1fr)}
 }
 @media (max-width:600px){
   .grid,.stats{grid-template-columns:1fr}
+  .live-stats .stats{grid-template-columns:1fr}
   .nav-links{gap:12px}
   .nav-links a{font-size:11.5px}
   section{padding:60px 0}
@@ -245,6 +255,27 @@ footer .attribution{margin:0}
   </div>
   <p class="honest">Honest failure books: cycle 45 hit its 160-iteration ceiling mid-wrap and the wrap was lost — cycle 46 reconstructed it from git history and ledgers alone. Failed validation rounds are the norm, not the exception; the tgrep arc alone logged four before its PASS.</p>
 </div></section>
+
+<div class="live-stats"><div class="wrap">
+  <p class="kicker"><span class="hash">##</span> live stats · rewritten by scripts/site-sync.sh at every cycle wrap</p>
+<!-- chug loop stats: regenerated deterministically by scripts/site-sync.sh (tampajohn/chug T98) — do not hand-edit between the markers -->
+<!-- STATS:BEGIN -->
+<div class="stats">
+  <div class="stat"><b>95/96</b><span>queue items landed — done rows in TODO.md, 96 item rows total</span></div>
+  <div class="stat"><b>777</b><span>tests green at the newest full-suite gate count in a commit message (eca240a)</span></div>
+  <div class="stat"><b>36</b><span>cycles completed by the loopd supervisor — "cycle OK" lines in .chug/loopd/loopd.log</span></div>
+  <div class="stat"><b>2026-09-27</b><span>last EVALUATION.md write (git log, chug repo)</span></div>
+</div>
+<p class="lede">Last five items landed — item · ref · date, quoted from the chug repo's git log:</p>
+<ul>
+  <li><code>T97</code> · <code>ee8a508</code> · 2026-09-27 — README delegate paragraph -&gt; per-action sub-bullets (zero behavior-text change; T69 collect pin…</li>
+  <li><code>T96</code> · <code>962830d</code> · 2026-09-27 — META-META-SPEC spec quality bar gains the check-filter-breadth sentence — a cargo-test `check:`…</li>
+  <li><code>T95</code> · <code>e80b3c5</code> · 2026-09-27 — README Development layout gains `permissions` + module set-equality guard. Cycle-53 eval §6(c): the…</li>
+  <li><code>T98</code> · <code>8721c83</code> · 2026-09-27 — site-sync.sh — chug.sh stats block regenerated deterministically at wrap (T46 digest pattern, zero…</li>
+  <li><code>T94</code> · <code>06f3b9e</code> · 2026-09-27 — get_str error names the received keys (alias self-correction). On a param-extraction miss the ONE…</li>
+</ul>
+<!-- STATS:END -->
+</div></div>
 
 <section id="timeline"><div class="wrap">
   <p class="kicker"><span class="hash">##</span> 03 · the timeline</p>
@@ -510,20 +541,3 @@ footer .attribution{margin:0}
   </footer>
 </body>
 </html>
-<!-- chug loop stats: regenerated deterministically by scripts/site-sync.sh (tampajohn/chug T98) — do not hand-edit between the markers -->
-<!-- STATS:BEGIN -->
-<div class="stats">
-  <div class="stat"><b>95/95</b><span>queue items landed — done rows in TODO.md, 95 item rows total</span></div>
-  <div class="stat"><b>777</b><span>tests green at the newest full-suite gate count in a commit message (89952ba)</span></div>
-  <div class="stat"><b>36</b><span>cycles completed by the loopd supervisor — "cycle OK" lines in .chug/loopd/loopd.log</span></div>
-  <div class="stat"><b>2026-09-27</b><span>last EVALUATION.md write (git log, chug repo)</span></div>
-</div>
-<p class="lede">Last five items landed — item · ref · date, quoted from the chug repo's git log:</p>
-<ul>
-  <li><code>T97</code> · <code>b0c6041</code> · 2026-09-27 — README delegate paragraph -&gt; per-action sub-bullets (zero behavior-text change; T69 collect pin…</li>
-  <li><code>T96</code> · <code>962830d</code> · 2026-09-27 — META-META-SPEC spec quality bar gains the check-filter-breadth sentence — a cargo-test `check:`…</li>
-  <li><code>T95</code> · <code>e80b3c5</code> · 2026-09-27 — README Development layout gains `permissions` + module set-equality guard. Cycle-53 eval §6(c): the…</li>
-  <li><code>T98</code> · <code>8721c83</code> · 2026-09-27 — site-sync.sh — chug.sh stats block regenerated deterministically at wrap (T46 digest pattern, zero…</li>
-  <li><code>T94</code> · <code>06f3b9e</code> · 2026-09-27 — get_str error names the received keys (alias self-correction). On a param-extraction miss the ONE…</li>
-</ul>
-<!-- STATS:END -->
