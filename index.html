@@ -292,18 +292,18 @@ footer .attribution{margin:0}
 <!-- chug loop stats: regenerated deterministically by scripts/site-sync.sh (tampajohn/chug T98) — do not hand-edit between the markers -->
 <!-- STATS:BEGIN -->
 <div class="stats">
-  <div class="stat"><b>108/108</b><span>queue items landed — done rows in TODO.md, 108 item rows total</span></div>
-  <div class="stat"><b>871</b><span>tests green at the newest full-suite gate count in a commit message (99565a4)</span></div>
-  <div class="stat"><b>42</b><span>cycles completed by the loopd supervisor — "cycle OK" lines in .chug/loopd/loopd.log</span></div>
+  <div class="stat"><b>120/120</b><span>queue items landed — done rows in TODO.md, 120 item rows total</span></div>
+  <div class="stat"><b>964</b><span>tests green at the newest full-suite gate count in a commit message (740f453)</span></div>
+  <div class="stat"><b>43</b><span>cycles completed by the loopd supervisor — "cycle OK" lines in .chug/loopd/loopd.log</span></div>
   <div class="stat"><b>2026-09-28</b><span>last EVALUATION.md write (git log, chug repo)</span></div>
 </div>
 <p class="lede">Last five items landed — item · ref · date, quoted from the chug repo's git log:</p>
 <ul>
+  <li><code>T122</code> · <code>93dae89</code> · 2026-09-28 — site-sync timeline — undatable curated entries sort by their tl-date, not the bottom</li>
+  <li><code>T120</code> · <code>c173c2f</code> · 2026-09-28 — LOOP-SPEC verify-then-kill SEQUENTIAL (step 2) + assert-after-sed (step 5), pinned by legs k-l</li>
+  <li><code>T116</code> · <code>eb55003</code> · 2026-09-28 — todo_update rejects empty/whitespace-only titles — one shared ensure_title_non_empty helper…</li>
+  <li><code>T114</code> · <code>63119e6</code> · 2026-09-28 — check: lines must see tests the change can BREAK — BREAK-side rule in META-META-SPEC's spec…</li>
   <li><code>T111</code> · <code>d8fdea0</code> · 2026-09-28 — F8 phase 1 — structured todo tool (todo_add/todo_update/todo_list over .chug/todos.json + prompt…</li>
-  <li><code>T110</code> · <code>5a16ce5</code> · 2026-09-28 — filing-time ~500-line estimate ceiling — T102 measure clause RESOLVED (doctrine: LOOP-SPEC +…</li>
-  <li><code>T107</code> · <code>793a0fc</code> · 2026-09-28 — LOOP-SPEC step-2 goal template gains the worktree-discipline commitment clause</li>
-  <li><code>T106</code> · <code>e5cdebd</code> · 2026-09-28 — README Install names the pending first release — one honesty sentence (needle 'no release…</li>
-  <li><code>T105</code> · <code>dc29137</code> · 2026-09-28 — F6 phase 1 — session fork slots (chug fork save/list/restore)</li>
 </ul>
 <!-- STATS:END -->
 </div></section>
@@ -382,7 +382,7 @@ footer .attribution{margin:0}
       <div class="tl-date"></div>
       <div class="tl-rail"><span class="tl-dot"></span></div>
       <div class="tl-body">
-        <h3>…and 83 earlier milestones (T1–T92)</h3>
+        <h3>…and 95 earlier milestones (T1–T103)</h3>
       </div>
     </div>
     <div class="tl-item major">
@@ -437,84 +437,16 @@ footer .attribution{margin:0}
       <div class="tl-date">2026-09-27</div>
       <div class="tl-rail"><span class="tl-dot"></span></div>
       <div class="tl-body">
-        <h3>permissions mcp__ matcher-fit canary accepts server-specific globs <span class="hash">(aeb12ea)</span></h3>
+        <h3>The move to K7 — always-on <span class="hash">com.tampajohn.chug-loopd.plist</span></h3>
+        <p>loopd moves under launchd on the operator's host (K7HC2K125R): the plist wraps loopd.sh in <code>caffeinate -dims</code> with RunAtLoad. The improvement loop no longer lives in a terminal.</p>
       </div>
     </div>
-    <div class="tl-item">
+    <div class="tl-item major">
       <div class="tl-date">2026-09-27</div>
       <div class="tl-rail"><span class="tl-dot"></span></div>
       <div class="tl-body">
-        <h3>F5 phase 1: read_file image input (base64 content blocks + endpoint-reject degrade) <span class="hash">(ae7ff5f)</span></h3>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2026-09-27</div>
-      <div class="tl-rail"><span class="tl-dot"></span></div>
-      <div class="tl-body">
-        <h3>get_str error names received keys (alias self-correction) <span class="hash">(06f3b9e)</span></h3>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2026-09-27</div>
-      <div class="tl-rail"><span class="tl-dot"></span></div>
-      <div class="tl-body">
-        <h3>site-sync: chug.sh stats update at wrap (deterministic) <span class="hash">(8721c83)</span></h3>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2026-09-27</div>
-      <div class="tl-rail"><span class="tl-dot"></span></div>
-      <div class="tl-body">
-        <h3>README Development layout gains permissions + module set-equality guard <span class="hash">(e80b3c5)</span></h3>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2026-09-27</div>
-      <div class="tl-rail"><span class="tl-dot"></span></div>
-      <div class="tl-body">
-        <h3>META-META-SPEC spec quality bar: check filter must run every test the change adds <span class="hash">(962830d)</span></h3>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2026-09-27</div>
-      <div class="tl-rail"><span class="tl-dot"></span></div>
-      <div class="tl-body">
-        <h3>README delegate paragraph → per-action sub-bullets <span class="hash">(b0c6041)</span></h3>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2026-09-27</div>
-      <div class="tl-rail"><span class="tl-dot"></span></div>
-      <div class="tl-body">
-        <h3>site-sync v2: timeline + feature-grid regions (deterministic) <span class="hash">(d13a253)</span></h3>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2026-09-27</div>
-      <div class="tl-rail"><span class="tl-dot"></span></div>
-      <div class="tl-body">
-        <h3>GitHub releases: tag-triggered prebuilt binaries + notes <span class="hash">(9d1182a)</span></h3>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2026-09-27</div>
-      <div class="tl-rail"><span class="tl-dot"></span></div>
-      <div class="tl-body">
-        <h3>site-sync timeline ordering + curation bugs <span class="hash">(bcd0b66)</span></h3>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2026-09-28</div>
-      <div class="tl-rail"><span class="tl-dot"></span></div>
-      <div class="tl-body">
-        <h3>LOOP-SPEC impl-child template --max-iters 65→80 <span class="hash">(ffebdaf)</span></h3>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2026-09-28</div>
-      <div class="tl-rail"><span class="tl-dot"></span></div>
-      <div class="tl-body">
-        <h3>delegate launch asserts spec + cwd exist (fail-fast on corrupted fields) <span class="hash">(80d4a14)</span></h3>
+        <h3>chug.sh — this site <span class="hash">e998d45</span></h3>
+        <p>chug builds its own public site: eight commits in one evening, every section landed against the verify.sh check gate, GitHub Pages serving a CNAME. You are reading the dogfood.</p>
       </div>
     </div>
     <div class="tl-item">
@@ -574,19 +506,87 @@ footer .attribution{margin:0}
       </div>
     </div>
     <div class="tl-item">
-      <div class="tl-date">2026-09-27</div>
+      <div class="tl-date">2026-09-28</div>
       <div class="tl-rail"><span class="tl-dot"></span></div>
       <div class="tl-body">
-        <h3>The move to K7 — always-on <span class="hash">com.tampajohn.chug-loopd.plist</span></h3>
-        <p>loopd moves under launchd on the operator's host (K7HC2K125R): the plist wraps loopd.sh in <code>caffeinate -dims</code> with RunAtLoad. The improvement loop no longer lives in a terminal.</p>
+        <h3>Streaming path reported input_tokens=0 (message_delta usage merge) <span class="hash">(0325a36)</span></h3>
       </div>
     </div>
-    <div class="tl-item major">
-      <div class="tl-date">2026-09-27</div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-28</div>
       <div class="tl-rail"><span class="tl-dot"></span></div>
       <div class="tl-body">
-        <h3>chug.sh — this site <span class="hash">e998d45</span></h3>
-        <p>chug builds its own public site: eight commits in one evening, every section landed against the verify.sh check gate, GitHub Pages serving a CNAME. You are reading the dogfood.</p>
+        <h3>F9 phase 1: slash-command packs (.chug/commands/*.md, chat invocation) <span class="hash">(55fe207)</span></h3>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-28</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>META-META-SPEC spec bar: check: lines must see tests the change can BREAK <span class="hash">(63119e6)</span></h3>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-28</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>Goal-integrity surface: delegate launch echoes + run_start goal_sha256 <span class="hash">(ed6c96f)</span></h3>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-28</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>todo_update accepts empty/whitespace-only title (symmetry with todo_add) <span class="hash">(eb55003)</span></h3>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-28</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>loopd orchestrator cap --max-iters 160 → 200 <span class="hash">(cbc21e0)</span></h3>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-28</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>F9 phase 2a: run-side goal expansion (chug run/plan --goal "/name args") + goal_pack in run_start <span class="hash">(3579d9d)</span></h3>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-28</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>T115 weak-test pins: multibyte goal_tail leg + run_start call-site wiring pins <span class="hash">(43f427d)</span></h3>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-28</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>LOOP-SPEC doctrine: verify-then-kill SEQUENTIAL + assert-after-sed <span class="hash">(c173c2f)</span></h3>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-28</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>F9 phase 2b: pack frontmatter (description:) + /help descriptions + Tab completion of pack names <span class="hash">(4c96414)</span></h3>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-28</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>release v0.2.0 workflow failure record (locked-leg + aarch64 cross) <span class="hash">(3cd7b7e)</span></h3>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-28</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>site-sync timeline: curated entries sort by display date, not bottom-pin <span class="hash">(93dae89)</span></h3>
       </div>
     </div>
 <!-- TIMELINE:END -->
@@ -673,7 +673,7 @@ footer .attribution{margin:0}
       <p><code>todo_add/update/list</code> driver-visible tools (statuses enforced) as an alternative to freeform LEDGER edits — the orchestration ledger becomes queryable.</p>
     </div>
     <div class="card">
-      <h3><span>Slash-command packs</span><i class="q">in-flight</i></h3>
+      <h3><span>Slash-command packs</span><i class="q">landed</i></h3>
       <p><code>.chug/commands/*.md</code> repo-local commands invocable from chat (<code>/review</code>, <code>/triage</code>) and as run goals. Community-extensible without code.</p>
     </div>
     <div class="card">
