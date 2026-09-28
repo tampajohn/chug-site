@@ -80,6 +80,8 @@ for i, n in sorted(c.ids.items()):
 for h in c.hrefs:
     if h.startswith("https://github.com/tampajohn/"):
         continue
+    if h == "https://videoamp.com":
+        continue
     if h.startswith("#") and len(h) > 1 and c.ids.get(h[1:]):
         continue
     errs.append("bad href: %r" % h)
