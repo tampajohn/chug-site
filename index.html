@@ -45,6 +45,7 @@ h1 .cursor{display:inline-block;width:.5em;height:.9em;background:var(--accent);
 .btn:hover{text-decoration:none;border-color:var(--accent)}
 .chips{display:flex;gap:8px;flex-wrap:wrap}
 .chip{font-family:var(--mono);font-size:12px;color:var(--muted);border:1px solid var(--border);background:var(--panel);padding:5px 11px;border-radius:999px}
+a.chip:hover{border-color:var(--accent);color:var(--text);text-decoration:none}
 .chip b{color:var(--text);font-weight:600}
 .term{background:var(--bg2);border:1px solid var(--border2);border-radius:10px;overflow:hidden;box-shadow:0 18px 50px rgba(0,0,0,.45)}
 .term-head{display:flex;gap:6px;padding:10px 12px;border-bottom:1px solid var(--border);background:#0f141b}
@@ -152,6 +153,7 @@ footer .attribution{margin:0}
   <div class="nav-links">
     <a href="#how-it-works">how it works</a>
     <a href="#proof">proof</a>
+    <a href="#stats">stats</a>
     <a href="#timeline">timeline</a>
     <a href="#features">features</a>
     <a href="#doctrine">doctrine</a>
@@ -171,9 +173,9 @@ footer .attribution{margin:0}
       <a class="btn" href="#how-it-works">see the loop ↓</a>
     </div>
     <div class="chips">
-      <span class="chip"><b>51</b> self-improvement cycles</span>
-      <span class="chip"><b>86/87</b> queue items landed</span>
-      <span class="chip"><b>721</b> tests green</span>
+      <a class="chip" href="#stats"><b>live</b> queue · tests · cycles →</a>
+      <span class="chip">self-improving in public</span>
+      <span class="chip">adversarial validation built in</span>
     </div>
   </div>
   <div class="term">
@@ -193,7 +195,7 @@ footer .attribution{margin:0}
 <section id="how-it-works"><div class="wrap">
   <p class="kicker"><span class="hash">##</span> 01 · how it works</p>
   <h2>The loop is code, not conversation</h2>
-  <p class="lede">A run takes a spec file with a <code>check:</code> line and a goal, and drives a fixed loop until the check exits 0. Goal and progress live in files on disk, re-read every iteration — so context trimming can never kill the run.</p>
+  <p class="lede">A run takes a spec file with a <code>check:</code> line and a goal, and drives a fixed loop until the check exits zero. Goal and progress live in files on disk, re-read every iteration — so context trimming can never kill the run.</p>
   <div class="flow">
     <div class="node">
       <h3>SPEC + GOAL</h3>
@@ -206,7 +208,7 @@ footer .attribution{margin:0}
     </div>
     <span class="arr">→</span>
     <div class="node">
-      <h3>TOOLS ×13</h3>
+      <h3>THE TOOLS</h3>
       <p>read_file, write_file, edit_file, bash, grep, tgrep, glob, list_dir, update_ledger, decision_log, delegate, web_fetch, goal_complete — sandboxed to <code>--cwd</code>.</p>
     </div>
     <span class="arr">→</span>
@@ -230,33 +232,26 @@ footer .attribution{margin:0}
 <section id="proof"><div class="wrap">
   <p class="kicker"><span class="hash">##</span> 02 · proof it runs itself</p>
   <h2>Built by its own loop, measured by its own gates</h2>
-  <p class="lede">chug improves chug. The <code>loopd</code> supervisor runs the self-improvement cycle back to back; every number below is quoted from the repo's own ledgers (cycle 51, 2026-09-27) — never invented, never rounded up.</p>
-  <div class="stats">
-    <div class="stat"><b>51</b><span>self-improvement cycles logged by the loopd supervisor</span></div>
-    <div class="stat"><b>86/87</b><span>queue items landed, T1–T89 done; T90 queued with its spec already written</span></div>
-    <div class="stat"><b>318 → 721</b><span>tests green: first recorded gate run to the latest cycle's gates</span></div>
-    <div class="stat"><b>131</b><span>structured decision records in .chug/decisions.jsonl</span></div>
-    <div class="stat"><b>31,890</b><span>lines of Rust across 27 modules in src/</span></div>
-    <div class="stat"><b>18/18</b><span>budget-death recoveries landed by the resume recipe, all-time</span></div>
-  </div>
+  <p class="lede">chug improves chug. The <code>loopd</code> supervisor runs the self-improvement cycle back to back, and at every wrap the <a href="#stats">synced stats band</a> below is regenerated from the repo's own ledgers — done rows in the queue ledger, gate counts in commit messages, the git log. Numbers live there, quoted and never rounded up; this section is the story behind them.</p>
   <div class="sagas">
     <div class="saga">
-      <h3>The tgrep arc: five validation rounds</h3>
-      <p>When the loop built its own token-budgeted context search, the adversarial validator refused to pass it — four times. <span class="v">R1 FAIL</span> merge-radius contradiction, <span class="v">R2 FAIL</span> symbols-mode dropping declarations, <span class="v">R3 FAIL</span> vacuous pins, <span class="v">R4 FAIL</span> one flaky perf pin (21/21 mutants red). Each FAIL forced a fix-up round; <span class="v">R5 PASS</span> closed it with 8 fresh mutants all dead. Sixteen artifacts harvested; post-merge gates 627/627.</p>
+      <h3>The tgrep arc: validation round after round</h3>
+      <p>When the loop built its own token-budgeted context search, the adversarial validator refused to pass it — again and again: a merge-radius contradiction, symbols mode dropping declarations, vacuous pins, then one flaky perf pin with every mutant red. Each refusal forced a fix-up round; the final round closed it with a fresh mutant batch, all dead. A full artifact set came out of it, and the post-merge gates ran green — the counts are in the <a href="#stats">stats band</a>.</p>
     </div>
     <div class="saga">
       <h3>The bug the pipeline existed to catch</h3>
-      <p>Building its own hooks system, the implementer passed gates — and the validator still failed it. <span class="v">R1 FAIL</span>: PostToolUse was firing on calls that PreToolUse had vetoed, a real semantic bug no test had pinned. The fix-up swept the whole class (the sibling risk-gate-block path had the same hole) with two RED-proven killing tests. <span class="v">R2 PASS</span>, zero blocking findings.</p>
+      <p>Building its own hooks system, the implementer passed gates — and the validator still failed it. First refusal: PostToolUse was firing on calls that PreToolUse had vetoed, a real semantic bug no test had pinned. The fix-up swept the whole class — the sibling risk-gate-block path had the same hole — with killing tests proven red first. Second round: PASS, zero blocking findings.</p>
     </div>
   </div>
   <div class="dog">
     <h3>Dogfood, verbatim</h3>
-    <p>Its interactive chat mode: written for it, by it. Its delegate tool — 887 lines launching child chug runs in git worktrees: written by a child run, validated by another model family, then grown through wait_secs long-polling, resume, collect, and terminal-wait mode across later cycles. Its decision_log, hooks, plan mode, TUI, MCP client, Langfuse tracing: same story. And this very page — the one you are reading — was written by chug running its own loop, with this site's check gate re-running on every claim.</p>
+    <p>Its interactive chat mode: written for it, by it. Its delegate tool — a Rust module of its own, launching child chug runs in git worktrees: written by a child run, validated by another model family, then grown through wait_secs long-polling, resume, collect, and terminal-wait mode across later cycles. Its decision_log, hooks, plan mode, TUI, MCP client, Langfuse tracing: same story. And this very page — the one you are reading — was written by chug running its own loop, with this site's check gate re-running on every claim.</p>
   </div>
-  <p class="honest">Honest failure books: cycle 45 hit its 160-iteration ceiling mid-wrap and the wrap was lost — cycle 46 reconstructed it from git history and ledgers alone. Failed validation rounds are the norm, not the exception; the tgrep arc alone logged four before its PASS.</p>
+  <p class="honest">Honest failure books: one cycle hit its iteration ceiling mid-wrap and the wrap was lost — the next cycle reconstructed it from git history and ledgers alone. Failed validation rounds are the norm, not the exception; the tgrep arc alone logged refusal after refusal before its pass.</p>
+  <p class="lede" style="margin:18px 0 0"><a href="#stats">→ live counts: queue, tests, cycles — rewritten at every wrap</a></p>
 </div></section>
 
-<div class="live-stats"><div class="wrap">
+<section id="stats" class="live-stats"><div class="wrap">
   <p class="kicker"><span class="hash">##</span> live stats · rewritten by scripts/site-sync.sh at every cycle wrap</p>
 <!-- chug loop stats: regenerated deterministically by scripts/site-sync.sh (tampajohn/chug T98) — do not hand-edit between the markers -->
 <!-- STATS:BEGIN -->
@@ -275,7 +270,7 @@ footer .attribution{margin:0}
   <li><code>T94</code> · <code>06f3b9e</code> · 2026-09-27 — get_str error names the received keys (alias self-correction). On a param-extraction miss the ONE…</li>
 </ul>
 <!-- STATS:END -->
-</div></div>
+</div></section>
 
 <section id="timeline"><div class="wrap">
   <p class="kicker"><span class="hash">##</span> 03 · the timeline</p>
@@ -287,7 +282,7 @@ footer .attribution{margin:0}
       <div class="tl-rail"><span class="tl-dot"></span></div>
       <div class="tl-body">
         <h3>Day one — the core harness <span class="hash">f911488</span></h3>
-        <p>First commit at 17:42: a driver-in-code loop, <code>LEDGER.md</code> as external memory, and goal completion that only counts when the check exits 0. Thirty-one commits land before midnight.</p>
+        <p>First commit at 17:42: a driver-in-code loop, <code>LEDGER.md</code> as external memory, and goal completion that only counts when the check exits zero. Thirty-one commits land before midnight.</p>
       </div>
     </div>
     <div class="tl-item">
@@ -351,7 +346,7 @@ footer .attribution{margin:0}
       <div class="tl-rail"><span class="tl-dot"></span></div>
       <div class="tl-body">
         <h3>loopd goes continuous <span class="hash">548d494</span></h3>
-        <p>The supervisor lands at 14:02 and starts its first cycle the same minute (18:02:52Z): cycles run back-to-back, each wrap the next cycle's input. It is still running today.</p>
+        <p>The supervisor lands after lunch and starts its first cycle the same minute — the first line of the loopd log. Cycles run back-to-back, each wrap the next cycle's input. It is still running today.</p>
       </div>
     </div>
     <div class="tl-item">
@@ -375,7 +370,7 @@ footer .attribution{margin:0}
       <div class="tl-rail"><span class="tl-dot"></span></div>
       <div class="tl-body">
         <h3>Hooks <span class="hash">ccb828a</span></h3>
-        <p>PreToolUse veto + PostToolUse advisory (T83). Validation round 1 FAIL caught PostToolUse firing on calls that never executed — a real bug — and the class sweep fixed the sibling risk-gate path with it.</p>
+        <p>PreToolUse veto + PostToolUse advisory (T83). The first validation round FAILED the merge — it caught PostToolUse firing on calls that never executed, a real bug — and the class sweep fixed the sibling risk-gate path with it.</p>
       </div>
     </div>
     <div class="tl-item">
@@ -383,7 +378,7 @@ footer .attribution{margin:0}
       <div class="tl-rail"><span class="tl-dot"></span></div>
       <div class="tl-body">
         <h3>Permissions <span class="hash">e9afed9</span></h3>
-        <p>The deny-list lands (T90): <code>.chug/permissions.json</code>, first-match-wins, fail-closed on match, first in the policy chain before hooks and the risk gate. FEATURES.md F4 flips to LANDED.</p>
+        <p>The deny-list lands (T90): <code>.chug/permissions.json</code>, first-match-wins, fail-closed on match, first in the policy chain before hooks and the risk gate. Its FEATURES.md roadmap row flips to LANDED.</p>
       </div>
     </div>
     <div class="tl-item">
@@ -411,7 +406,7 @@ footer .attribution{margin:0}
       </div>
     </div>
   </div>
-  <p class="honest">The quiet patch stays on the chart: zero commits Sep 23–24, between the last cycle-3 landing and loopd's first start. Honest books include the blank pages.</p>
+  <p class="honest">The quiet patch stays on the chart: zero commits for two days between the last early-cycle landing and loopd's first start. Honest books include the blank pages.</p>
 </div></section>
 
 <section id="features"><div class="wrap">
@@ -420,7 +415,7 @@ footer .attribution{margin:0}
   <p class="lede">Every capability below is quoted from the repo's README and FEATURES roadmap — including the phases still deferred with written reasons, because a harness that keeps honest books about what it hasn't done yet is the whole point.</p>
   <div class="grid">
     <div class="card">
-      <h3><span>×</span>13 built-in tools</h3>
+      <h3><span>builtin</span> tools</h3>
       <p><code>read_file</code> <code>write_file</code> <code>edit_file</code> <code>bash</code> <code>grep</code> <code>tgrep</code> <code>glob</code> <code>list_dir</code> <code>update_ledger</code> <code>decision_log</code> <code>delegate</code> <code>web_fetch</code> <code>goal_complete</code> — all paths sandboxed to the run's working directory.</p>
     </div>
     <div class="card">
@@ -436,8 +431,8 @@ footer .attribution{margin:0}
       <p><code>.chug/hooks.json</code> policy-as-config: PreToolUse hooks can veto a tool call before it executes; PostToolUse hooks advise. Fails open, per-checkout, never fires a hook from a hook.</p>
     </div>
     <div class="card">
-      <h3><span>permissions</span><i class="q">phase 1 landed</i></h3>
-      <p><code>.chug/permissions.json</code> deny rules evaluated first in the policy chain — before hooks and the risk gate; fail-closed on match, first-match-wins. Phase 1 landed 2026-09-27; ask-mode and settings.json unification are deferred phases with written reasons.</p>
+      <h3><span>permissions</span><i class="q">first phase landed</i></h3>
+      <p><code>.chug/permissions.json</code> deny rules evaluated first in the policy chain — before hooks and the risk gate; fail-closed on match, first-match-wins. The first phase is landed; ask-mode and settings.json unification are deferred phases with written reasons.</p>
     </div>
     <div class="card">
       <h3><span>risk gate</span> (Laya)</h3>
@@ -461,7 +456,7 @@ footer .attribution{margin:0}
     </div>
     <div class="card">
       <h3><span>tgrep</span></h3>
-      <p>Token-budgeted ranked context search: ranked match clusters with ±3-line windows, quoted phrases, a symbols mode for Rust signatures. Deterministic scoring — no embeddings, no LLM.</p>
+      <p>Token-budgeted ranked context search: ranked match clusters with tight context windows, quoted phrases, a symbols mode for Rust signatures. Deterministic scoring — no embeddings, no LLM.</p>
     </div>
     <div class="card">
       <h3><span>chat</span></h3>
@@ -523,7 +518,7 @@ footer .attribution{margin:0}
       <pre class="code"><span class="pr">$</span> nohup ./loopd.sh &gt; /dev/null 2&gt;&amp;1 &amp;   <span class="cmt"># start (detached)</span>
 <span class="pr">$</span> ./loopd.sh status                     <span class="cmt"># liveness + recent cycle activity</span>
 <span class="pr">$</span> ./loopd.sh stop                       <span class="cmt"># exits after the current cycle</span></pre>
-      <p class="note-line"><a href="https://github.com/tampajohn/chug/blob/main/LOOP-SPEC.md">LOOP-SPEC.md</a> is the one-command self-improvement loop; the loopd supervisor runs it continuously — cycle after cycle, no human per-phase prompting. It has been doing so for 51 cycles.</p>
+      <p class="note-line"><a href="https://github.com/tampajohn/chug/blob/main/LOOP-SPEC.md">LOOP-SPEC.md</a> is the one-command self-improvement loop; the loopd supervisor runs it continuously — cycle after cycle, no human per-phase prompting. The live count is in the <a href="#stats">stats band</a>.</p>
     </div>
     <div class="step">
       <h3>4 · DEVELOP</h3>

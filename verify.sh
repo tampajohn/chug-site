@@ -49,6 +49,45 @@ if [ -f index.html ]; then
       fail "stats region not between the proof and timeline sections (BEGIN line $bl, END line $el, proof $proof, timeline $tline)"
     fi
   fi
+
+  # 2d. Living-site rule: every top-level section id appears in a nav href
+  for id in hero how-it-works proof stats timeline features doctrine get-started; do
+    grep -q "id=\"$id\"" index.html || fail "missing section marker id=\"$id\""
+    grep -q "href=\"#$id\"" index.html || fail "section id=\"$id\" is not navigable (no href=\"#$id\" anywhere)"
+  done
+
+  # 2e. Living-site rule: no hardcoded metrics outside the STATS:BEGIN/END region.
+  #     Grep heuristic, not a parser: body-only, skip the machine-synced STATS
+  #     region, verbatim <pre> command samples, the hero terminal sketch, and
+  #     HTML comments; strip tags; strip identifier-like tokens (queue T-ids,
+  #     validation R-labels, SPEC-N, 7+ char hex hashes, dates, clock times) —
+  #     those are cited git history, not rotting page stats. What remains is
+  #     flagged when one line carries BOTH a digit and a metric claim word.
+  bad=$(sed -n '/<body>/,/<\/body>/p' index.html \
+    | awk '
+        /^[[:space:]]*<!-- STATS:BEGIN -->[[:space:]]*$/{instats=1; next}
+        /^[[:space:]]*<!-- STATS:END -->[[:space:]]*$/{instats=0; next}
+        instats{next}
+        /<pre/{inpre=1}
+        inpre{if(/<\/pre>/) inpre=0; next}
+        /class="term-body"/{interm=1}
+        interm{if(/class="term-cap"/) interm=0; next}
+        /<!--/{next}
+        {print}' \
+    | sed -E 's/<[^>]*>/ /g;
+              s/T[0-9]+/ ID /g;
+              s/R[0-9]+/ ID /g;
+              s/SPEC-[0-9]+/ ID /g;
+              s/v[0-9][0-9a-z.]*/ VER /g;
+              s/glm-[0-9][0-9a-z.-]*/ MODEL /g;
+              s/kimi-k[0-9][0-9a-z-]*/ MODEL /g;
+              s/[0-9a-f]{7,}/ HASH /g;
+              s/20[0-9]{2}-[0-9]{2}-[0-9]{2}/ DATE /g;
+              s/[0-9]{1,2}:[0-9]{2}(:[0-9]{2})?Z?/ TIME /g' \
+    | grep -iE '[0-9].*(tests?|items?|land(ed|ing|s)?|cycles?|green|lines|mutants?|rounds?|recoveries|iterations?|records?|queue)|(tests?|items?|land(ed|ing|s)?|cycles?|green|lines|mutants?|rounds?|recoveries|iterations?|records?|queue).*[0-9]')
+  if [ -n "$bad" ]; then
+    fail "hardcoded metric outside the STATS region (digit + claim word): $(echo "$bad" | head -2 | tr '\n' ' ' | cut -c1-200)"
+  fi
 fi
 
 # 3. no lorem/placeholder/TODO strings — hand-written parts only: the
