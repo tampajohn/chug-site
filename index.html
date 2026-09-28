@@ -696,7 +696,12 @@ footer .attribution{margin:0}
   <p class="lede">Everything below is the repo's own quickstart, verbatim. Put a <code>check:</code> line in your spec — <code>goal_complete</code> is only accepted when the check exits 0.</p>
   <div class="steps">
     <div class="step">
-      <h3>1 · BUILD</h3>
+      <h3>1 · INSTALL</h3>
+      <pre class="code"><span class="pr">$</span> curl -fsSL https://chug.sh/install.sh | sh</pre>
+      <p class="note-line">Prebuilt binaries for macos-arm64, linux-x86_64 and linux-aarch64 — detects your platform, <b>verifies the sha256</b>, installs to <code>~/.local/bin</code> (never sudo). <a href="/install.sh">Read the script</a> first if you like; the loop cuts <code>v*</code> releases from its own wrap. Or build from source ↓</p>
+    </div>
+    <div class="step">
+      <h3>2 · BUILD</h3>
       <pre class="code"><span class="pr">$</span> git clone https://github.com/tampajohn/chug
 <span class="pr">$</span> cd chug
 <span class="pr">$</span> cargo build
@@ -704,7 +709,7 @@ footer .attribution{margin:0}
       <p class="note-line">Zero setup if you have Claude Code configured: chug reads its auth from <code>~/.claude/settings.json</code> when the process env doesn't have it.</p>
     </div>
     <div class="step">
-      <h3>2 · RUN SOMETHING REAL</h3>
+      <h3>3 · RUN SOMETHING REAL</h3>
       <pre class="code"><span class="pr">$</span> chug run --spec SPEC.md --goal "Build X and make the check pass" \
     --model anthropic-system.ai.kimi-k3 --max-iters 40 --max-minutes 120
 
@@ -714,14 +719,14 @@ footer .attribution{margin:0}
 <span class="pr">$</span> chug ledger          <span class="cmt"># print current LEDGER.md</span></pre>
     </div>
     <div class="step">
-      <h3>3 · RUN THE LOOP ON ITSELF</h3>
+      <h3>4 · RUN THE LOOP ON ITSELF</h3>
       <pre class="code"><span class="pr">$</span> nohup ./loopd.sh &gt; /dev/null 2&gt;&amp;1 &amp;   <span class="cmt"># start (detached)</span>
 <span class="pr">$</span> ./loopd.sh status                     <span class="cmt"># liveness + recent cycle activity</span>
 <span class="pr">$</span> ./loopd.sh stop                       <span class="cmt"># exits after the current cycle</span></pre>
       <p class="note-line"><a href="https://github.com/tampajohn/chug/blob/main/LOOP-SPEC.md">LOOP-SPEC.md</a> is the one-command self-improvement loop; the loopd supervisor runs it continuously — cycle after cycle, no human per-phase prompting. The live count is in the <a href="#stats">stats band</a>.</p>
     </div>
     <div class="step">
-      <h3>4 · DEVELOP</h3>
+      <h3>5 · DEVELOP</h3>
       <pre class="code"><span class="pr">$</span> cargo build &amp;&amp; cargo clippy --all-targets -- -D warnings &amp;&amp; cargo test</pre>
       <p class="note-line">All three must stay green — the loop's own gates enforce the same bar on every change it lands.</p>
     </div>

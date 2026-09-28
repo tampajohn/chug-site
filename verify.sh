@@ -223,6 +223,22 @@ if errs:
 print("  meta pack + assets: OK (og.png 1200x630, favicon.svg, apple-touch-icon 180x180)")
 PY
 fi
+# 4. install one-liner block (tampajohn/chug T100): the get-started section
+#    shows `curl -fsSL https://chug.sh/install.sh | sh`, links the script for
+#    reading-before-piping, and the script itself is served from the repo root
+#    (POSIX-syntax-clean). If any leg rots the one-liner lies — fail loud.
+if [ -f index.html ]; then
+  grep -qF 'curl -fsSL https://chug.sh/install.sh | sh' index.html \
+    || fail "get-started install one-liner missing or changed (expect: curl -fsSL https://chug.sh/install.sh | sh)"
+  grep -qF 'href="/install.sh"' index.html \
+    || fail "get-started block does not link the script (href=\"/install.sh\")"
+fi
+if [ ! -f install.sh ]; then
+  fail "install.sh missing at the site root (https://chug.sh/install.sh must serve)"
+else
+  sh -n install.sh || fail "install.sh fails sh -n syntax check"
+fi
+
 # 5. python3 html.parser validation passes
 python3 - <<'PY' || fail "html checks (hrefs / html.parser) failed"
 import os
@@ -273,6 +289,10 @@ for h in c.hrefs:
         continue
     if h == "https://chug.sh/" or h.startswith("https://chug.sh/"):
         continue  # canonical site origin (og/canonical targets)
+    if h == "/install.sh":
+        if os.path.isfile("install.sh"):
+            continue
+        errs.append("href /install.sh but install.sh missing on disk")
     if h == "/llms.txt":
         if os.path.isfile("llms.txt"):
             continue
