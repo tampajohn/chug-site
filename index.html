@@ -273,18 +273,18 @@ footer .attribution{margin:0}
 <!-- chug loop stats: regenerated deterministically by scripts/site-sync.sh (tampajohn/chug T98) — do not hand-edit between the markers -->
 <!-- STATS:BEGIN -->
 <div class="stats">
-  <div class="stat"><b>97/97</b><span>queue items landed — done rows in TODO.md, 97 item rows total</span></div>
-  <div class="stat"><b>818</b><span>tests green at the newest full-suite gate count in a commit message (fd40ca6)</span></div>
-  <div class="stat"><b>38</b><span>cycles completed by the loopd supervisor — "cycle OK" lines in .chug/loopd/loopd.log</span></div>
-  <div class="stat"><b>2026-09-27</b><span>last EVALUATION.md write (git log, chug repo)</span></div>
+  <div class="stat"><b>98/98</b><span>queue items landed — done rows in TODO.md, 98 item rows total</span></div>
+  <div class="stat"><b>820</b><span>tests green at the newest full-suite gate count in a commit message (27eb133)</span></div>
+  <div class="stat"><b>39</b><span>cycles completed by the loopd supervisor — "cycle OK" lines in .chug/loopd/loopd.log</span></div>
+  <div class="stat"><b>2026-09-28</b><span>last EVALUATION.md write (git log, chug repo)</span></div>
 </div>
 <p class="lede">Last five items landed — item · ref · date, quoted from the chug repo's git log:</p>
 <ul>
-  <li><code>T100</code> · <code>67b7702</code> · 2026-09-27 — GitHub releases — tag-triggered prebuilt binaries + generated notes</li>
+  <li><code>T101</code> · <code>bcd0b66</code> · 2026-09-27 — site-sync timeline — commit-time order, curated merge, cap enforcement</li>
+  <li><code>T100</code> · <code>2b282ce</code> · 2026-09-27 — GitHub releases — tag-triggered prebuilt binaries + generated notes</li>
   <li><code>T99</code> · <code>5e6552b</code> · 2026-09-27 — site-sync fix-up — flush_card drops nothing + mutant-killing pins</li>
   <li><code>T97</code> · <code>ee8a508</code> · 2026-09-27 — README delegate paragraph -&gt; per-action sub-bullets (zero behavior-text change; T69 collect pin…</li>
   <li><code>T96</code> · <code>962830d</code> · 2026-09-27 — META-META-SPEC spec quality bar gains the check-filter-breadth sentence — a cargo-test `check:`…</li>
-  <li><code>T95</code> · <code>e80b3c5</code> · 2026-09-27 — README Development layout gains `permissions` + module set-equality guard. Cycle-53 eval §6(c): the…</li>
 </ul>
 <!-- STATS:END -->
 </div></section>
@@ -359,6 +359,13 @@ footer .attribution{margin:0}
         <p>Mutation testing enters the validation template — every landing must now prove its tests can fail. LOOP-SPEC writes the whole evaluate→queue→implement→validate→merge→push loop into one file. glm-5-3-flash takes the implementer seat; kimi-k3 keeps the verdicts.</p>
       </div>
     </div>
+    <div class="tl-item">
+      <div class="tl-date"></div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>…and 73 earlier milestones (T1–T80)</h3>
+      </div>
+    </div>
     <div class="tl-item major">
       <div class="tl-date">2026-09-25</div>
       <div class="tl-rail"><span class="tl-dot"></span></div>
@@ -387,8 +394,79 @@ footer .attribution{margin:0}
       <div class="tl-date">2026-09-27</div>
       <div class="tl-rail"><span class="tl-dot"></span></div>
       <div class="tl-body">
+        <h3>Parallel mutation testing for validators <span class="hash">(660f652)</span></h3>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-27</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>Per-phase model routing <span class="hash">c1daaca</span></h3>
+        <p>T81: glm orchestrates routine cycles, kimi takes the judgment calls — a mechanical freshness predicate in loopd.sh, never model vibes.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-27</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>cargo-nextest for gates <span class="hash">(6edc5ee)</span></h3>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-27</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>LOOP-SPEC wrap checklist gains the decision-records sentence (zero-call adoption gap) <span class="hash">(b4c159f)</span></h3>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-27</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>driver.rs trim-machinery extraction to src/trim.rs (pre-declared ~4500 trip line crossed) <span class="hash">(745f8ff)</span></h3>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-27</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
         <h3>Hooks <span class="hash">ccb828a</span></h3>
         <p>PreToolUse veto + PostToolUse advisory (T83). The first validation round FAILED the merge — it caught PostToolUse firing on calls that never executed, a real bug — and the class sweep fixed the sibling risk-gate path with it.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-27</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>Cross-tree read friction: LOOP-SPEC step 3 + META-SPEC §6 goal template name the bash escape hatch <span class="hash">(128a4b3)</span></h3>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-27</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>README Development layout omits plan.rs + tgrep.rs <span class="hash">(da1c51a)</span></h3>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-27</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>Docs-only guard floor: remove unreachable bash -n leg + fix the go-red overclaim <span class="hash">(ba5a9a0)</span></h3>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-27</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>decision_log validation errors name every bad field + the received shape <span class="hash">(c5a4f9e)</span></h3>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-27</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>delegate status terminal-wait mode (wake only on goal/abort/liveness/deadline) + LOOP-SPEC adoption <span class="hash">(d2b402a)</span></h3>
       </div>
     </div>
     <div class="tl-item">
@@ -403,8 +481,77 @@ footer .attribution{margin:0}
       <div class="tl-date">2026-09-27</div>
       <div class="tl-rail"><span class="tl-dot"></span></div>
       <div class="tl-body">
-        <h3>Per-phase model routing <span class="hash">c1daaca</span></h3>
-        <p>T81: glm orchestrates routine cycles, kimi takes the judgment calls — a mechanical freshness predicate in loopd.sh, never model vibes.</p>
+        <h3>LOOP-SPEC impl-child template --max-iters 50→65 <span class="hash">(9db86bc)</span></h3>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-27</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>permissions mcp__ matcher-fit canary accepts server-specific globs <span class="hash">(aeb12ea)</span></h3>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-27</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>F5 phase 1: read_file image input (base64 content blocks + endpoint-reject degrade) <span class="hash">(ae7ff5f)</span></h3>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-27</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>get_str error names received keys (alias self-correction) <span class="hash">(06f3b9e)</span></h3>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-27</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>site-sync: chug.sh stats update at wrap (deterministic) <span class="hash">(8721c83)</span></h3>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-27</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>README Development layout gains permissions + module set-equality guard <span class="hash">(e80b3c5)</span></h3>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-27</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>META-META-SPEC spec quality bar: check filter must run every test the change adds <span class="hash">(962830d)</span></h3>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-27</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>README delegate paragraph → per-action sub-bullets <span class="hash">(b0c6041)</span></h3>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-27</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>site-sync v2: timeline + feature-grid regions (deterministic) <span class="hash">(d13a253)</span></h3>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-27</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>GitHub releases: tag-triggered prebuilt binaries + notes <span class="hash">(9d1182a)</span></h3>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-27</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>site-sync timeline ordering + curation bugs <span class="hash">(bcd0b66)</span></h3>
       </div>
     </div>
     <div class="tl-item">
@@ -421,153 +568,6 @@ footer .attribution{margin:0}
       <div class="tl-body">
         <h3>chug.sh — this site <span class="hash">e998d45</span></h3>
         <p>chug builds its own public site: eight commits in one evening, every section landed against the verify.sh check gate, GitHub Pages serving a CNAME. You are reading the dogfood.</p>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2026-09-27</div>
-      <div class="tl-rail"><span class="tl-dot"></span></div>
-      <div class="tl-body">
-        <h3>GitHub releases: tag-triggered prebuilt binaries + notes <span class="hash">(9d1182a)</span></h3>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2026-09-27</div>
-      <div class="tl-rail"><span class="tl-dot"></span></div>
-      <div class="tl-body">
-        <h3>site-sync v2: timeline + feature-grid regions (deterministic) <span class="hash">(d13a253)</span></h3>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2026-09-27</div>
-      <div class="tl-rail"><span class="tl-dot"></span></div>
-      <div class="tl-body">
-        <h3>site-sync: chug.sh stats update at wrap (deterministic) <span class="hash">(8721c83)</span></h3>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2026-09-27</div>
-      <div class="tl-rail"><span class="tl-dot"></span></div>
-      <div class="tl-body">
-        <h3>README delegate paragraph → per-action sub-bullets <span class="hash">(b0c6041)</span></h3>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2026-09-27</div>
-      <div class="tl-rail"><span class="tl-dot"></span></div>
-      <div class="tl-body">
-        <h3>META-META-SPEC spec quality bar: check filter must run every test the change adds <span class="hash">(962830d)</span></h3>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2026-09-27</div>
-      <div class="tl-rail"><span class="tl-dot"></span></div>
-      <div class="tl-body">
-        <h3>README Development layout gains permissions + module set-equality guard <span class="hash">(e80b3c5)</span></h3>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2026-09-27</div>
-      <div class="tl-rail"><span class="tl-dot"></span></div>
-      <div class="tl-body">
-        <h3>get_str error names received keys (alias self-correction) <span class="hash">(06f3b9e)</span></h3>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2026-09-27</div>
-      <div class="tl-rail"><span class="tl-dot"></span></div>
-      <div class="tl-body">
-        <h3>permissions mcp__ matcher-fit canary accepts server-specific globs <span class="hash">(aeb12ea)</span></h3>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2026-09-27</div>
-      <div class="tl-rail"><span class="tl-dot"></span></div>
-      <div class="tl-body">
-        <h3>LOOP-SPEC impl-child template --max-iters 50→65 <span class="hash">(9db86bc)</span></h3>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2026-09-27</div>
-      <div class="tl-rail"><span class="tl-dot"></span></div>
-      <div class="tl-body">
-        <h3>F5 phase 1: read_file image input (base64 content blocks + endpoint-reject degrade) <span class="hash">(ae7ff5f)</span></h3>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2026-09-27</div>
-      <div class="tl-rail"><span class="tl-dot"></span></div>
-      <div class="tl-body">
-        <h3>delegate status terminal-wait mode (wake only on goal/abort/liveness/deadline) + LOOP-SPEC adoption <span class="hash">(d2b402a)</span></h3>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2026-09-27</div>
-      <div class="tl-rail"><span class="tl-dot"></span></div>
-      <div class="tl-body">
-        <h3>decision_log validation errors name every bad field + the received shape <span class="hash">(c5a4f9e)</span></h3>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2026-09-27</div>
-      <div class="tl-rail"><span class="tl-dot"></span></div>
-      <div class="tl-body">
-        <h3>Docs-only guard floor: remove unreachable bash -n leg + fix the go-red overclaim <span class="hash">(ba5a9a0)</span></h3>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2026-09-27</div>
-      <div class="tl-rail"><span class="tl-dot"></span></div>
-      <div class="tl-body">
-        <h3>README Development layout omits plan.rs + tgrep.rs <span class="hash">(da1c51a)</span></h3>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2026-09-27</div>
-      <div class="tl-rail"><span class="tl-dot"></span></div>
-      <div class="tl-body">
-        <h3>Cross-tree read friction: LOOP-SPEC step 3 + META-SPEC §6 goal template name the bash escape hatch <span class="hash">(128a4b3)</span></h3>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2026-09-27</div>
-      <div class="tl-rail"><span class="tl-dot"></span></div>
-      <div class="tl-body">
-        <h3>driver.rs trim-machinery extraction to src/trim.rs (pre-declared ~4500 trip line crossed) <span class="hash">(745f8ff)</span></h3>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2026-09-27</div>
-      <div class="tl-rail"><span class="tl-dot"></span></div>
-      <div class="tl-body">
-        <h3>cargo-nextest for gates <span class="hash">(6edc5ee)</span></h3>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2026-09-27</div>
-      <div class="tl-rail"><span class="tl-dot"></span></div>
-      <div class="tl-body">
-        <h3>Docs-only rounds skip the cargo gates <span class="hash">(9c4221d)</span></h3>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2026-09-27</div>
-      <div class="tl-rail"><span class="tl-dot"></span></div>
-      <div class="tl-body">
-        <h3>Parallel mutation testing for validators <span class="hash">(660f652)</span></h3>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2026-09-27</div>
-      <div class="tl-rail"><span class="tl-dot"></span></div>
-      <div class="tl-body">
-        <h3>LOOP-SPEC wrap checklist gains the decision-records sentence (zero-call adoption gap) <span class="hash">(b4c159f)</span></h3>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date"></div>
-      <div class="tl-rail"><span class="tl-dot"></span></div>
-      <div class="tl-body">
-        <h3>…and 72 earlier milestones (T1–T78)</h3>
       </div>
     </div>
 <!-- TIMELINE:END -->
