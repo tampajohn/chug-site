@@ -1,0 +1,69 @@
+# chug
+
+> Autonomous coding harness. Given a spec and a goal, it keeps on chugging.
+> Design rule #1: **the loop is code, not conversation** — the model never
+> decides whether to continue (the driver does), and the goal plus progress
+> live in files on disk, re-read every iteration, so context trimming can
+> never kill the run. Every completion claim is verified: a `goal_complete`
+> call is accepted only when the spec's `check:` command exits 0. chug
+> improves itself by running LOOP-SPEC on its own repository — evaluate the
+> codebase, queue improvements in TODO.md, implement them with child chug
+> runs in git worktrees, validate adversarially with a second model family
+> (plus mutation testing), merge, push — and nearly every TODO item has
+> landed that way, including the machine-synced stats on the page below and
+> the page itself.
+
+One Rust binary, two modes sharing the same tools and loop: `chug chat`
+(interactive TUI) and `chug run` (autonomous). The driver re-reads
+SPEC.md + LEDGER.md every iteration, calls tools, and re-runs the spec's
+check before accepting the goal — LEDGER.md is external memory injected
+every turn, so transcript trimming never loses progress.
+
+## Docs
+
+- [README.md](https://github.com/tampajohn/chug/blob/main/README.md): what chug is, the verbatim quickstart, chat + run modes, the tool surface, auth, and abort/resume behavior.
+- [LOOP-SPEC.md](https://github.com/tampajohn/chug/blob/main/LOOP-SPEC.md): the self-improvement loop as one command — evaluate, work the queue with child runs, wrap; model routing (glm implements, kimi validates) and the adversarial-validation doctrine.
+- [META-SPEC.md](https://github.com/tampajohn/chug/blob/main/META-SPEC.md): the orchestrator doctrine — chug orchestrating chug: bounded child runs in git worktrees, review, merge gates.
+- [SELF-SPEC.md](https://github.com/tampajohn/chug/blob/main/SELF-SPEC.md): the worker doctrine — continuous self-improvement within a budget, one verified item at a time, TODO.md as the ledger.
+- [FEATURES.md](https://github.com/tampajohn/chug/blob/main/FEATURES.md): the capability roadmap, benchmarked against Claude Code / Codex-class agents — landed, split, and queued items.
+- [EVALUATION.md](https://github.com/tampajohn/chug/blob/main/EVALUATION.md): the loop's written self-assessments, cycle by cycle — what worked, what failed, what got queued.
+
+## Site
+
+- [chug.sh](https://chug.sh/): the overview page chug built about itself — hero, how-it-works, the proof-it-runs-itself story, the loop doctrine, get started.
+- [Stats](https://chug.sh/#stats): live counters — machine-synced from the source repo by the loop itself at every cycle wrap.
+- [Timeline](https://chug.sh/#timeline): the improvement arc, one dated entry per landed item.
+- [Feature grid](https://chug.sh/#features): the tool and capability surface at a glance.
+
+## Install
+
+No installer yet — a one-line `curl | sh` install (to be served at
+`chug.sh/install.sh`, alongside prebuilt GitHub release binaries) is TODO
+item T100 in the source repo and has not landed. Build from source today:
+
+```bash
+git clone https://github.com/tampajohn/chug
+cd chug
+cargo build
+cargo install --path .   # puts the chug binary on PATH (~/.cargo/bin)
+```
+
+Auth: zero setup if Claude Code is configured — chug reads
+`ANTHROPIC_BASE_URL` / `ANTHROPIC_AUTH_TOKEN` / `ANTHROPIC_API_KEY` from
+`~/.claude/settings.json` when the process env doesn't have them (process
+env always wins).
+
+Run it:
+
+```bash
+chug run --spec SPEC.md --goal "Build X and make the check pass" \
+  --model anthropic-system.ai.kimi-k3 --max-iters 40 --max-minutes 120
+
+chug run --tui ...   # same, with the live dashboard
+chug run --resume    # continue an aborted run from .chug/transcript.jsonl
+chug chat            # interactive mode (TUI)
+chug ledger          # print current LEDGER.md
+```
+
+Put a `check: <shell command>` line in your spec — `goal_complete` is only
+accepted when the check exits 0.
