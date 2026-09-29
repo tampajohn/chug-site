@@ -292,18 +292,18 @@ footer .attribution{margin:0}
 <!-- chug loop stats: regenerated deterministically by scripts/site-sync.sh (tampajohn/chug T98) — do not hand-edit between the markers -->
 <!-- STATS:BEGIN -->
 <div class="stats">
-  <div class="stat"><b>136/138</b><span>queue items landed — done rows in TODO.md, 138 item rows total</span></div>
-  <div class="stat"><b>1092</b><span>tests green at the newest full-suite gate count in a commit message (c24b3cd)</span></div>
-  <div class="stat"><b>48</b><span>cycles completed by the loopd supervisor — "cycle OK" lines in .chug/loopd/loopd.log</span></div>
+  <div class="stat"><b>138/138</b><span>queue items landed — done rows in TODO.md, 138 item rows total</span></div>
+  <div class="stat"><b>1106</b><span>tests green at the newest full-suite gate count in a commit message (4544241)</span></div>
+  <div class="stat"><b>49</b><span>cycles completed by the loopd supervisor — "cycle OK" lines in .chug/loopd/loopd.log</span></div>
   <div class="stat"><b>2026-09-29</b><span>last EVALUATION.md write (git log, chug repo)</span></div>
 </div>
 <p class="lede">Last five items landed — item · ref · date, quoted from the chug repo's git log:</p>
 <ul>
+  <li><code>T131</code> · <code>b52e62c</code> · 2026-09-29 — eval-digest reader staleness check excludes the reader's own live stream</li>
+  <li><code>T129</code> · <code>2b4490b</code> · 2026-09-29 — chug_launch MCP write leg, flag-gated by mcp-serve --allow-launch</li>
   <li><code>T139</code> · <code>b5f1fa0</code> · 2026-09-29 — spec check passes the bash gates — editable spec check no longer bypasses permissions/hooks/risk…</li>
   <li><code>T143</code> · <code>00adb88</code> · 2026-09-28 — per-request max_tokens knob — 32768 default, env/CLI override, truncation remedy, run_start cap…</li>
   <li><code>T138</code> · <code>37f8edc</code> · 2026-09-28 — mcp.json no longer executes before permission enforcement</li>
-  <li><code>T137</code> · <code>08f0a39</code> · 2026-09-28 — refuse to launch a stale binary after a failed build (codex review §1 HIGH — loopd build gate)</li>
-  <li><code>T136</code> · <code>bf672b6</code> · 2026-09-28 — repair crash-torn transcripts — resume answers interrupted tool batches atomically</li>
 </ul>
 <!-- STATS:END -->
 </div></section>
@@ -382,7 +382,7 @@ footer .attribution{margin:0}
       <div class="tl-date"></div>
       <div class="tl-rail"><span class="tl-dot"></span></div>
       <div class="tl-body">
-        <h3>…and 111 earlier milestones (T1–T121)</h3>
+        <h3>…and 113 earlier milestones (T1–T121)</h3>
       </div>
     </div>
     <div class="tl-item major">
@@ -447,20 +447,6 @@ footer .attribution{margin:0}
       <div class="tl-body">
         <h3>chug.sh — this site <span class="hash">e998d45</span></h3>
         <p>chug builds its own public site: eight commits in one evening, every section landed against the verify.sh check gate, GitHub Pages serving a CNAME. You are reading the dogfood.</p>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2026-09-28</div>
-      <div class="tl-rail"><span class="tl-dot"></span></div>
-      <div class="tl-body">
-        <h3>LOOP-SPEC doctrine: verify-then-kill SEQUENTIAL + assert-after-sed <span class="hash">(c173c2f)</span></h3>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2026-09-28</div>
-      <div class="tl-rail"><span class="tl-dot"></span></div>
-      <div class="tl-body">
-        <h3>F9 phase 2b: pack frontmatter (description:) + /help descriptions + Tab completion of pack names <span class="hash">(4c96414)</span></h3>
       </div>
     </div>
     <div class="tl-item">
@@ -587,6 +573,20 @@ footer .attribution{margin:0}
       <div class="tl-rail"><span class="tl-dot"></span></div>
       <div class="tl-body">
         <h3>Editable spec check: bypasses bash deny + risk gate (codex review §2) <span class="hash">(b5f1fa0)</span></h3>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-29</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>F10 phase 2b: chug_launch MCP write leg, flag-gated by mcp-serve --allow-launch (default-deny) <span class="hash">(2b4490b)</span></h3>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-29</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>eval-digest reader staleness check excludes the reader's own live stream <span class="hash">(b52e62c)</span></h3>
       </div>
     </div>
 <!-- TIMELINE:END -->
