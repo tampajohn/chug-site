@@ -292,18 +292,18 @@ footer .attribution{margin:0}
 <!-- chug loop stats: regenerated deterministically by scripts/site-sync.sh (tampajohn/chug T98) — do not hand-edit between the markers -->
 <!-- STATS:BEGIN -->
 <div class="stats">
-  <div class="stat"><b>132/137</b><span>queue items landed — done rows in TODO.md, 137 item rows total</span></div>
-  <div class="stat"><b>1057</b><span>tests green at the newest full-suite gate count in a commit message (ae257da)</span></div>
-  <div class="stat"><b>47</b><span>cycles completed by the loopd supervisor — "cycle OK" lines in .chug/loopd/loopd.log</span></div>
-  <div class="stat"><b>2026-09-28</b><span>last EVALUATION.md write (git log, chug repo)</span></div>
+  <div class="stat"><b>136/138</b><span>queue items landed — done rows in TODO.md, 138 item rows total</span></div>
+  <div class="stat"><b>1092</b><span>tests green at the newest full-suite gate count in a commit message (c24b3cd)</span></div>
+  <div class="stat"><b>48</b><span>cycles completed by the loopd supervisor — "cycle OK" lines in .chug/loopd/loopd.log</span></div>
+  <div class="stat"><b>2026-09-29</b><span>last EVALUATION.md write (git log, chug repo)</span></div>
 </div>
 <p class="lede">Last five items landed — item · ref · date, quoted from the chug repo's git log:</p>
 <ul>
+  <li><code>T139</code> · <code>b5f1fa0</code> · 2026-09-29 — spec check passes the bash gates — editable spec check no longer bypasses permissions/hooks/risk…</li>
+  <li><code>T143</code> · <code>00adb88</code> · 2026-09-28 — per-request max_tokens knob — 32768 default, env/CLI override, truncation remedy, run_start cap…</li>
+  <li><code>T138</code> · <code>37f8edc</code> · 2026-09-28 — mcp.json no longer executes before permission enforcement</li>
+  <li><code>T137</code> · <code>08f0a39</code> · 2026-09-28 — refuse to launch a stale binary after a failed build (codex review §1 HIGH — loopd build gate)</li>
   <li><code>T136</code> · <code>bf672b6</code> · 2026-09-28 — repair crash-torn transcripts — resume answers interrupted tool batches atomically</li>
-  <li><code>T135</code> · <code>611916e</code> · 2026-09-28 — serialize driver.lock acquisition under a kernel mutex (flock on .chug dirfd)</li>
-  <li><code>T142</code> · <code>3bc3169</code> · 2026-09-28 — supervisor cycle verdict from the child's exit status, not a greppable marker (codex adversarial…</li>
-  <li><code>T130</code> · <code>976e4ae</code> · 2026-09-28 — strengthen chug_status fail-fast legs with distinctive phrases + shadow guards (T124 M3 survivor)</li>
-  <li><code>T125</code> · <code>532c403</code> · 2026-09-28 — META-META-SPEC estimate calibration (all-in counts, ~400 should-split band), pinned by legs m-n</li>
 </ul>
 <!-- STATS:END -->
 </div></section>
@@ -382,7 +382,7 @@ footer .attribution{margin:0}
       <div class="tl-date"></div>
       <div class="tl-rail"><span class="tl-dot"></span></div>
       <div class="tl-body">
-        <h3>…and 107 earlier milestones (T1–T115)</h3>
+        <h3>…and 111 earlier milestones (T1–T121)</h3>
       </div>
     </div>
     <div class="tl-item major">
@@ -447,34 +447,6 @@ footer .attribution{margin:0}
       <div class="tl-body">
         <h3>chug.sh — this site <span class="hash">e998d45</span></h3>
         <p>chug builds its own public site: eight commits in one evening, every section landed against the verify.sh check gate, GitHub Pages serving a CNAME. You are reading the dogfood.</p>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2026-09-28</div>
-      <div class="tl-rail"><span class="tl-dot"></span></div>
-      <div class="tl-body">
-        <h3>todo_update accepts empty/whitespace-only title (symmetry with todo_add) <span class="hash">(eb55003)</span></h3>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2026-09-28</div>
-      <div class="tl-rail"><span class="tl-dot"></span></div>
-      <div class="tl-body">
-        <h3>loopd orchestrator cap --max-iters 160 → 200 <span class="hash">(cbc21e0)</span></h3>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2026-09-28</div>
-      <div class="tl-rail"><span class="tl-dot"></span></div>
-      <div class="tl-body">
-        <h3>F9 phase 2a: run-side goal expansion (chug run/plan --goal "/name args") + goal_pack in run_start <span class="hash">(3579d9d)</span></h3>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2026-09-28</div>
-      <div class="tl-rail"><span class="tl-dot"></span></div>
-      <div class="tl-body">
-        <h3>T115 weak-test pins: multibyte goal_tail leg + run_start call-site wiring pins <span class="hash">(43f427d)</span></h3>
       </div>
     </div>
     <div class="tl-item">
@@ -587,6 +559,34 @@ footer .attribution{margin:0}
       <div class="tl-rail"><span class="tl-dot"></span></div>
       <div class="tl-body">
         <h3>Crash mid-tool-batch leaves unresumable transcript (codex review §1) <span class="hash">(bf672b6)</span></h3>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-28</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>loopd launches stale binary after failed build (codex review §1) <span class="hash">(08f0a39)</span></h3>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-28</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>mcp.json executes before permission enforcement (codex review §2) <span class="hash">(37f8edc)</span></h3>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-28</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>max_tokens too small for thinking models (GLM truncation class) <span class="hash">(00adb88)</span></h3>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-29</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>Editable spec check: bypasses bash deny + risk gate (codex review §2) <span class="hash">(b5f1fa0)</span></h3>
       </div>
     </div>
 <!-- TIMELINE:END -->
