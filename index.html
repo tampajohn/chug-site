@@ -292,18 +292,18 @@ footer .attribution{margin:0}
 <!-- chug loop stats: regenerated deterministically by scripts/site-sync.sh (tampajohn/chug T98) — do not hand-edit between the markers -->
 <!-- STATS:BEGIN -->
 <div class="stats">
-  <div class="stat"><b>158/163</b><span>queue items landed — done rows in TODO.md, 163 item rows total</span></div>
-  <div class="stat"><b>1121</b><span>tests green at the newest full-suite gate count in a commit message (7d121c3)</span></div>
-  <div class="stat"><b>58</b><span>cycles completed by the loopd supervisor — "cycle OK" lines in .chug/loopd/loopd.log</span></div>
+  <div class="stat"><b>161/163</b><span>queue items landed — done rows in TODO.md, 163 item rows total</span></div>
+  <div class="stat"><b>1238</b><span>tests green at the newest full-suite gate count in a commit message (fafbe7f)</span></div>
+  <div class="stat"><b>59</b><span>cycles completed by the loopd supervisor — "cycle OK" lines in .chug/loopd/loopd.log</span></div>
   <div class="stat"><b>2026-09-30</b><span>last EVALUATION.md write (git log, chug repo)</span></div>
 </div>
 <p class="lede">Last five items landed — item · ref · date, quoted from the chug repo's git log:</p>
 <ul>
+  <li><code>T165</code> · <code>607e877</code> · 2026-09-30 — role-key the spec check line to target-shared-impl-a (the mid-flight overlap-contention fix…</li>
+  <li><code>T166</code> · <code>7911b3c</code> · 2026-09-30 — elide needless lifetimes in write_eval_window (validator finding 1 — clippy -D clean restored)</li>
+  <li><code>T162</code> · <code>54334c2</code> · 2026-09-30 — MCP resources consume legs phase 1a (F11) — capability catalog + resources/list + resources/read…</li>
   <li><code>T164</code> · <code>48a1ca1</code> · 2026-09-30 — spec check-line lint — no --lib in any position, no failure-masking pipes, no absolute-path cd…</li>
   <li><code>T163</code> · <code>8062a2f</code> · 2026-09-30 — goal-gate check timeout 600→1200 + check-wall doctrine + pin file</li>
-  <li><code>T158</code> · <code>9fb8736</code> · 2026-09-30 — spawn-invalidation seam converts the named legs + class sweep; stub-dump launch-outcome visibility;…</li>
-  <li><code>T159</code> · <code>534dfd5</code> · 2026-09-29 — the through-loopd reaper tests join T151's shared timing-lock domain</li>
-  <li><code>T161</code> · <code>7e7c2c9</code> · 2026-09-29 — two-impl overlap — LOOP-SPEC T44 extension (≤2 children, ≤1 validator, disjoint-gated)</li>
 </ul>
 <!-- STATS:END -->
 </div></section>
@@ -382,7 +382,7 @@ footer .attribution{margin:0}
       <div class="tl-date"></div>
       <div class="tl-rail"><span class="tl-dot"></span></div>
       <div class="tl-body">
-        <h3>…and 133 earlier milestones (T1–T143)</h3>
+        <h3>…and 136 earlier milestones (T1–T146)</h3>
       </div>
     </div>
     <div class="tl-item major">
@@ -447,27 +447,6 @@ footer .attribution{margin:0}
       <div class="tl-body">
         <h3>chug.sh — this site <span class="hash">e998d45</span></h3>
         <p>chug builds its own public site: eight commits in one evening, every section landed against the verify.sh check gate, GitHub Pages serving a CNAME. You are reading the dogfood.</p>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2026-09-29</div>
-      <div class="tl-rail"><span class="tl-dot"></span></div>
-      <div class="tl-body">
-        <h3>Goal-gate check + driver-spawned shells must not inherit CARGO_TARGET_DIR (cross-worktree… <span class="hash">(8cabc79)</span></h3>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2026-09-29</div>
-      <div class="tl-rail"><span class="tl-dot"></span></div>
-      <div class="tl-body">
-        <h3>update_ledger writes through fsatomic::write_atomic (completes T136 crash-safety class) <span class="hash">(52a0abf)</span></h3>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2026-09-29</div>
-      <div class="tl-rail"><span class="tl-dot"></span></div>
-      <div class="tl-body">
-        <h3>F2 phase 2a: chug run --approve plan.md gate + web_fetch in plan mode (ROADMAP PULL) <span class="hash">(55d59c3)</span></h3>
       </div>
     </div>
     <div class="tl-item">
@@ -589,6 +568,27 @@ footer .attribution{margin:0}
         <h3>Spec check-line lint: no --lib, no failure-masking pipes, no main-repo cd (+legacy sweep) <span class="hash">(c96255d)</span></h3>
       </div>
     </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-30</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>MCP resources consume legs phase 1a (F11): resources/list+read on stdio + capability catalog <span class="hash">(8120b00)</span></h3>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-30</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>Pin the T129 weak-test survivors (M7 CLI plumbing flag-OFF, M8 launch-failure isError arm) <span class="hash">(12699d9)</span></h3>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-30</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>Eval template must carry forward ALL existing Outcomes sections (META-META sentence + pin) <span class="hash">(fafbe7f)</span></h3>
+      </div>
+    </div>
 <!-- TIMELINE:END -->
   </div>
   <p class="honest">The quiet patch stays on the chart: zero commits between the last early-cycle landing and loopd's first start. Honest books include the blank pages.</p>
@@ -681,7 +681,7 @@ footer .attribution{margin:0}
       <p><code>chug mcp-serve</code>: expose run/delegate/status as MCP tools so Claude Code, the bridge fleet, or another chug can drive it. The fleet primitive.</p>
     </div>
     <div class="card">
-      <h3><span>MCP resources+prompts</span><i class="q">in-flight</i></h3>
+      <h3><span>MCP resources+prompts</span><i class="q">landed</i></h3>
       <p>Consume MCP resource/prompt capabilities (the wired surface is tools).</p>
     </div>
     <div class="card">
