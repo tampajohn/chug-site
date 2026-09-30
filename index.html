@@ -292,18 +292,18 @@ footer .attribution{margin:0}
 <!-- chug loop stats: regenerated deterministically by scripts/site-sync.sh (tampajohn/chug T98) — do not hand-edit between the markers -->
 <!-- STATS:BEGIN -->
 <div class="stats">
-  <div class="stat"><b>156/156</b><span>queue items landed — done rows in TODO.md, 156 item rows total</span></div>
+  <div class="stat"><b>158/163</b><span>queue items landed — done rows in TODO.md, 163 item rows total</span></div>
   <div class="stat"><b>1121</b><span>tests green at the newest full-suite gate count in a commit message (7d121c3)</span></div>
-  <div class="stat"><b>57</b><span>cycles completed by the loopd supervisor — "cycle OK" lines in .chug/loopd/loopd.log</span></div>
+  <div class="stat"><b>58</b><span>cycles completed by the loopd supervisor — "cycle OK" lines in .chug/loopd/loopd.log</span></div>
   <div class="stat"><b>2026-09-30</b><span>last EVALUATION.md write (git log, chug repo)</span></div>
 </div>
 <p class="lede">Last five items landed — item · ref · date, quoted from the chug repo's git log:</p>
 <ul>
+  <li><code>T164</code> · <code>48a1ca1</code> · 2026-09-30 — spec check-line lint — no --lib in any position, no failure-masking pipes, no absolute-path cd…</li>
+  <li><code>T163</code> · <code>8062a2f</code> · 2026-09-30 — goal-gate check timeout 600→1200 + check-wall doctrine + pin file</li>
   <li><code>T158</code> · <code>9fb8736</code> · 2026-09-30 — spawn-invalidation seam converts the named legs + class sweep; stub-dump launch-outcome visibility;…</li>
   <li><code>T159</code> · <code>534dfd5</code> · 2026-09-29 — the through-loopd reaper tests join T151's shared timing-lock domain</li>
   <li><code>T161</code> · <code>7e7c2c9</code> · 2026-09-29 — two-impl overlap — LOOP-SPEC T44 extension (≤2 children, ≤1 validator, disjoint-gated)</li>
-  <li><code>T156</code> · <code>57a6ebf</code> · 2026-09-29 — T63 doctrine names the complete+committed budget-death variant</li>
-  <li><code>T153</code> · <code>3ae17a1</code> · 2026-09-29 — chug_cancel — the second flag-gated MCP write leg (F10 phase 3a)</li>
 </ul>
 <!-- STATS:END -->
 </div></section>
@@ -382,7 +382,7 @@ footer .attribution{margin:0}
       <div class="tl-date"></div>
       <div class="tl-rail"><span class="tl-dot"></span></div>
       <div class="tl-body">
-        <h3>…and 131 earlier milestones (T1–T143)</h3>
+        <h3>…and 133 earlier milestones (T1–T143)</h3>
       </div>
     </div>
     <div class="tl-item major">
@@ -447,20 +447,6 @@ footer .attribution{margin:0}
       <div class="tl-body">
         <h3>chug.sh — this site <span class="hash">e998d45</span></h3>
         <p>chug builds its own public site: eight commits in one evening, every section landed against the verify.sh check gate, GitHub Pages serving a CNAME. You are reading the dogfood.</p>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2026-09-29</div>
-      <div class="tl-rail"><span class="tl-dot"></span></div>
-      <div class="tl-body">
-        <h3>F10 phase 2b: chug_launch MCP write leg, flag-gated by mcp-serve --allow-launch (default-deny) <span class="hash">(2b4490b)</span></h3>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2026-09-29</div>
-      <div class="tl-rail"><span class="tl-dot"></span></div>
-      <div class="tl-body">
-        <h3>eval-digest reader staleness check excludes the reader's own live stream <span class="hash">(b52e62c)</span></h3>
       </div>
     </div>
     <div class="tl-item">
@@ -589,6 +575,20 @@ footer .attribution{margin:0}
         <h3>Pin the two T153 kimi weak-test survivors (needle --special row + escalation-effect pin) <span class="hash">(bad8b89)</span></h3>
       </div>
     </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-30</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>Goal-gate check timeout vs real check walls (CHECK_TIMEOUT_SECS 600→1200 + check-wall doctrine) <span class="hash">(195204c)</span></h3>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-30</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>Spec check-line lint: no --lib, no failure-masking pipes, no main-repo cd (+legacy sweep) <span class="hash">(c96255d)</span></h3>
+      </div>
+    </div>
 <!-- TIMELINE:END -->
   </div>
   <p class="honest">The quiet patch stays on the chart: zero commits between the last early-cycle landing and loopd's first start. Honest books include the blank pages.</p>
@@ -681,7 +681,7 @@ footer .attribution{margin:0}
       <p><code>chug mcp-serve</code>: expose run/delegate/status as MCP tools so Claude Code, the bridge fleet, or another chug can drive it. The fleet primitive.</p>
     </div>
     <div class="card">
-      <h3><span>MCP resources+prompts</span><i class="q">queued</i></h3>
+      <h3><span>MCP resources+prompts</span><i class="q">in-flight</i></h3>
       <p>Consume MCP resource/prompt capabilities (the wired surface is tools).</p>
     </div>
     <div class="card">
