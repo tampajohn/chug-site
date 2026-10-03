@@ -292,18 +292,18 @@ footer .attribution{margin:0}
 <!-- chug loop stats: regenerated deterministically by scripts/site-sync.sh (tampajohn/chug T98) — do not hand-edit between the markers -->
 <!-- STATS:BEGIN -->
 <div class="stats">
-  <div class="stat"><b>198/200</b><span>queue items landed — done rows in TODO.md, 200 item rows total</span></div>
+  <div class="stat"><b>201/206</b><span>queue items landed — done rows in TODO.md, 206 item rows total</span></div>
   <div class="stat"><b>1457</b><span>tests green at the newest full-suite gate count in a commit message (cd0e020)</span></div>
-  <div class="stat"><b>78</b><span>cycles completed by the loopd supervisor — "cycle OK" lines in .chug/loopd/loopd.log</span></div>
-  <div class="stat"><b>2026-10-02</b><span>last EVALUATION.md write (git log, chug repo)</span></div>
+  <div class="stat"><b>79</b><span>cycles completed by the loopd supervisor — "cycle OK" lines in .chug/loopd/loopd.log</span></div>
+  <div class="stat"><b>2026-10-03</b><span>last EVALUATION.md write (git log, chug repo)</span></div>
 </div>
 <p class="lede">Last five items landed — item · ref · date, quoted from the chug repo's git log:</p>
 <ul>
+  <li><code>T206</code> · <code>71a991a</code> · 2026-10-03 — deflake daemon tests under the threaded harness (bounded-retry test hardening)</li>
   <li><code>T200</code> · <code>5a2e45c</code> · 2026-10-02 — scripts/decisions-export.sh - decisions.jsonl -&gt; joined training JSONL (F13 phase 2a-ii)</li>
   <li><code>T199</code> · <code>2d77c83</code> · 2026-10-02 — outcome-choice enum at decision_log write time + scripts/decisions-audit.sh corpus-health summary…</li>
   <li><code>T197</code> · <code>f7e6a94</code> · 2026-10-02 — delegate launch warns on CARGO_TARGET_DIR drift across the three carriers (spec check-line export /…</li>
   <li><code>T201</code> · <code>ca82fd9</code> · 2026-10-02 — validator verdict-first -- VERDICT lands in .chug/verdict.md at decision time</li>
-  <li><code>T198</code> · <code>96ccd9f</code> · 2026-10-02 — loopd cycle budget --max-minutes 240-&gt;360 (the fleet outgrew the wall)</li>
 </ul>
 <!-- STATS:END -->
 </div></section>
@@ -382,7 +382,7 @@ footer .attribution{margin:0}
       <div class="tl-date"></div>
       <div class="tl-rail"><span class="tl-dot"></span></div>
       <div class="tl-body">
-        <h3>…and 173 earlier milestones (T1–T183)</h3>
+        <h3>…and 176 earlier milestones (T1–T193)</h3>
       </div>
     </div>
     <div class="tl-item major">
@@ -447,27 +447,6 @@ footer .attribution{margin:0}
       <div class="tl-body">
         <h3>chug.sh — this site <span class="hash">e998d45</span></h3>
         <p>chug builds its own public site: eight commits in one evening, every section landed against the verify.sh check gate, GitHub Pages serving a CNAME. You are reading the dogfood.</p>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2026-10-01</div>
-      <div class="tl-rail"><span class="tl-dot"></span></div>
-      <div class="tl-body">
-        <h3>bash reader-grace discards already-read output when a grandchild holds the pipe <span class="hash">(068e223)</span></h3>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2026-10-01</div>
-      <div class="tl-rail"><span class="tl-dot"></span></div>
-      <div class="tl-body">
-        <h3>Context-economy telemetry: cache tokens on iteration events + a Trim event + digest surfacing (F14… <span class="hash">(198d664)</span></h3>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2026-10-01</div>
-      <div class="tl-rail"><span class="tl-dot"></span></div>
-      <div class="tl-body">
-        <h3>site-sync in-flight classifier counts done TODO rows — F6/F12 stuck "in-flight" on chug.sh despite… <span class="hash">(a3acaac)</span></h3>
       </div>
     </div>
     <div class="tl-item">
@@ -589,6 +568,27 @@ footer .attribution{margin:0}
         <h3>DEPENDENCIES.md: audited external-dependency inventory (9 crates, env-optional services, failure… <span class="hash">(c3c5975)</span></h3>
       </div>
     </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-10-03</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>baked-in Laya judge phase 1 (F15): `chug daemon` Rust inference server (candle, /judge over 0600… <span class="hash">(dbce0e2)</span></h3>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-10-03</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>Deflake daemon tests under the libtest threaded harness (flock fork-inheritance race) — lock… <span class="hash">(1a41a00)</span></h3>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-10-03</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>F13 phase 2b: first distillation experiment (measure-first — export -&gt; train -&gt; held-out accuracy… <span class="hash">(cf6366b)</span></h3>
+      </div>
+    </div>
 <!-- TIMELINE:END -->
   </div>
   <p class="honest">The quiet patch stays on the chart: zero commits between the last early-cycle landing and loopd's first start. Honest books include the blank pages.</p>
@@ -691,6 +691,10 @@ footer .attribution{margin:0}
     <div class="card">
       <h3><span>Context compaction</span><i class="q">landed</i></h3>
       <p>Long autonomous cycles accumulate 0.8–1.2M input tokens per orchestrator stream (cycle-79/80 kimi streams measured); a compaction/summarization pass over aged…</p>
+    </div>
+    <div class="card">
+      <h3><span>Baked-in Laya judge daemon</span><i class="q">queued</i></h3>
+      <p>http\</p>
     </div>
 <!-- FEATURES:END -->
   </div>
