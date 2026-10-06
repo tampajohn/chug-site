@@ -213,7 +213,7 @@ footer .attribution{margin:0}
       <li><a href="#runbook-readme">Runbooks</a></li>
       <li><a href="#runbook-adversarial-review">Runbook: adversarial review of a repo or diff</a></li>
       <li><a href="#runbook-feature">Runbook: spec'd feature work</a></li>
-      <li><a href="#runbook-laya-hf-hosting">laya checkpoint hosting: VA-private fine-tunes + the token path (T205)</a></li>
+      <li><a href="#runbook-laya-hf-hosting">laya checkpoint hosting: org-private fine-tunes + the token path (T205)</a></li>
       <li><a href="#runbook-loop-ops">Runbook: loopd operations</a></li>
       <li><a href="#runbook-quick-task">Runbook: one small task, zero setup</a></li>
       <li><a href="#runbook-repo-eval">Runbook: feasibility eval of an external repo</a></li>
@@ -258,7 +258,7 @@ chug ledger          # print current LEDGER.md
 <li>"Can chug drive some other repo? Evaluate it before committing a loop" → <a href="https://github.com/tampajohn/chug/blob/main/runbooks/repo-eval.md">repo-eval.md</a></li>
 <li>"The self-improvement loop: start it, read it, stop it, recover it" → <a href="https://github.com/tampajohn/chug/blob/main/runbooks/loop-ops.md">loop-ops.md</a></li>
 <li>"Get a second pair of eyes on this code or diff, then file the findings" → <a href="https://github.com/tampajohn/chug/blob/main/runbooks/adversarial-review.md">adversarial-review.md</a></li>
-<li>"Host or consume a VA-private laya judge fine-tune (org/token/endpoint, publish contract)" → <a href="https://github.com/tampajohn/chug/blob/main/runbooks/laya-hf-hosting.md">laya-hf-hosting.md</a></li>
+<li>"Host or consume an org-private laya judge fine-tune (org/token/endpoint, publish contract)" → <a href="https://github.com/tampajohn/chug/blob/main/runbooks/laya-hf-hosting.md">laya-hf-hosting.md</a></li>
 </ul>
   </div>
 </div></section>
@@ -344,23 +344,23 @@ you own LEDGER.md bookkeeping" \
 <section id="runbook-laya-hf-hosting"><div class="wrap">
   <p class="kicker"><span class="hash">##</span> runbook · laya-hf-hosting.md</p>
   <div class="doctext">
-<h2>laya checkpoint hosting: VA-private fine-tunes + the token path (T205)</h2>
-<p>When to reach for this: you are hosting or consuming a laya judge fine-tune for a VideoAmp (VA) machine fleet — the daemon's risk-gate model. One-page contract here; the code pins are <code>src/hf_hosting.rs</code>, <code>src/judge_model.rs</code>, and <code>tests/no_secret_spill.rs</code>.</p>
+<h2>laya checkpoint hosting: org-private fine-tunes + the token path (T205)</h2>
+<p>When to reach for this: you are hosting or consuming a laya judge fine-tune for an internal machine fleet — the daemon's risk-gate model. One-page contract here; the code pins are <code>src/hf_hosting.rs</code>, <code>src/judge_model.rs</code>, and <code>tests/no_secret_spill.rs</code>.</p>
 <h3>The gating decision (already made)</h3>
-<p>A PRIVATE repo in the videoamp HF org: org-membership-gated, machines pull via a read-scoped <code>HF_TOKEN</code>. NOT HF's "gated" feature (public + approval workflow — wrong tool). Three artifact classes, three postures:</p>
+<p>A PRIVATE repo in the org's HF org: org-membership-gated, machines pull via a read-scoped <code>HF_TOKEN</code>. NOT HF's "gated" feature (public + approval workflow — wrong tool). Three artifact classes, three postures:</p>
 <table>
 <thead><tr><th>class</th><th>where</th><th>gating</th></tr></thead>
 <tbody>
-<tr><td>base laya (<code>convaiinnovations/laya</code>, Apache 2.0)</td><td>public, upstream</td><td>none — the chug default stays public so no public user hits an auth wall; mirroring to <code>videoamp/laya-base</code> is OPTIONAL (availability pinning only)</td></tr>
-<tr><td>stop-completion judge (<code>tampajohn/…</code>, trained on the operator's personal Claude Code transcripts)</td><td>personal org today</td><td>migrating it to the VA org is the operator's IP call — flagged, not decided here</td></tr>
-<tr><td>F13 loop-decision fine-tunes (trained on chug <code>decisions.jsonl</code>)</td><td>VA-private from day one</td><td>public-repo work is fine only while chug loops against public repos; against vampflake/central the logs encode internal structure/doctrine</td></tr>
+<tr><td>base laya (<code>convaiinnovations/laya</code>, Apache 2.0)</td><td>public, upstream</td><td>none — the chug default stays public so no public user hits an auth wall; mirroring to <code>org/laya-base</code> is OPTIONAL (availability pinning only)</td></tr>
+<tr><td>stop-completion judge (<code>tampajohn/…</code>, trained on the operator's personal Claude Code transcripts)</td><td>personal org today</td><td>migrating it to the org's HF org is the operator's IP call — flagged, not decided here</td></tr>
+<tr><td>F13 loop-decision fine-tunes (trained on chug <code>decisions.jsonl</code>)</td><td>org-private from day one</td><td>public-repo work is fine only while chug loops against public repos; against internal monorepos the logs encode internal structure/doctrine</td></tr>
 </tbody>
 </table>
 <h3>Hosting decision — PENDING the operator's Monday 2026-10-05 call</h3>
 <p>NO org-side work (repo creation, membership, Vault tokens) happens before this. Ranked from the 2026-10-02 analysis:</p>
 <ol>
-<li><strong>JFrog Artifactory HF repository</strong> — PREFERRED if available (VA runs JFrog; the HF repo type hosts models behind existing SSO/IAM; clients point <code>HF_ENDPOINT</code> at the Artifactory repo URL). VERIFY first: Artifactory version + HF repo type enabled. If present, it displaces the HF org.</li>
-<li><strong>videoamp HF org private repo</strong> — works today, adds a second membership/token silo.</li>
+<li><strong>JFrog Artifactory HF repository</strong> — PREFERRED if available (the org runs JFrog; the HF repo type hosts models behind existing SSO/IAM; clients point <code>HF_ENDPOINT</code> at the Artifactory repo URL). VERIFY first: Artifactory version + HF repo type enabled. If present, it displaces the HF org.</li>
+<li><strong>the org HF org private repo</strong> — works today, adds a second membership/token silo.</li>
 <li>Databricks Model Registry — REJECTED 2026-10-02: speaks ONLY the MLflow API; no HF-Hub-compatible endpoint exists; would mean a bespoke fetch backend.</li>
 </ol>
 <p><strong>Interim hosting (works today, no org steps):</strong> a LOCAL DIRECTORY (<code>CHUG_LAYA_CHECKPOINT=&lt;path&gt;</code>) or a PRIVATE <code>tampajohn/*</code> HF repo behind <code>HF_TOKEN</code>. New fine-tune repos are created PRIVATE at inception (contract below). The loop-side machinery in this runbook is required for the interim too — only the org steps wait.</p>
@@ -370,7 +370,7 @@ you own LEDGER.md bookkeeping" \
 # local dir (interim; T204 req 2)
 export CHUG_LAYA_CHECKPOINT="$HOME/models/laya/finetune/out"
 # hub repo, pinned revision — REQUIRED SHAPE for policy-affecting artifacts
-export CHUG_LAYA_CHECKPOINT="videoamp/laya-stop-judge@9c6af39cdce45b570f0b7f8fad2b311c96019804"
+export CHUG_LAYA_CHECKPOINT="org/laya-stop-judge@9c6af39cdce45b570f0b7f8fad2b311c96019804"
 export HF_TOKEN="&lt;read-scoped-token-with-access-to-the-repo&gt;"   # name only in this repo
 # non-huggingface.co hosts (Artifactory or any HF-compatible endpoint):
 export CHUG_HF_ENDPOINT="https://artifactory.example.com/hf"    # wins
@@ -386,21 +386,21 @@ $HOME/.chug/loopd.env        # default; override with CHUG_LOOPD_ENV
 <p>Format: <code>KEY=VALUE</code> lines, <code>#</code> comments, optional <code>export </code> prefix and one pair of quotes. Values are LITERAL (no <code>$()</code> expansion — the file is parsed, never eval'd). ONLY three keys are applied — <code>CHUG_LAYA_CHECKPOINT</code>, <code>HF_TOKEN</code>, <code>CHUG_HF_ENDPOINT</code> — and only when the operator has not already exported them (explicit env wins). Rotation = edit the file + restart loopd (the T47 lesson: no env mutation inside the cycle loop).</p>
 <p>Hygiene: the file lives OUTSIDE any repo (never committed), and its CONTENTS are never echoed or logged — loopd logs only the path and a skipped-line count. This is the hard rule from the operator's env-dump spill history; <code>tests/no_secret_spill.rs</code> pins the whole repo to the same rule (HF_TOKEN appears as a NAME, never a value).</p>
 <p>Degrade: absent file → silent no-op (public base laya); unauthed daemon → the 401 line above + fail-open; the loop never stalls on the judge.</p>
-<h3>Publish contract (every VA-bound fine-tune, before any consumer points at it)</h3>
+<h3>Publish contract (every org-bound fine-tune, before any consumer points at it)</h3>
 <ol>
 <li><strong>PRIVATE at creation</strong> — org-membership gating, not HF's "gated".</li>
 <li><strong>Secret-scanned over the training corpus</strong> (gitleaks-class), scan result recorded in the model card. Hard gate, not advice.</li>
 <li><strong>Revision-pinned by consumers</strong> — <code>org/model@REV</code> in every env file.</li>
-<li>Base laya mirroring to <code>videoamp/laya-base</code> is OPTIONAL (availability pinning only).</li>
+<li>Base laya mirroring to <code>org/laya-base</code> is OPTIONAL (availability pinning only).</li>
 </ol>
 <h3>Operator checklist — PENDING 2026-10-05, do NOT execute early</h3>
 <ol>
 <li>Verify the Artifactory HF-repo option FIRST (version + repo type). If present it displaces the HF org.</li>
-<li>Else verify the videoamp HF org exists (else create with IT).</li>
+<li>Else verify the org HF org exists (else create with IT).</li>
 <li>Create the private judge repo(s) — PRIVATE at inception.</li>
 <li>Set org membership / Artifactory perms (machines: read-scoped token only; humans: membership).</li>
 <li>Mint the read-scoped token INTO VAULT (never into this repo, never into <code>.chug/*.json</code> in git).</li>
-<li>Decide the stop-judge migration (personal-transcript-derived IP → VA asset call).</li>
+<li>Decide the stop-judge migration (personal-transcript-derived IP → org asset call).</li>
 </ol>
 <p>Out of scope here: training/publishing the F13 fine-tunes (F13 phases), HF Enterprise/SSO, re-hosting base laya unless the mirror proves necessary.</p>
   </div>
@@ -486,7 +486,7 @@ chug run --auto-spec --resume --goal "&lt;goal&gt;"
   <p class="kicker"><span class="hash">##</span> runbook · repo-eval.md</p>
   <div class="doctext">
 <h2>Runbook: feasibility eval of an external repo</h2>
-<p><strong>Use when</strong> you want to know whether a loop harness can drive some other repository before committing one to it: build system, test gates, layout, and what would trip the harness up. This is the vampflake pattern. <strong>Arc: ~30–90 minutes.</strong></p>
+<p><strong>Use when</strong> you want to know whether a loop harness can drive some other repository before committing one to it: build system, test gates, layout, and what would trip the harness up. This is the internal-monorepo pattern. <strong>Arc: ~30–90 minutes.</strong></p>
 <h3>1. Clone, then aim chug at the clone</h3>
 <p><code>--cwd</code> is the whole sandbox — every file/bash tool lands inside it — so the eval reads the external repo and writes its deliverable there, never touching your own checkout:</p>
 <pre class="code">
@@ -514,7 +514,7 @@ risks: &lt;what a loop would trip on — cold build times, flaky gates, ...&gt;
 </pre>
 <p><code>FEASIBLE</code> means a loop could run here with a sane cycle budget; <code>NOT-FEASIBLE</code> names the blockers precisely. Skim <code>.chug/events.jsonl</code> in the clone (<code>jq -r '.type' .chug/events.jsonl | sort | uniq -c</code>) to see where the eval's time actually went.</p>
 <h3>3. If FEASIBLE</h3>
-<p>One loop per repo is the repo-level lever (the dashd/vampflake pattern): give the repo its own TODO.md, specs/, and <code>./loopd.sh</code> — don't merge it into another repo's cycle.</p>
+<p>One loop per repo is the repo-level lever (the dashboard/internal-monorepo pattern): give the repo its own TODO.md, specs/, and <code>./loopd.sh</code> — don't merge it into another repo's cycle.</p>
   </div>
 </div></section>
 <footer><div class="wrap">
