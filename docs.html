@@ -173,15 +173,19 @@ footer .attribution{margin:0}
 /* docs.html additions (T241) — the block above is index.html's own <style>,
    verbatim, and is never modified here; these few rules cover only the shapes
    the runbook corpus renders that the base does not style (prose
-   sub-headings, list bodies, the on-this-page index). */
+   sub-headings, list bodies, tables + strong/em — T244 — the on-this-page
+   index). */
 .doctext h3,.doctext h4{font-family:var(--mono);color:var(--text);line-height:1.4}
 .doctext h3{font-size:15px;margin:26px 0 8px}
 .doctext h4{font-size:13px;margin:20px 0 6px;color:var(--muted)}
 .doctext ul,.doctext ol{color:var(--muted);max-width:var(--measure);margin:0 0 14px;padding-left:22px}
 .doctext li{line-height:1.7;margin:0 0 6px}
-.doctext li b{color:var(--text)}
-.doctext p code,.doctext li code{font-size:.88em;color:var(--text);background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:0 4px}
+.doctext li b,.doctext li strong{color:var(--text)}
+.doctext p code,.doctext li code,.doctext td code{font-size:.88em;color:var(--text);background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:0 4px}
 .doctext pre.code{margin:0 0 14px;max-width:var(--content)}
+.doctext table{border-collapse:collapse;margin:0 0 14px;max-width:var(--measure);font-size:13.5px;line-height:1.6}
+.doctext th,.doctext td{border:1px solid var(--border);padding:5px 9px;text-align:left;vertical-align:top}
+.doctext th{color:var(--text);font-family:var(--mono);font-size:12px}
 .docs-index{margin:26px 0 0;max-width:var(--content)}
 .docs-index p{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 10px}
 .docs-index ul{list-style:none;margin:0;padding:0;max-width:none}
@@ -262,7 +266,7 @@ chug ledger          # print current LEDGER.md
   <p class="kicker"><span class="hash">##</span> runbook · adversarial-review.md</p>
   <div class="doctext">
 <h2>Runbook: adversarial review of a repo or diff</h2>
-<p><b>Use when</b> you want a second pair of eyes: correctness bugs in a snapshot or on a diff/commit — read-only work whose deliverable is a findings report. <b>Arc: ~20–60 minutes.</b> The reviewer is chug itself, or an external reviewer (the codex-review arc); intake is the same either way.</p>
+<p><strong>Use when</strong> you want a second pair of eyes: correctness bugs in a snapshot or on a diff/commit — read-only work whose deliverable is a findings report. <strong>Arc: ~20–60 minutes.</strong> The reviewer is chug itself, or an external reviewer (the codex-review arc); intake is the same either way.</p>
 <h3>1. Run the review</h3>
 <pre class="code">
 chug run --spec review-spec.md \
@@ -281,7 +285,7 @@ estimate: ~1 changed line (the report)
 <ul>
 <li>A summary paragraph up top naming what the green suite misses — "the tests pass, and here is why that isn't enough".</li>
 <li>Severity-graded sections: <code>## 1. CORRECTNESS BUGS</code> → <code>### HIGH — &lt;title&gt;</code>.</li>
-<li>Each finding carries <b>Evidence</b> (<code>src/foo.rs:817</code>-style references), a concrete <b>Trigger</b> (or interleaving), and a suggested test when the bug is testable.</li>
+<li>Each finding carries <strong>Evidence</strong> (<code>src/foo.rs:817</code>-style references), a concrete <strong>Trigger</strong> (or interleaving), and a suggested test when the bug is testable.</li>
 </ul>
 <h3>3. Intake: findings → TODO rows</h3>
 <p>Triage before filing: drop duplicates and out-of-scope nits, keep correctness bugs and integrity gaps.</p>
@@ -296,7 +300,7 @@ estimate: ~1 changed line (the report)
   <p class="kicker"><span class="hash">##</span> runbook · feature.md</p>
   <div class="doctext">
 <h2>Runbook: spec'd feature work</h2>
-<p><b>Use when</b> the change is a real feature — behavior worth pinning with tests, a check gate, and adversarial validation. <b>Arc: 1–2 h per item</b> (implementation, validation, a fix-up round if needed).</p>
+<p><strong>Use when</strong> the change is a real feature — behavior worth pinning with tests, a check gate, and adversarial validation. <strong>Arc: 1–2 h per item</strong> (implementation, validation, a fix-up round if needed).</p>
 <h3>1. Write the spec</h3>
 <p>Hand-written specs live in <code>specs/t&lt;N&gt;-&lt;slug&gt;.md</code>; T191's own is a worked example:</p>
 <pre class="code">
@@ -330,9 +334,9 @@ you own LEDGER.md bookkeeping" \
 <h3>3. Validation and verdict</h3>
 <p>Core-logic items get adversarial validation — an independent run that re-derives requirements, re-runs gates, attacks with mutants. Handling:</p>
 <ul>
-<li><b>PASS</b> — merge, close the row, done.</li>
-<li><b>FAIL</b> — relaunch against the same worktree with the findings in the goal (a fix-up run starts fresh by design), then re-validate. One fix-up round is normal; three is a smell — re-scope the item.</li>
-<li><b>Budget death, work complete-but-uncommitted</b> — one <code>--resume</code> attempt on the same worktree (T63); a second death: finish by hand from <code>LEDGER.md</code>.</li>
+<li><strong>PASS</strong> — merge, close the row, done.</li>
+<li><strong>FAIL</strong> — relaunch against the same worktree with the findings in the goal (a fix-up run starts fresh by design), then re-validate. One fix-up round is normal; three is a smell — re-scope the item.</li>
+<li><strong>Budget death, work complete-but-uncommitted</strong> — one <code>--resume</code> attempt on the same worktree (T63); a second death: finish by hand from <code>LEDGER.md</code>.</li>
 <li>A surviving mutant gets a named follow-up on the row — never dropped.</li>
 </ul>
   </div>
@@ -344,21 +348,22 @@ you own LEDGER.md bookkeeping" \
 <p>When to reach for this: you are hosting or consuming a laya judge fine-tune for a VideoAmp (VA) machine fleet — the daemon's risk-gate model. One-page contract here; the code pins are <code>src/hf_hosting.rs</code>, <code>src/judge_model.rs</code>, and <code>tests/no_secret_spill.rs</code>.</p>
 <h3>The gating decision (already made)</h3>
 <p>A PRIVATE repo in the videoamp HF org: org-membership-gated, machines pull via a read-scoped <code>HF_TOKEN</code>. NOT HF's "gated" feature (public + approval workflow — wrong tool). Three artifact classes, three postures:</p>
-<pre class="code">
-| class | where | gating |
-|---|---|---|
-| base laya (`convaiinnovations/laya`, Apache 2.0) | public, upstream | none — the chug default stays public so no public user hits an auth wall; mirroring to `videoamp/laya-base` is OPTIONAL (availability pinning only) |
-| stop-completion judge (`tampajohn/…`, trained on the operator's personal Claude Code transcripts) | personal org today | migrating it to the VA org is the operator's IP call — flagged, not decided here |
-| F13 loop-decision fine-tunes (trained on chug `decisions.jsonl`) | VA-private from day one | public-repo work is fine only while chug loops against public repos; against vampflake/central the logs encode internal structure/doctrine |
-</pre>
+<table>
+<thead><tr><th>class</th><th>where</th><th>gating</th></tr></thead>
+<tbody>
+<tr><td>base laya (<code>convaiinnovations/laya</code>, Apache 2.0)</td><td>public, upstream</td><td>none — the chug default stays public so no public user hits an auth wall; mirroring to <code>videoamp/laya-base</code> is OPTIONAL (availability pinning only)</td></tr>
+<tr><td>stop-completion judge (<code>tampajohn/…</code>, trained on the operator's personal Claude Code transcripts)</td><td>personal org today</td><td>migrating it to the VA org is the operator's IP call — flagged, not decided here</td></tr>
+<tr><td>F13 loop-decision fine-tunes (trained on chug <code>decisions.jsonl</code>)</td><td>VA-private from day one</td><td>public-repo work is fine only while chug loops against public repos; against vampflake/central the logs encode internal structure/doctrine</td></tr>
+</tbody>
+</table>
 <h3>Hosting decision — PENDING the operator's Monday 2026-10-05 call</h3>
 <p>NO org-side work (repo creation, membership, Vault tokens) happens before this. Ranked from the 2026-10-02 analysis:</p>
 <ol>
-<li><b>JFrog Artifactory HF repository</b> — PREFERRED if available (VA runs JFrog; the HF repo type hosts models behind existing SSO/IAM; clients point <code>HF_ENDPOINT</code> at the Artifactory repo URL). VERIFY first: Artifactory version + HF repo type enabled. If present, it displaces the HF org.</li>
-<li><b>videoamp HF org private repo</b> — works today, adds a second membership/token silo.</li>
+<li><strong>JFrog Artifactory HF repository</strong> — PREFERRED if available (VA runs JFrog; the HF repo type hosts models behind existing SSO/IAM; clients point <code>HF_ENDPOINT</code> at the Artifactory repo URL). VERIFY first: Artifactory version + HF repo type enabled. If present, it displaces the HF org.</li>
+<li><strong>videoamp HF org private repo</strong> — works today, adds a second membership/token silo.</li>
 <li>Databricks Model Registry — REJECTED 2026-10-02: speaks ONLY the MLflow API; no HF-Hub-compatible endpoint exists; would mean a bespoke fetch backend.</li>
 </ol>
-<p><b>Interim hosting (works today, no org steps):</b> a LOCAL DIRECTORY (<code>CHUG_LAYA_CHECKPOINT=&lt;path&gt;</code>) or a PRIVATE <code>tampajohn/*</code> HF repo behind <code>HF_TOKEN</code>. New fine-tune repos are created PRIVATE at inception (contract below). The loop-side machinery in this runbook is required for the interim too — only the org steps wait.</p>
+<p><strong>Interim hosting (works today, no org steps):</strong> a LOCAL DIRECTORY (<code>CHUG_LAYA_CHECKPOINT=&lt;path&gt;</code>) or a PRIVATE <code>tampajohn/*</code> HF repo behind <code>HF_TOKEN</code>. New fine-tune repos are created PRIVATE at inception (contract below). The loop-side machinery in this runbook is required for the interim too — only the org steps wait.</p>
 <h3>Consumer config (the daemon's fetch path)</h3>
 <p>The judge daemon (T204) resolves its checkpoint from <code>CHUG_LAYA_CHECKPOINT</code>:</p>
 <pre class="code">
@@ -372,7 +377,7 @@ export CHUG_HF_ENDPOINT="https://artifactory.example.com/hf"    # wins
 export HF_ENDPOINT="https://artifactory.example.com/hf"         # fallback
 </pre>
 <p>Verified against hf-hub 0.4.3 (do not trust the crate to do this): it reads NEITHER <code>HF_TOKEN</code> from the env (only <code>~/.cache/huggingface/token</code>, <code>huggingface-cli login</code>) NOR <code>HF_ENDPOINT</code> via <code>Api::new()</code>. chug applies both itself (<code>hf_hosting::build_hub_api</code>): <code>CHUG_HF_ENDPOINT</code> &gt; <code>HF_ENDPOINT</code> &gt; <code>https://huggingface.co</code>; a non-empty <code>HF_TOKEN</code> overrides the cached token file. Default stays public — public chug never requires a token.</p>
-<p><b>Auth failure is honest:</b> a 401/403 from a private repo produces ONE stderr line naming the fix — <code>set HF_TOKEN to a read-scoped token with access to &lt;repo&gt;</code> (missing) or <code>HF_TOKEN is set but was rejected: check scope/expiry/membership</code> (insufficient) — plus one <code>judge_checkpoint_auth_error</code> note in <code>.chug/events.jsonl</code>, then the daemon dies, the client latches, and the loop continues fail-open (T190 shape). No retry storm: one fetch attempt, <code>max_retries=0</code>.</p>
+<p><strong>Auth failure is honest:</strong> a 401/403 from a private repo produces ONE stderr line naming the fix — <code>set HF_TOKEN to a read-scoped token with access to &lt;repo&gt;</code> (missing) or <code>HF_TOKEN is set but was rejected: check scope/expiry/membership</code> (insufficient) — plus one <code>judge_checkpoint_auth_error</code> note in <code>.chug/events.jsonl</code>, then the daemon dies, the client latches, and the loop continues fail-open (T190 shape). No retry storm: one fetch attempt, <code>max_retries=0</code>.</p>
 <h3>loopd wiring (K7): the out-of-repo env file</h3>
 <p>The supervisor loads ONE env file at startup and every cycle (orchestrator, delegate children, spawned judge daemon) inherits the exports:</p>
 <pre class="code">
@@ -383,9 +388,9 @@ $HOME/.chug/loopd.env        # default; override with CHUG_LOOPD_ENV
 <p>Degrade: absent file → silent no-op (public base laya); unauthed daemon → the 401 line above + fail-open; the loop never stalls on the judge.</p>
 <h3>Publish contract (every VA-bound fine-tune, before any consumer points at it)</h3>
 <ol>
-<li><b>PRIVATE at creation</b> — org-membership gating, not HF's "gated".</li>
-<li><b>Secret-scanned over the training corpus</b> (gitleaks-class), scan result recorded in the model card. Hard gate, not advice.</li>
-<li><b>Revision-pinned by consumers</b> — <code>org/model@REV</code> in every env file.</li>
+<li><strong>PRIVATE at creation</strong> — org-membership gating, not HF's "gated".</li>
+<li><strong>Secret-scanned over the training corpus</strong> (gitleaks-class), scan result recorded in the model card. Hard gate, not advice.</li>
+<li><strong>Revision-pinned by consumers</strong> — <code>org/model@REV</code> in every env file.</li>
 <li>Base laya mirroring to <code>videoamp/laya-base</code> is OPTIONAL (availability pinning only).</li>
 </ol>
 <h3>Operator checklist — PENDING 2026-10-05, do NOT execute early</h3>
@@ -404,7 +409,7 @@ $HOME/.chug/loopd.env        # default; override with CHUG_LOOPD_ENV
   <p class="kicker"><span class="hash">##</span> runbook · loop-ops.md</p>
   <div class="doctext">
 <h2>Runbook: loopd operations</h2>
-<p><b>Use when</b> you run the continuous self-improvement loop — start it, read its state, stop it, recover from a HALT, clean up worktrees. <b>Arc: a daemon (cycles of ~1–4 h each); the ops commands below are seconds.</b></p>
+<p><strong>Use when</strong> you run the continuous self-improvement loop — start it, read its state, stop it, recover from a HALT, clean up worktrees. <strong>Arc: a daemon (cycles of ~1–4 h each); the ops commands below are seconds.</strong></p>
 <h3>Start / probe / status / stop</h3>
 <pre class="code">
 nohup ./loopd.sh &gt; /dev/null 2&gt;&amp;1 &amp;   # start (detached; plain ./loopd.sh = foreground)
@@ -442,7 +447,7 @@ LOOP_REAPER_DRY_RUN=1 scripts/orphan-reaper.sh   # list leftover loop processes;
 <li>the repo release build — only when it hosts the judge (never loopd's own feature-lean build);</li>
 </ol>
 <p>else the ensure is skipped for the whole run behind that one log line (fail-open: the judge client degrades per command exactly as it did when layad was down). <code>LOOP_DAEMON_ENSURE=0</code> opts out entirely.</p>
-<p><b>First run — pre-warm the weights (the pinned remedy, T215):</b> the daemon loads the ~650 MB checkpoint BEFORE the socket binds, and the ensure's wait budget stays bounded, so a cold first load exceeds it: the first cycle runs fail-open while the detached daemon finishes downloading, and later cycles find it warm. To pay the download outside a cycle, pre-warm once:</p>
+<p><strong>First run — pre-warm the weights (the pinned remedy, T215):</strong> the daemon loads the ~650 MB checkpoint BEFORE the socket binds, and the ensure's wait budget stays bounded, so a cold first load exceeds it: the first cycle runs fail-open while the detached daemon finishes downloading, and later cycles find it warm. To pay the download outside a cycle, pre-warm once:</p>
 <pre class="code">
 ~/.local/bin/chug daemon      # foreground; Ctrl-C after "judge model warm"
 </pre>
@@ -453,7 +458,7 @@ LOOP_REAPER_DRY_RUN=1 scripts/orphan-reaper.sh   # list leftover loop processes;
   <p class="kicker"><span class="hash">##</span> runbook · quick-task.md</p>
   <div class="doctext">
 <h2>Runbook: one small task, zero setup</h2>
-<p><b>Use when</b> you have a single chore — a failing test, a missing helper, a rename — and don't want to write a spec by hand. <b>Arc: ~5–20 minutes.</b> Headless only (for interactive use, <code>chug chat</code>).</p>
+<p><strong>Use when</strong> you have a single chore — a failing test, a missing helper, a rename — and don't want to write a spec by hand. <strong>Arc: ~5–20 minutes.</strong> Headless only (for interactive use, <code>chug chat</code>).</p>
 <p>Before you start: the <code>chug</code> binary on PATH (<code>cargo install --path .</code> from a checkout), model credentials in the env (<code>ANTHROPIC_BASE_URL</code> + <code>ANTHROPIC_AUTH_TOKEN</code>, or the <code>~/.claude/settings.json</code> fallback), and your shell sitting in the repo you want changed.</p>
 <h3>Run it</h3>
 <pre class="code">
@@ -481,7 +486,7 @@ chug run --auto-spec --resume --goal "&lt;goal&gt;"
   <p class="kicker"><span class="hash">##</span> runbook · repo-eval.md</p>
   <div class="doctext">
 <h2>Runbook: feasibility eval of an external repo</h2>
-<p><b>Use when</b> you want to know whether a loop harness can drive some other repository before committing one to it: build system, test gates, layout, and what would trip the harness up. This is the vampflake pattern. <b>Arc: ~30–90 minutes.</b></p>
+<p><strong>Use when</strong> you want to know whether a loop harness can drive some other repository before committing one to it: build system, test gates, layout, and what would trip the harness up. This is the vampflake pattern. <strong>Arc: ~30–90 minutes.</strong></p>
 <h3>1. Clone, then aim chug at the clone</h3>
 <p><code>--cwd</code> is the whole sandbox — every file/bash tool lands inside it — so the eval reads the external repo and writes its deliverable there, never touching your own checkout:</p>
 <pre class="code">
