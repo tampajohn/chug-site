@@ -292,13 +292,13 @@ footer .attribution{margin:0}
 <section id="releases" class="live-stats"><div class="wrap">
   <p class="kicker"><span class="hash">##</span> latest release · synced from the repo's v* tags by scripts/site-sync.sh</p>
 <!-- RELEASE:BEGIN -->
-<div class="stat"><b>v0.17.6</b><span>latest release — tagged 2026-10-06 · <a href="https://github.com/tampajohn/chug/releases/tag/v0.17.6">notes on GitHub</a></span></div>
+<div class="stat"><b>v0.17.7</b><span>latest release — tagged 2026-10-06 · <a href="https://github.com/tampajohn/chug/releases/tag/v0.17.7">notes on GitHub</a></span></div>
 <ul>
-  <li>t248 dispatch re-key: spec check line export -&gt; target-shared-validate-a (validator slot a; T175 dispatch-time re-key, cycle-97 drift advisory) (<code>ba2a719</code>)</li>
-  <li>T248 — LOOP-SPEC Phase 3: the T237 token verbatim ONLY in a true disposition wrap subject + post-commit sleep-ok probe (<code>de495de</code>)</li>
-  <li>T247 dispatch re-key: spec check line export -&gt; target-shared-validate-a (validator slot a; T175 dispatch-time re-key, cycle-97 drift advisory) (<code>92502e6</code>)</li>
-  <li>T247 — LOOP-SPEC Phase 1 codifies the empty-delta chain (disposition rule + eval-trip valve + human-counted streak) (<code>b06e36b</code>)</li>
-  <li>t246 dispatch-time check re-key (T175/T212): validate-a slot for the kimi validation — the goal gate reads THIS worktree copy per the SPEC-ARG RULE…</li>
+  <li>t251 post-validation re-key: spec check export back to default target-shared (validate-a was validator-slot-only; T175/T52 hygiene before merge) (<code>0ae8375</code>)</li>
+  <li>t251 dispatch-time re-key: spec check export to validate-a slot (T175; validator-slot keying, reverted to default post-merge) (<code>2fec427</code>)</li>
+  <li>t251: LOOP-SPEC mutation-checkpoint ordering + read-first recovery rule (the ctx-edit casualty clauses) (<code>edb5ad5</code>)</li>
+  <li>t250: OUT-CLASS resolution — machine-codename class permanently excluded (operator-personal infra, public-acceptable) (<code>fdc13f9</code>)</li>
+  <li>t249 post-merge re-key: spec check export back to default target-shared (dispatch-time validate-a key was validator-slot-only; T175/T52 hygiene before the…</li>
 </ul>
 <!-- RELEASE:END -->
 </div></section>
@@ -307,18 +307,18 @@ footer .attribution{margin:0}
 <!-- chug loop stats: regenerated deterministically by scripts/site-sync.sh (tampajohn/chug T98) — do not hand-edit between the markers -->
 <!-- STATS:BEGIN -->
 <div class="stats">
-  <div class="stat"><b>245/245</b><span>queue items landed — done rows in TODO.md, 245 item rows total</span></div>
-  <div class="stat"><b>1700</b><span>tests green at the newest full-suite gate count in a commit message (77eec09)</span></div>
-  <div class="stat"><b>116</b><span>cycles completed by the loopd supervisor — "cycle OK" lines in .chug/loopd/loopd.log</span></div>
+  <div class="stat"><b>247/247</b><span>queue items landed — done rows in TODO.md, 247 item rows total</span></div>
+  <div class="stat"><b>1702</b><span>tests green at the newest full-suite gate count in a commit message (7aa1287)</span></div>
+  <div class="stat"><b>117</b><span>cycles completed by the loopd supervisor — "cycle OK" lines in .chug/loopd/loopd.log</span></div>
   <div class="stat"><b>2026-10-06</b><span>last EVALUATION.md write (git log, chug repo)</span></div>
 </div>
 <p class="lede">Last five items landed — item · ref · date, quoted from the chug repo's git log:</p>
 <ul>
+  <li><code>T251</code> · <code>edb5ad5</code> · 2026-10-06 — LOOP-SPEC mutation-checkpoint ordering + read-first recovery rule (the ctx-edit casualty clauses)</li>
   <li><code>T250</code> · <code>fdc13f9</code> · 2026-10-06 — OUT-CLASS resolution — machine-codename class permanently excluded (operator-personal infra,…</li>
   <li><code>T249</code> · <code>058448d</code> · 2026-10-06 — internal-info lint — the repo can never re-accumulate org details</li>
   <li><code>T246</code> · <code>4694ee5</code> · 2026-10-06 — outcome-backfill audit at wrap — malformed-chain section + wrap audit step</li>
   <li><code>T245</code> · <code>3fce276</code> · 2026-10-06 — release reconcile-after-tag doctrine — MERGE never rebase + ancestor sanity check</li>
-  <li><code>T244</code> · <code>438c616</code> · 2026-10-05 — docs.html inline markdown — pipe tables -&gt; &lt;table&gt;, lists, strong/em, https-only links</li>
 </ul>
 <!-- STATS:END -->
 </div></section>
@@ -397,7 +397,7 @@ footer .attribution{margin:0}
       <div class="tl-date"></div>
       <div class="tl-rail"><span class="tl-dot"></span></div>
       <div class="tl-body">
-        <h3>…and 220 earlier milestones (T1–T230)</h3>
+        <h3>…and 221 earlier milestones (T1–T231)</h3>
       </div>
     </div>
     <div class="tl-item major">
@@ -462,13 +462,6 @@ footer .attribution{margin:0}
       <div class="tl-body">
         <h3>chug.sh — this site <span class="hash">e998d45</span></h3>
         <p>chug builds its own public site: eight commits in one evening, every section landed against the verify.sh check gate, GitHub Pages serving a CNAME. You are reading the dogfood.</p>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2026-10-04</div>
-      <div class="tl-rail"><span class="tl-dot"></span></div>
-      <div class="tl-body">
-        <h3>LOOP-SPEC step 5 TODO-edit guard floor names the T57 main-dedicated target dir (doctrine, SOLO) <span class="hash">(05963e2)</span></h3>
       </div>
     </div>
     <div class="tl-item">
@@ -602,6 +595,13 @@ footer .attribution{margin:0}
       <div class="tl-rail"><span class="tl-dot"></span></div>
       <div class="tl-body">
         <h3>machine-codename class: operator rules the internal-info lint's one open scope boundary <span class="hash">(f58f7a8)</span></h3>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-10-06</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>LOOP-SPEC mutation-checkpoint ordering + read-first recovery rule (the ctx-edit casualty clauses) <span class="hash">(f24ba45)</span></h3>
       </div>
     </div>
 <!-- TIMELINE:END -->
