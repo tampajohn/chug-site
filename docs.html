@@ -217,6 +217,7 @@ footer .attribution{margin:0}
       <li><a href="#runbook-loop-ops">Runbook: loopd operations</a></li>
       <li><a href="#runbook-quick-task">Runbook: one small task, zero setup</a></li>
       <li><a href="#runbook-repo-eval">Runbook: feasibility eval of an external repo</a></li>
+      <li><a href="#cost">Cost — daily Langfuse spend</a></li>
     </ul>
   </div>
 </div></header>
@@ -515,6 +516,30 @@ risks: &lt;what a loop would trip on — cold build times, flaky gates, ...&gt;
 <p><code>FEASIBLE</code> means a loop could run here with a sane cycle budget; <code>NOT-FEASIBLE</code> names the blockers precisely. Skim <code>.chug/events.jsonl</code> in the clone (<code>jq -r '.type' .chug/events.jsonl | sort | uniq -c</code>) to see where the eval's time actually went.</p>
 <h3>3. If FEASIBLE</h3>
 <p>One loop per repo is the repo-level lever (the dashboard/internal-monorepo pattern): give the repo its own TODO.md, specs/, and <code>./loopd.sh</code> — don't merge it into another repo's cycle.</p>
+  </div>
+</div></section>
+<section id="cost"><div class="wrap">
+  <p class="kicker"><span class="hash">##</span> cost · Langfuse daily spend, chug project — baked at sync time by scripts/site-sync.sh</p>
+  <div class="doctext">
+    <table>
+      <thead><tr><th>date</th><th>calls</th><th>kimi</th><th>glm</th><th>total</th></tr></thead>
+      <tbody>
+        <tr><td>2026-11-06</td><td>4610</td><td>$73.59</td><td>$1.59</td><td>$75.18</td></tr>
+        <tr><td>2026-11-05</td><td>4296</td><td>$109.73</td><td>$0.24</td><td>$109.97</td></tr>
+        <tr><td>2026-11-04</td><td>5374</td><td>$118.67</td><td>$0.36</td><td>$119.03</td></tr>
+        <tr><td>2026-11-03</td><td>4104</td><td>$112.40</td><td>$0.00</td><td>$112.40</td></tr>
+        <tr><td>2026-11-02</td><td>3667</td><td>$112.67</td><td>$0.00</td><td>$112.67</td></tr>
+        <tr><td>2026-11-01</td><td>5279</td><td>$99.54</td><td>$0.39</td><td>$99.94</td></tr>
+        <tr><td>2026-10-31</td><td>6336</td><td>$150.01</td><td>$0.00</td><td>$150.01</td></tr>
+        <tr><td>2026-10-30</td><td>5954</td><td>$137.84</td><td>$0.05</td><td>$137.88</td></tr>
+        <tr><td>2026-10-29</td><td>5987</td><td>$151.91</td><td>$0.00</td><td>$151.91</td></tr>
+        <tr><td>2026-10-28</td><td>5939</td><td>$187.70</td><td>$0.18</td><td>$187.89</td></tr>
+        <tr><td>2026-10-27</td><td>4199</td><td>$129.53</td><td>$0.00</td><td>$129.53</td></tr>
+        <tr><td>2026-10-26</td><td>3846</td><td>$115.38</td><td>$0.07</td><td>$115.45</td></tr>
+        <tr><td>2026-10-25</td><td>4148</td><td>$117.10</td><td>$0.13</td><td>$117.23</td></tr>
+        <tr><td>2026-10-24</td><td>5538</td><td>$171.30</td><td>$0.00</td><td>$171.30</td></tr>
+      </tbody>
+    </table>
   </div>
 </div></section>
 <footer><div class="wrap">
