@@ -218,6 +218,7 @@ footer .attribution{margin:0}
       <li><a href="#runbook-loop-ops">Runbook: loopd operations</a></li>
       <li><a href="#runbook-quick-task">Runbook: one small task, zero setup</a></li>
       <li><a href="#runbook-repo-eval">Runbook: feasibility eval of an external repo</a></li>
+      <li><a href="#risk-gate">Why it's safe to let the loop write code</a></li>
       <li><a href="#cost">Cost — daily Langfuse spend</a></li>
     </ul>
   </div>
@@ -519,13 +520,85 @@ risks: &lt;what a loop would trip on — cold build times, flaky gates, ...&gt;
 <p>One loop per repo is the repo-level lever (the dashboard/internal-monorepo pattern): give the repo its own TODO.md, specs/, and <code>./loopd.sh</code> — don't merge it into another repo's cycle.</p>
   </div>
 </div></section>
+<section id="risk-gate"><div class="wrap">
+  <p class="kicker"><span class="hash">##</span> risk gate · docs/risk-gate.md</p>
+  <div class="doctext">
+<h2>Why it's safe to let the loop write code</h2>
+<p>The question this page answers is the one every engineering-leadership review asks first: <strong>what stops it from doing something bad?</strong> The answer here is not a promise. It is an inventory of mechanisms that already run, each cited by the file, feature id, or gate name that implements it — follow any citation to its source; the repo is public. Where a mechanism has a known hole (a fail-open leg, a lane that skips review), the hole is named next to the citation, because the reviewer looking for it will find it anyway.</p>
+<p>This file is the source of truth; <code>scripts/site-sync.sh</code> renders it as a section of <a href="https://chug.sh/docs.html#risk-gate">the docs page</a> at every sync (T331, the T241 docs-page pipeline), and the adopt page's safety FAQ (<code>docs/adopt/faq.md</code>) links that section.</p>
+<h3>The gates</h3>
+<p>What runs on loop-written code before it lands. The implementation child is launched with "keep cargo build and cargo test green" in its goal text (the <code>META-SPEC.md</code> §6 round-protocol template), and the gates below are then re-run independently — "never trust a claim of green without seeing it" (<code>LOOP-SPEC.md</code> step 3).</p>
+<table>
+<thead><tr><th>Gate</th><th>Command</th><th>When</th></tr></thead>
+<tbody>
+<tr><td>Full suite</td><td><code>cargo nextest run --release</code> when <code>cargo nextest</code> is on PATH, else <code>cargo test --release -- --test-threads=4</code> — the T82 gate runner, whose fallback is unconditional (nextest is a host tool, never a hard dependency)</td><td>every item's worktree (<code>LOOP-SPEC.md</code> step 3), again post-merge (step 5)</td></tr>
+<tr><td>Lint</td><td><code>cargo clippy --all-targets --release -- -D warnings</code></td><td>beside the suite, never through it (<code>LOOP-SPEC.md</code> step 3)</td></tr>
+<tr><td>Python battery</td><td><code>python3 -m unittest scripts/test_wrap_assert.py</code> and <code>python3 -m unittest scripts.test_todo_flip</code> — the unittest batteries behind <code>scripts/wrap_assert.py</code> (T273) and <code>scripts/todo_flip.py</code> (T279)</td><td>each script's own check line; re-run beside the cargo gates on landing (the T289 row records "gates independently re-run python 56/56")</td></tr>
+<tr><td>TODO row guard</td><td><code>cargo test --release --test todo_consistency</code></td><td>after every <code>TODO.md</code> edit (<code>tests/todo_consistency.rs</code>; the row-flip path itself goes through <code>scripts/todo_flip.py</code>, which asserts the row invariants before writing — the three-fire todo-flip census, <code>LOOP-SPEC.md</code>)</td></tr>
+<tr><td>Docs-only floor</td><td>the same <code>todo_consistency</code> run, plus the affected pin file's tests</td><td>when the diff is <code>*.md</code>-only — the T80 classification is mechanical (<code>git diff --name-only main...&lt;branch&gt; | grep -qvE '\.md$'</code>), and any ambiguity defaults to full gates</td></tr>
+</tbody>
+</table>
+<p>Two properties of the lint leg are load-bearing, not incidental:</p>
+<ul>
+<li><strong>Zero warnings, not exit-0.</strong> <code>nextest</code> compiles <code>cfg(test)</code> code but never lints it, so a narrower clippy form lets test-only warnings through — the T176 semantics that define the bar (<code>LOOP-SPEC.md</code> step 3).</li>
+<li><strong>Release profile.</strong> The gates run <code>--release</code> (T78): the first build into a cold cache pays compile time, every later run is faster — the shared target dirs (T47/T52) amortize it.</li>
+</ul>
+<h4>What "green" means</h4>
+<ul>
+<li><strong>Unpiped exits.</strong> A gate run is unpiped, or the chain begins <code>set -o pipefail;</code> — a piped gate whose filter exits 0 reports green on a red guard (the c06a555 lesson, <code>LOOP-SPEC.md</code>'s todo_consistency rule).</li>
+<li><strong>Full-suite counts only.</strong> The public test count on chug.sh is parsed from commit messages by <code>scripts/site-sync.sh</code>, which accepts only provably-full-suite shapes — an equal-operand N/N pair at or above the 500 floor, or a "full suite N unit" label adjacent to the number. The T238 rule exists because a mid-run census ("nextest 113/1402") was once published as if it were the suite total.</li>
+<li><strong>Fail-closed publishing.</strong> The same sync refuses to publish anything when its repo inputs are unreadable — <code>TODO.md</code> missing, <code>.chug/loopd</code> absent, or empty git log is one named error and exit 4, nothing written (the T217 letter, <code>scripts/site-sync.sh</code>). Fallback zeros are byte-identical to a genuinely empty repo's first run, so they are never published with real data's authority.</li>
+<li><strong>Pins, not prose.</strong> Doctrine text is pinned by test files — <code>tests/loop_spec_*.rs</code>, <code>tests/shared_target_dir.rs</code>, <code>tests/nextest_gate_runner.rs</code> — so an edit that breaks a pinned clause goes red in the suite, not just in review (the T80 floor names them because that is the risk surface of a docs-only diff).</li>
+</ul>
+<h3>The validators</h3>
+<p>The author model never validates its own work. Implementation children run on glm; validation children run on kimi — different model families (<code>META-SPEC.md</code> §6) — and a glm-orchestrated cycle still launches the kimi validator (the T81 family-independence rule, <code>LOOP-SPEC.md</code> step 4: "glm implements, so a glm-orchestrated cycle never lets glm validate glm").</p>
+<ul>
+<li><strong>Adversarial validation</strong> (<code>META-SPEC.md</code> §6 step 6): the validator child reviews the diff against the spec for correctness bugs, missing spec requirements, and weak tests, and must end with a typed verdict — <code>VERDICT: PASS</code> or <code>VERDICT: FAIL</code> plus a numbered findings list. It writes the verdict to <code>.chug/verdict.md</code> in its worktree BEFORE any wrap-up, so a budget death loses nothing (the T209 doctrine: a written verdict IS the verdict). PASS merges; FAIL feeds the findings into the fix-up child's goal verbatim.</li>
+<li><strong>Mutation testing</strong> (<code>META-SPEC.md</code> §6 goal text): the validator deliberately breaks the new code — flip a condition, drop a check, corrupt a value — and confirms the tests catch it, because "green tests that survive mutations are vacuous (round 1 shipped dead code with 245/245 green until mutations exposed it)". Mutants run in parallel throwaway worktrees, one role-keyed target dir per leg, capped at 3 in flight; serial stays the default when mutants touch overlapping files; the main worktree must be byte-clean before the verdict (T79, <code>META-SPEC.md</code> §6).</li>
+<li><strong>RED-proven fixes.</strong> A fix-up round's killing test must be shown RED against the broken code, not asserted after the fact — and when a finding names one instance of a class, the goal requires EVERY instance swept with its own RED-proven killing test (the cycle-33 lesson: T69's run_start latch resets took three rounds one leg at a time; the sweep-the-family goal closed it in one — <code>LOOP-SPEC.md</code> step 4). Mutation legs for RED-proofs are applied inside the worktree via bash, because the confined file tools would silently produce false survivors (<code>LOOP-SPEC.md</code> step 4).</li>
+<li><strong>Survivor adjudication.</strong> A surviving mutant is a finding, not a shrug: the verdict record logs PASS/FAIL, findings count, and survivor count to the decision corpus (<code>.chug/decisions.jsonl</code>, classes <code>validation-routing</code> / <code>validation-verdict</code> — <code>LOOP-SPEC.md</code> step 4), and survivors kept as weak-test findings get named individually in the landing record (e.g. the T316 row: "6 mutants 4 killed, 2 low-impact survivors ... documented as weak-test findings").</li>
+<li><strong>The lane, and what it skips.</strong> Validation is REQUIRED for any item touching <code>src/driver.rs</code>, <code>src/api.rs</code>, <code>src/tools.rs</code>, <code>src/events.rs</code>, or the loop/spec doctrine. The low-stakes lane (T189) can skip the validator child — but the predicate is mechanical, computed from the diff and never the model's say-so: no core-list file, ≤ ~150 changed lines, no new tool/command surface, no CI or <code>check:</code> line change; any single flip forces full validation, and the lane skips the kimi child, never the gates (<code>LOOP-SPEC.md</code> step 4).</li>
+</ul>
+<h3>The decision gate</h3>
+<p>Consequential actions pass typed verdicts before they execute — the Laya/Jev precedent (F13/F15):</p>
+<ul>
+<li><strong>The runtime risk gate.</strong> Every <code>bash</code> command is classified destructive/risky/safe by a Laya judge before executing; <code>destructive</code> p≥0.5 is blocked with an error the model can see and route around; verdicts are logged to <code>.chug/risk_verdicts.jsonl</code> (<code>README.md</code>, <code>## Risk gate (--risk-gate)</code>; <code>src/riskgate.rs</code>). The hole, stated: the gate fails OPEN when the judge is down, and an <code>allow destructive</code> steering note disables it for the run — both pinned in that README section, which is why the policy layers below it exist.</li>
+<li><strong>The policy layers under it.</strong> <code>.chug/permissions.json</code> deny rules are evaluated in-process before every tool call: a rule match fails closed (it always denies), while a malformed rule is skipped with a warning (<code>README.md</code>, <code>## Permissions (.chug/permissions.json)</code>). <code>.chug/hooks.json</code> PreToolUse hooks veto with <code>[hook veto]</code> — programmable, and therefore fail-open (<code>README.md</code>, <code>## Hooks (.chug/hooks.json)</code>). Policy order is permissions → hooks → risk gate; a denied call never executes.</li>
+<li><strong>The judge itself is contested, not trusted.</strong> The T223 bake-off (<a href="https://github.com/tampajohn/chug/blob/main/docs/judge-parity.md">docs/judge-parity.md</a>, run by the fail-closed <code>scripts/judge-parity.sh</code>) measured Laya against the kev-0.8b and openJev-verdict-2.0 challengers over golden fixtures and a decision-log holdout; the recorded verdict is "Laya stays" with the honest gaps named — kev is candle-blocked (T222) and openJev's id returns 401 — rather than a fabricated comparison.</li>
+<li><strong>The baked-in judge daemon</strong> (F15): <code>CHUG_JUDGE=daemon</code> serves the same model over a <code>0600</code> unix socket at <code>~/.chug/daemon.sock</code> — no TCP port, no network listener; filesystem permissions gate the policy surface (<code>FEATURES.md</code> F15, <code>src/daemon.rs</code>).</li>
+<li><strong>The decision-log corpus as evidence</strong> (F13): every loop judgment emits a structured record to <code>.chug/decisions.jsonl</code> — decision class, compact inputs, options considered, choice, model, confidence — with outcome labels backfilled from git (landed-clean / fixed-up / reverted). The triage layer (T259) records every would-be-launch classification the same way (class <code>laya-triage</code>, plus the backfilled <code>outcome</code>), so "the loop decided correctly" is a queryable corpus, not an anecdote.</li>
+<li><strong>The goal gate.</strong> A run ends when the spec's <code>check:</code> line — re-run by <code>goal_complete</code> verification — passes, never when a model claims done (<code>src/driver.rs</code>: "the spec's <code>check:</code> line still decides DONE"; <code>LOOP-SPEC.md</code>'s check-line doctrine, including the T67 class: a spec <code>check:</code> line IS executable text and gets validated like code).</li>
+</ul>
+<h3>The cost guardrails</h3>
+<p>The loop cannot spend unboundedly while idle. Three mechanisms, all supervisor-computed from git and <code>.chug/loopd/loopd.log</code> — never from an LLM's say-so (<code>LOOP-SPEC.md</code>):</p>
+<ul>
+<li><strong>The cheap exit (T258).</strong> Before any launch the supervisor computes a mechanical predicate: no new <code>TODO.md</code> rows since the last evaluation, no child deaths, a bookkeeping-only delta (every commit an <code>eval:</code> commit touching nothing outside <code>EVALUATION.md</code> and <code>TODO.md</code>), and <code>EVALUATION.md</code> fresh (same UTC day). When all four hold it writes a one-line disposition and skips the cycle entirely — no LLM call. The disposition records the predicate inputs in <code>.chug/loopd/loopd.log</code>.</li>
+<li><strong>The valve (T247).</strong> The empty-delta chain is not self-sustaining: after ~3 consecutive empty-delta dispositions, the 4th empty cycle runs the real evaluation. The trip binds on the TRUE streak — human-counted from the wrap-notes chain for adjudication, machine-read (<code>empty_wrap_streak</code>, loopd's git walk) for the supervisor's gate — and the cycle-118 divergence (machine read 4 vs TRUE 3) is the recorded reason both readings exist (<code>LOOP-SPEC.md</code>, "The empty-delta chain (T247)").</li>
+<li><strong>Dormancy (T325).</strong> With an empty queue the loop is DORMANT: the cheap exit fires every cycle, the valve is suspended, and the weekly audit timer launches one READ-ONLY evaluation per week at most — gates green (build, clippy, test), pins verified, site-sync freshness, daemon liveness. It files <code>TODO.md</code> rows only on observed breakage, exactly one row each, zero on green, and MUST NOT file loop-tooling meta-work — "an empty backlog must make the loop nearly free; it must never make the loop invent meta-work" (<code>LOOP-SPEC.md</code>, "Dormant mode (T325)"; <code>tests/loopd_dormant_mode.rs</code> pins the battery).</li>
+<li><strong>Bounded children.</strong> Impl children launch at <code>--max-iters 40 --max-minutes 35</code> (<code>META-SPEC.md</code> §6 step 4); validators at 60/50 — the <code>LOOP-SPEC.md</code> step-4 override, raised after 4 of 4 validator children died at budget in cycles 66–69. A wedge dies at budget, and the T237 backoff paces the skipped-eval chain. The T259 triage sits between the mechanical layer and System Two, fail-open to the T258 routing, with its one threshold (<code>TRIAGE_HIGH</code> 0.85) in one place in <code>loopd.sh</code>.</li>
+</ul>
+<h3>The history</h3>
+<p>The repo is public, and it has already failed this review once.</p>
+<ul>
+<li><strong>The 2026-10 scrub.</strong> On 2026-10-06 the operator reported "safety concerns (internal info shared about the org) in the repo, let's clean that up" — an internal proxy hostname in src comments and a spec, org HF-org names, org-private/fleet framings, and internal codenames across specs, runbooks, TODO, DEPENDENCIES, and test fixtures. The redaction pass landed as commit 47cd0d1 (<code>specs/t249-internal-info-lint.md</code> records the derivation).</li>
+<li><strong>The standing guard.</strong> <code>tests/internal_info_lint.rs</code> (T249) walks every tracked file (<code>git ls-files</code>) line by line against seven word-bounded pattern classes derived from that diff; any hit fails the suite, so the class cannot regrow through loop-authored content. The lint's own source composes its literals from pieces at runtime, so no tracked line carries a whole redaction literal. The site sync runs the same pattern classes over the composed adopt page before it may publish — a hit blocks the render and the previously published page rides (<code>t249_scan</code> in <code>scripts/site-sync.sh</code>, T329).</li>
+<li><strong>The secrets sibling.</strong> <code>tests/no_secret_spill.rs</code> (T205 req 5) is the credential-side twin of the same doctrine.</li>
+</ul>
+<h3>What this page does not claim</h3>
+<ul>
+<li>The risk gate is not a sandbox: it classifies and blocks, and fails open when the judge is down (<code>README.md</code>, <code>## Risk gate (--risk-gate)</code>). The cwd confinement of the file tools (<code>README.md</code>, "All file-tool paths are sandboxed to <code>--cwd</code>") and the deny-rule layer above are the structural bounds; the gate is one policy source among several.</li>
+<li>The low-stakes lane really does skip the kimi validator for small, non-core diffs (T189) — the citation above names the exact mechanical predicate, so the reviewer can audit what "small" means rather than trust it.</li>
+<li>Fail-open and fail-closed are mixed deliberately, per mechanism, and the polarity is pinned per mechanism (permissions fail closed on a match, hooks fail open on a config problem — the two <code>README.md</code> sections cited above). The claim is not "nothing can fail"; it is that each failure mode is named, cited, and tested where this page says it is.</li>
+</ul>
+  </div>
+</div></section>
 <section id="cost"><div class="wrap">
   <p class="kicker"><span class="hash">##</span> cost · Langfuse daily spend, chug project — baked at sync time by scripts/site-sync.sh</p>
   <div class="doctext">
     <table>
       <thead><tr><th>date</th><th>calls</th><th>kimi</th><th>glm</th><th>total</th></tr></thead>
       <tbody>
-        <tr><td>2026-11-07</td><td>1621</td><td>$10.16</td><td>$0.75</td><td>$10.91</td></tr>
+        <tr><td>2026-11-07</td><td>4437</td><td>$15.42</td><td>$2.74</td><td>$18.15</td></tr>
         <tr><td>2026-11-06</td><td>5660</td><td>$76.17</td><td>$2.53</td><td>$78.70</td></tr>
         <tr><td>2026-11-05</td><td>4296</td><td>$109.73</td><td>$0.24</td><td>$109.97</td></tr>
         <tr><td>2026-11-04</td><td>5374</td><td>$118.67</td><td>$0.36</td><td>$119.03</td></tr>

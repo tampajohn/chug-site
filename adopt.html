@@ -253,13 +253,15 @@ chug run --spec SPEC.md --goal "Make the login test deterministic" \
 <p>The <code>check:</code> line is the whole contract: a run only ends when the check exits 0 on a re-run, never when the model <em>says</em> it is done. Point <code>--model</code> at any provider that speaks the Anthropic Messages API — <code>ANTHROPIC_BASE_URL</code> / <code>ANTHROPIC_AUTH_TOKEN</code> in the env, or your existing <code>~/.claude/settings.json</code> (chug reads it when the env is empty).</p>
 <p>No spec yet? <code>chug run --goal "Fix the flaky login test" --auto-spec</code> drafts one for you, dry-runs its check, and refuses a check that cannot pass on the current tree. <code>chug chat</code> is the interactive sibling; <code>--tui</code> adds the live dashboard to either.</p>
 <h3>The continuous loop</h3>
-<p>Single runs are one item. The supervisor makes it a queue that works itself: clone the repo and start <code>loopd.sh</code> — cycles run back-to-back, each wrap feeding the next cycle, all state in files:</p>
+<p>Single runs are one item. The loop makes it a queue that works itself — scaffolded and started in any repo of yours, with no clone of chug anywhere in the flow. The loop's queue is YOUR repo's TODO.md: it files, lands, and commits in your repo's branches, and an empty queue idles (a $0 dormant cycle — it never invents work to stay busy):</p>
 <pre class="code">
-git clone https://github.com/tampajohn/chug &amp;&amp; cd chug
-nohup ./loopd.sh &gt; /dev/null 2&gt;&amp;1 &amp;   # start (detached)
-./loopd.sh status                     # liveness + recent cycle activity
-./loopd.sh stop                       # exits after the current cycle
+cd &lt;your-repo&gt;
+chug loop init                          # one-time: LOOP-SPEC.md + TODO.md + .chug/
+nohup chug loop run &gt; /dev/null 2&gt;&amp;1 &amp;  # start (detached; no clone required)
+.chug/loopd/loopd.sh status             # liveness + recent cycle activity
+.chug/loopd/loopd.sh stop               # exits after the current cycle
 </pre>
+<p><code>chug loop init</code> is idempotent — run it again and every existing file is reported <code>kept</code>, never clobbered (<code>--force</code> overwrites with a <code>.bak</code> backup beside each file). It scaffolds a GENERIC loop contract you are meant to edit: <code>LOOP-SPEC.md</code> states the queue rules, the check:-line contract, and the gate expectations for YOUR repo; <code>TODO.md</code> starts empty. File a row — a spec under <code>specs/</code> with a mechanical <code>check:</code> line, then one line in <code>TODO.md</code> — and the next cycle picks it up. The loop's model provider comes from the same env as <code>chug run</code> (a profile installed with <code>install.sh --profile &lt;name&gt;</code> is loaded automatically).</p>
 <h3>What healthy looks like (first 10 minutes)</h3>
 <ul>
 <li>the run prints <code>▪ iter NN …</code> lines — reading, editing, running bash — and every event appends to <code>.chug/events.jsonl</code></li>
@@ -267,7 +269,7 @@ nohup ./loopd.sh &gt; /dev/null 2&gt;&amp;1 &amp;   # start (detached)
 <li><code>goal_complete</code> appears only after the spec's <code>check:</code> re-runs and exits 0; a rejected claim keeps the loop in charge</li>
 <li><code>chug ledger</code> prints LEDGER.md — the run's external memory</li>
 <li>the first eval lands as a fresh <code>EVALUATION.md</code> body — the loop examining its own recent cycles, dated same-UTC-day at the top</li>
-<li>under loopd: <code>.chug/loopd/loopd.log</code> gains one <code>cycle OK</code> line per completed cycle (plus a <code>cheap-exit disposition</code> line on empty days — a $0 cycle), <code>.chug/loopd/cycle-*.log</code> holds each cycle's stream, and <code>./loopd.sh status</code> answers "is it alive"</li>
+<li>under the loop: <code>.chug/loopd/loopd.log</code> gains one <code>cycle OK</code> line per completed cycle (and a <code>queue empty — dormant</code> line when there is nothing to do — a $0 cycle), <code>.chug/loopd/cycle-*.log</code> holds each cycle's stream, and <code>.chug/loopd/loopd.sh status</code> answers "is it alive"</li>
 </ul>
   </div>
 </div></section>
@@ -319,7 +321,7 @@ nohup ./loopd.sh &gt; /dev/null 2&gt;&amp;1 &amp;   # start (detached)
 <ol>
 <li><strong>Write a spec</strong> — <code>specs/tNNN-short-slug.md</code>: the concern, the requirements, the tests, and a mechanical <code>check:</code> line. The loop's goal gate re-runs that check and accepts nothing but exit 0.</li>
 <li><strong>File the TODO row</strong> — one line in <code>TODO.md</code>: id, title, spec path, priority, status <code>open</code>. That row is the contract; there is nothing to assign to anyone.</li>
-<li><strong>Let the loop pick it up</strong> — under <code>./loopd.sh</code> the next cycle takes the highest-priority open row; or run it directly: <code>chug run --spec specs/tNNN-short-slug.md --goal "Land X"</code>.</li>
+<li><strong>Let the loop pick it up</strong> — under <code>chug loop run</code> (after <code>chug loop init</code>) the next cycle takes the highest-priority open row; or run it directly: <code>chug run --spec specs/tNNN-short-slug.md --goal "Land X"</code>.</li>
 <li><strong>Read the harvest</strong> — the landed commit, the validation verdict, the merged LEDGER, and the artifacts under <code>.chug/</code> (events, ledgers, decision records). The wrap is the paper trail.</li>
 </ol>
 <h3>What a good first item looks like</h3>
@@ -338,11 +340,11 @@ nohup ./loopd.sh &gt; /dev/null 2&gt;&amp;1 &amp;   # start (detached)
 <p><strong>What does this cost?</strong></p>
 <p>The public numbers are on the site: the cost tile on the <a href="https://chug.sh/">home page</a> and the per-day table on the <a href="https://chug.sh/docs.html#cost">docs page</a> — daily spend, baked in at every sync. The loop's own cost boundary: empty days take a $0 mechanical cheap exit, a drained queue goes dormant (a weekly read-only audit, not manufactured work), and routine cycles ride the cheaper routine model unless the day's freshness rule escalates.</p>
 <p><strong>Is it safe to point at my repo?</strong></p>
-<p>The trust boundary is mechanical, not hopeful. Every shell call passes the risk gate — destructive calls are blocked with an error the model can route around — and <code>.chug/hooks.json</code> can veto any tool call, while <code>.chug/permissions.json</code> deny-rules fail closed. Tools are sandboxed to the run cwd, and the goal gate is the spec's <code>check:</code> re-running, never a model's claim. The README's <a href="https://github.com/tampajohn/chug/blob/main/README.md">risk gate, hooks, and permissions sections</a> name every knob.</p>
+<p>The trust boundary is mechanical, not hopeful. Every shell call passes the risk gate — destructive calls are blocked with an error the model can route around — and <code>.chug/hooks.json</code> can veto any tool call, while <code>.chug/permissions.json</code> deny-rules fail closed. Tools are sandboxed to the run cwd, and the goal gate is the spec's <code>check:</code> re-running, never a model's claim. The README's <a href="https://github.com/tampajohn/chug/blob/main/README.md">risk gate, hooks, and permissions sections</a> name every knob. The full story — the gates, the validators, the decision gate, the cost guardrails, and the repo's own redaction history — is on the <a href="https://chug.sh/docs.html#risk-gate">risk-gate page</a>, rendered from the repo's <code>docs/risk-gate.md</code> at every sync.</p>
 <p><strong>Do I need an Anthropic account?</strong></p>
-<p>No. chug speaks the Anthropic Messages wire protocol; point <code>ANTHROPIC_BASE_URL</code> / <code>ANTHROPIC_AUTH_TOKEN</code> at any provider that speaks it. The repo's own loop runs kimi for judgment calls and glm for routine phases — per-phase routing is a mechanical rule in the supervisor (<code>./loopd.sh routing</code> prints what the next cycle would get), never a model's choice.</p>
+<p>No. chug speaks the Anthropic Messages wire protocol; point <code>ANTHROPIC_BASE_URL</code> / <code>ANTHROPIC_AUTH_TOKEN</code> at any provider that speaks it. The repo's own loop runs kimi for judgment calls and glm for routine phases — per-phase routing is a mechanical rule in the supervisor, never a model's choice; a profile installed with <code>install.sh --profile &lt;name&gt;</code> carries the same keys for your repo's loop.</p>
 <p><strong>How do I uninstall?</strong></p>
-<p><code>./loopd.sh stop</code> (and remove the launchd plist, if you installed one), delete the binary — <code>rm ~/.local/bin/chug</code>, or <code>cargo uninstall chug</code> if you installed from source — and delete any per-repo state you do not want (the <code>.chug/</code> directory inside each repo it ran in). Nothing else was installed.</p>
+<p><code>.chug/loopd/loopd.sh stop</code> in each repo the loop runs in (and remove the launchd plist, if you installed one), delete the binary — <code>rm ~/.local/bin/chug</code>, or <code>cargo uninstall chug</code> if you installed from source — and delete any per-repo state you do not want (the <code>.chug/</code> directory inside each repo it ran in). Nothing else was installed.</p>
   </div>
 </div></section>
 <footer><div class="wrap">
