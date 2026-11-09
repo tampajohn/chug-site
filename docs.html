@@ -245,6 +245,8 @@ chug run --auto-spec --validate     # force FULL adversarial validation on this 
 chug run --auto-spec --no-validate  # force the gates-only lane (operator override, recorded)
 chug chat            # interactive mode (TUI)
 chug ledger          # print current LEDGER.md
+chug capabilities    # print the capability contract — features + versions this build supports (T339)
+chug daemon --status # the judge daemon's lifecycle; T340 also serves GET /status/loop + /status/items on its socket (observation only)
 </pre>
 <p>Put a <code>check: &lt;shell command&gt;</code> line in your spec — <code>goal_complete</code> is only accepted when the check exits 0. The check (like every shell chug spawns) runs with <code>CARGO_TARGET_DIR</code>/<code>CARGO_BUILD_TARGET_DIR</code> scrubbed from its environment, so a bare <code>cargo test</code> builds the run cwd's own <code>target/</code> — set the variable inside the <code>check:</code> line itself if you want a shared build cache (an explicit choice, never an inheritance accident).</p>
 <p>No spec yet? <code>chug run --goal "Fix the flaky login test" --auto-spec</code> (or <code>chug quick</code>) drafts one for you: one read-only model call (plan mode's loop) writes <code>.chug/auto-spec.md</code> — concern, requirements, tests, acceptance, plus the <code>check:</code> and <code>estimate:</code> lines — and the draft's check is dry-run executed before the run starts. A check that can't exit 0 on the current tree is refused and redrafted once; a second refusal aborts with the draft and the failing output, never a loosened check. In chat mode the same flow is <code>/auto-spec &lt;request&gt;</code> then <code>/auto-spec-approve</code> (the approve gate re-runs the dry-run; editing the check to something vacuous is refused). Auto-spec is for task-class work — chores, small features; adversarial and loop work keeps hand-written specs. Auto-spec'd runs default to the low-stakes validation lane (T189): per item, a mechanical predicate computed from the diff (no core-list file touched, ≤ ~150 changed lines, no new tool/command surface, no CI/<code>check:</code>-line change) routes gates-only — the kimi validation child is skipped, never the gates (build + clippy + the full suite in the worktree, byte-clean review, and the scope check stay required). <code>--validate</code> forces full adversarial validation; <code>--no-validate</code> forces the gates-only lane; either operator override is recorded.</p>
@@ -598,7 +600,7 @@ risks: &lt;what a loop would trip on — cold build times, flaky gates, ...&gt;
     <table>
       <thead><tr><th>date</th><th>calls</th><th>kimi</th><th>glm</th><th>total</th></tr></thead>
       <tbody>
-        <tr><td>2026-11-09</td><td>649</td><td>$8.86</td><td>$0.53</td><td>$9.39</td></tr>
+        <tr><td>2026-11-09</td><td>1693</td><td>$11.01</td><td>$1.39</td><td>$12.41</td></tr>
         <tr><td>2026-11-08</td><td>7980</td><td>$0.53</td><td>$13.04</td><td>$13.57</td></tr>
         <tr><td>2026-11-07</td><td>6259</td><td>$15.42</td><td>$4.89</td><td>$20.31</td></tr>
         <tr><td>2026-11-06</td><td>5660</td><td>$76.17</td><td>$2.53</td><td>$78.70</td></tr>
