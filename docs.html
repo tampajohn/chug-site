@@ -229,16 +229,23 @@ footer .attribution{margin:0}
   <h2>Quickstart</h2>
   <p class="lede">The repo's own quickstart, verbatim from README.md — re-rendered at every sync.</p>
   <div class="doctext">
+<p>One command installs the binary — platform detected, sha256 verified, no Rust toolchain, no sudo:</p>
 <pre class="code">
-cargo build
-cargo install --path .   # puts the chug binary on PATH (~/.cargo/bin)
-# Zero setup if you have Claude Code configured: chug reads
-# ANTHROPIC_BASE_URL / ANTHROPIC_AUTH_TOKEN / ANTHROPIC_API_KEY from
-# ~/.claude/settings.json when the process env doesn't have them.
-# (Process env always wins; default base URL is api.anthropic.com.)
-
+curl -fsSL https://chug.sh/install.sh | sh
+</pre>
+<p>Then, in a repo of yours (no clone of chug needed), start the continuous loop:</p>
+<pre class="code">
+cd &lt;your-repo&gt;
+chug loop init      # scaffold LOOP-SPEC.md + TODO.md + .chug/ (idempotent; --force backs up)
+chug loop run       # exec the loop supervisor against THIS repo
+</pre>
+<p>Wire up a model provider with <code>--profile &lt;name&gt;</code> at install time — the profile exports the provider contract (base URL, key, per-phase models); see <a href="https://github.com/tampajohn/chug/blob/main/docs/install-profiles.md">docs/install-profiles.md</a>. Zero setup also works if you have Claude Code configured: chug reads <code>ANTHROPIC_BASE_URL</code> / <code>ANTHROPIC_AUTH_TOKEN</code> / <code>ANTHROPIC_API_KEY</code> from <code>~/.claude/settings.json</code> when the process env doesn't have them (process env always wins; default base URL is api.anthropic.com).</p>
+<p>Single runs need no scaffolding: <code>chug run</code> takes a spec file with a <code>check:</code> line plus a goal and drives a fixed loop until the check exits 0.</p>
+<pre class="code">
 chug run --spec SPEC.md --goal "Build X and make the check pass" \
-  --model anthropic-system.ai.kimi-k3 --max-iters 40 --max-minutes 120
+  --model claude-sonnet-4-6 --max-iters 40 --max-minutes 120
+# --model takes any name your provider resolves; provider-specific ids
+# belong in a profile — see docs/install-profiles.md
 
 chug run --tui ...   # same, with the live dashboard
 chug run --resume    # continue an aborted run from .chug/transcript.jsonl
@@ -598,9 +605,12 @@ risks: &lt;what a loop would trip on — cold build times, flaky gates, ...&gt;
 <section id="shipped"><div class="wrap">
   <p class="kicker"><span class="hash">##</span> shipped · TODO.md done rows</p>
   <h2>Shipped — the complete record</h2>
-  <p class="lede">Every item the loop has flipped done (349 items), newest first — auto-fed from TODO.md at every sync. The curated feature grid on the home page is the flagship list; this feed is the complete shipped record.</p>
+  <p class="lede">Every item the loop has flipped done (352 items), newest first — auto-fed from TODO.md at every sync. The curated feature grid on the home page is the flagship list; this feed is the complete shipped record.</p>
   <div class="doctext">
     <ul>
+    <li>2026-11-10 · <code>T351</code> · <a href="https://github.com/tampajohn/chug/blob/main/specs/t351-readme-entry-path.md">README entry-path cleanup: install-first quickstart, chug loop leads continuous mode, generic model…</a></li>
+    <li>2026-11-10 · <code>T353</code> · <a href="https://github.com/tampajohn/chug/blob/main/specs/t353-langfuse-project-dead-var.md">profile contract: CHUG_LANGFUSE_PROJECT is a no-op (0 consumers) — remove + document per-lane…</a></li>
+    <li>2026-11-10 · <code>T358</code> · <a href="https://github.com/tampajohn/chug/blob/main/specs/t358-pilot-osc7501.md">OSC 7501 emission in loopd-pilot.sh (the embedded supervisor spawned loops actually run) — T354…</a></li>
     <li>2026-11-09 · <code>T356</code> · <a href="https://github.com/tampajohn/chug/blob/main/specs/t356-loop-terminal-heartbeat.md">loop terminal heartbeat: compact live status lines on stdout (TTY-gated, same source string as the…</a></li>
     <li>2026-11-09 · <code>T354</code> · <a href="https://github.com/tampajohn/chug/blob/main/specs/t354-loopd-osc7501.md">loopd emits OSC 7501 status natively (TTY-gated, env-killable, blocked carries msg) — kills the…</a></li>
     <li>2026-11-09 · <code>T350</code> · <a href="https://github.com/tampajohn/chug/blob/main/specs/t350-stats-cycles-durable.md">STATS cycles counter on durable source (cycle-*.log count, not rotating loopd.log lines) — site…</a></li>
@@ -959,7 +969,7 @@ risks: &lt;what a loop would trip on — cold build times, flaky gates, ...&gt;
     <table>
       <thead><tr><th>date</th><th>calls</th><th>kimi</th><th>glm</th><th>total</th></tr></thead>
       <tbody>
-        <tr><td>2026-11-10</td><td>1390</td><td>$3.99</td><td>$1.53</td><td>$5.52</td></tr>
+        <tr><td>2026-11-10</td><td>2748</td><td>$7.04</td><td>$2.35</td><td>$9.39</td></tr>
         <tr><td>2026-11-09</td><td>9870</td><td>$28.15</td><td>$9.02</td><td>$37.18</td></tr>
         <tr><td>2026-11-08</td><td>7980</td><td>$0.53</td><td>$13.04</td><td>$13.57</td></tr>
         <tr><td>2026-11-07</td><td>6259</td><td>$15.42</td><td>$4.89</td><td>$20.31</td></tr>
