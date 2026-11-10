@@ -308,7 +308,7 @@ footer .attribution{margin:0}
   <p class="kicker"><span class="hash">##</span> cost · synced from Langfuse by scripts/site-sync.sh</p>
 <!-- COST:BEGIN -->
 <div class="stats">
-  <div class="stat"><b>$37.18</b><span>Langfuse spend yesterday (2026-11-09 UTC) · 7-day avg $70.16/day · TRUE streak 2 · as of 2026-11-10T09:29:25Z</span></div>
+  <div class="stat"><b>$37.18</b><span>Langfuse spend yesterday (2026-11-09 UTC) · 7-day avg $70.16/day · TRUE streak 2 · as of 2026-11-10T10:05:59Z</span></div>
   <div class="stat"><b>▄█▇▆▇▅▅▅▅▅▄▂▂▂</b><span>14-day spend shape, oldest → newest — daily total from Langfuse (chug project); per-day table on the <a href="https://chug.sh/docs.html#cost">docs page</a></span></div>
 </div>
 <!-- COST:END -->
@@ -318,18 +318,18 @@ footer .attribution{margin:0}
 <!-- chug loop stats: regenerated deterministically by scripts/site-sync.sh (tampajohn/chug T98) — do not hand-edit between the markers -->
 <!-- STATS:BEGIN -->
 <div class="stats">
-  <div class="stat"><b>351/353</b><span>queue items landed — done rows in TODO.md, 353 item rows total</span></div>
-  <div class="stat"><b>2060</b><span>tests green at the newest full-suite gate count in a commit message (8c149d21)</span></div>
-  <div class="stat"><b>1086</b><span>cycles on record — cycle-*.log files in .chug/loopd/</span></div>
+  <div class="stat"><b>352/353</b><span>queue items landed — done rows in TODO.md, 353 item rows total</span></div>
+  <div class="stat"><b>2226</b><span>tests green at the newest full-suite gate count in a commit message (c15a6e17)</span></div>
+  <div class="stat"><b>1087</b><span>cycles on record — cycle-*.log files in .chug/loopd/</span></div>
   <div class="stat"><b>2026-11-10</b><span>last EVALUATION.md write (git log, chug repo)</span></div>
 </div>
 <p class="lede">Last five items landed — item · ref · date, quoted from the chug repo's git log:</p>
 <ul>
+  <li><code>T357</code> · <code>9a656dc2</code> · 2026-11-10 — pin the site-sync cycles leg-2 subject anchor (eval:-prefixed body line counts 0)</li>
   <li><code>T353</code> · <code>915f1966</code> · 2026-11-10 — profile contract honesty + dead-key audit — docs/install-profiles.md gains the per-lane Langfuse…</li>
   <li><code>T358</code> · <code>42292699</code> · 2026-11-10 — OSC 7501 emission in loopd-pilot.sh — the embedded supervisor spawned loops actually run</li>
   <li><code>T356</code> · <code>9887225c</code> · 2026-11-09 — loop terminal heartbeat — the human sibling of the T354 dot</li>
   <li><code>T354</code> · <code>d38510dc</code> · 2026-11-09 — loopd emits OSC 7501 status natively (kills the harness shim for every terminal harness)</li>
-  <li><code>T352</code> · <code>9c52b79d</code> · 2026-11-09 — chug update — self-update with version-floor protection + source-build fallback</li>
 </ul>
 <!-- STATS:END -->
 </div></section>
@@ -408,7 +408,7 @@ footer .attribution{margin:0}
       <div class="tl-date"></div>
       <div class="tl-rail"><span class="tl-dot"></span></div>
       <div class="tl-body">
-        <h3>…and 324 earlier milestones (T1–T335)</h3>
+        <h3>…and 325 earlier milestones (T1–T337)</h3>
       </div>
     </div>
     <div class="tl-item major">
@@ -473,13 +473,6 @@ footer .attribution{margin:0}
       <div class="tl-body">
         <h3>chug.sh — this site <span class="hash">e998d45</span></h3>
         <p>chug builds its own public site: eight commits in one evening, every section landed against the verify.sh check gate, GitHub Pages serving a CNAME. You are reading the dogfood.</p>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2026-11-07</div>
-      <div class="tl-rail"><span class="tl-dot"></span></div>
-      <div class="tl-body">
-        <h3>wrap_assert T324 live-corpus smoke: the own-anchor probe over-reads T316-leg QUOTE mentions (the… <span class="hash">(f9d8945)</span></h3>
       </div>
     </div>
     <div class="tl-item">
@@ -615,6 +608,13 @@ footer .attribution{margin:0}
         <h3>README entry-path cleanup: install-first quickstart, chug loop leads continuous mode, generic model… <span class="hash">(be7ab1b4)</span></h3>
       </div>
     </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-11-10</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>pin the site-sync cycles leg-2 subject anchor (eval: commits counted by SUBJECT only, never body)… <span class="hash">(c15a6e17)</span></h3>
+      </div>
+    </div>
 <!-- TIMELINE:END -->
   </div>
   <p class="honest">The quiet patch stays on the chart: zero commits between the last early-cycle landing and loopd's first start. Honest books include the blank pages.</p>
@@ -626,8 +626,9 @@ footer .attribution{margin:0}
   <p class="lede">Every capability below is quoted from the repo's README and FEATURES roadmap — including the phases still deferred with written reasons, because a harness that keeps honest books about what it hasn't done yet is the whole point.</p>
 <!-- SHIPPED:BEGIN -->
 <div class="shipped">
-  <p class="lede">Recently shipped — the newest 20 of 352 done rows in TODO.md, newest first; auto-fed from the loop's own flip record at every sync, never hand-edited:</p>
+  <p class="lede">Recently shipped — the newest 20 of 353 done rows in TODO.md, newest first; auto-fed from the loop's own flip record at every sync, never hand-edited:</p>
   <ul>
+  <li>2026-11-10 · <code>T357</code> · <a href="https://github.com/tampajohn/chug/blob/main/specs/t357-site-sync-subject-anchor.md">pin the site-sync cycles leg-2 subject anchor (eval: commits counted by SUBJECT only, never body)…</a></li>
   <li>2026-11-10 · <code>T351</code> · <a href="https://github.com/tampajohn/chug/blob/main/specs/t351-readme-entry-path.md">README entry-path cleanup: install-first quickstart, chug loop leads continuous mode, generic model…</a></li>
   <li>2026-11-10 · <code>T353</code> · <a href="https://github.com/tampajohn/chug/blob/main/specs/t353-langfuse-project-dead-var.md">profile contract: CHUG_LANGFUSE_PROJECT is a no-op (0 consumers) — remove + document per-lane…</a></li>
   <li>2026-11-10 · <code>T358</code> · <a href="https://github.com/tampajohn/chug/blob/main/specs/t358-pilot-osc7501.md">OSC 7501 emission in loopd-pilot.sh (the embedded supervisor spawned loops actually run) — T354…</a></li>
@@ -647,8 +648,7 @@ footer .attribution{margin:0}
   <li>2026-11-08 · <code>T340</code> · <a href="https://github.com/tampajohn/chug/blob/main/specs/t340-chugd-typed-status.md">chugd typed status endpoints: status enum + blocked-reason + children enumeration (observation only)</a></li>
   <li>2026-11-08 · <code>T339</code> · <a href="https://github.com/tampajohn/chug/blob/main/specs/t339-meta-capability-contract.md">meta-harness capability contract: chug capabilities subcommand + versioned feature doc</a></li>
   <li>2026-11-08 · <code>T338</code> · <a href="https://github.com/tampajohn/chug/blob/main/specs/t338-readme-tools-mcp-resource.md">README Tools headline enumeration gains `mcp_resource` — the 2026-W46 weekly cold-read audit's…</a></li>
-  <li>2026-11-07 · <code>T337</code> · <a href="https://github.com/tampajohn/chug/blob/main/specs/t337-smoke-anchor-narrowing.md">wrap_assert T324 live-corpus smoke: the own-anchor probe over-reads T316-leg QUOTE mentions (the…</a></li>
-  <li>…and 332 earlier shipped items — the full record on the <a href="https://chug.sh/docs.html#shipped">docs page</a></li>
+  <li>…and 333 earlier shipped items — the full record on the <a href="https://chug.sh/docs.html#shipped">docs page</a></li>
   </ul>
   <p class="lede">The curated feature grid below is the flagship list; this feed is the complete shipped record.</p>
 </div>
