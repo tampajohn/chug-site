@@ -308,8 +308,8 @@ footer .attribution{margin:0}
   <p class="kicker"><span class="hash">##</span> cost · synced from Langfuse by scripts/site-sync.sh</p>
 <!-- COST:BEGIN -->
 <div class="stats">
-  <div class="stat"><b>$23.63</b><span>Langfuse spend yesterday (2026-11-10 UTC) · 7-day avg $57.48/day · TRUE streak 8 · as of 2026-11-11T06:27:51Z</span></div>
-  <div class="stat"><b>▇█▇█▆▆▆▆▆▅▂▂▃▂</b><span>14-day spend shape, oldest → newest — daily total from Langfuse (chug project); per-day table on the <a href="https://chug.sh/docs.html#cost">docs page</a></span></div>
+  <div class="stat"><b>$23.63</b><span>Langfuse spend yesterday (2026-11-10 UTC) · 7-day avg $57.48/day · TRUE streak 16 · as of 2026-11-11T17:34:41Z</span></div>
+  <div class="stat"><b>▃█▇█▆▆▆▆▆▅▂▂▃▂</b><span>14-day spend shape, oldest → newest — daily total from Langfuse (chug project); per-day table on the <a href="https://chug.sh/docs.html#cost">docs page</a></span></div>
 </div>
 <!-- COST:END -->
 </div></section>
@@ -318,12 +318,17 @@ footer .attribution{margin:0}
 <!-- chug loop stats: regenerated deterministically by scripts/site-sync.sh (tampajohn/chug T98) — do not hand-edit between the markers -->
 <!-- STATS:BEGIN -->
 <div class="stats">
-  <div class="stat"><b>357/357</b><span>queue items landed — done rows in TODO.md, 357 item rows total</span></div>
+  <div class="stat"><b>360/360</b><span>queue items landed — done rows in TODO.md, 360 item rows total</span></div>
   <div class="stat"><b>2265</b><span>tests green at the newest full-suite gate count in a commit message (b3249e16)</span></div>
-  <div class="stat"><b>1105</b><span>cycles on record — cycle-*.log files in .chug/loopd/</span></div>
+  <div class="stat"><b>1106</b><span>cycles on record — cycle-*.log files in .chug/loopd/</span></div>
   <div class="stat"><b>2026-11-11</b><span>last EVALUATION.md write (git log, chug repo)</span></div>
 </div>
-<p class="lede">No landed-item commits ("tNN: …" subjects) in the chug repo's git log yet.</p>
+<p class="lede">Last five items landed — item · ref · date, quoted from the chug repo's git log:</p>
+<ul>
+  <li><code>T365</code> · <code>ee1c384e</code> · 2026-11-11 — scope the three wired-hook probe tests' socket namespace (CHUG_HOME in-test) — the loop's own live…</li>
+  <li><code>T364</code> · <code>ea030354</code> · 2026-11-11 — anchor the backoff needles with the case-arm suffix (kimi f1 — digit-suffix drift class, M7 now…</li>
+  <li><code>T363</code> · <code>2787e1f2</code> · 2026-11-11 — fix the two stale fixture doc comments (kimi finding 1, comment-only)</li>
+</ul>
 <!-- STATS:END -->
 </div></section>
 
@@ -401,7 +406,7 @@ footer .attribution{margin:0}
       <div class="tl-date"></div>
       <div class="tl-rail"><span class="tl-dot"></span></div>
       <div class="tl-body">
-        <h3>…and 329 earlier milestones (T1–T341)</h3>
+        <h3>…and 331 earlier milestones (T1–T345)</h3>
       </div>
     </div>
     <div class="tl-item major">
@@ -466,20 +471,6 @@ footer .attribution{margin:0}
       <div class="tl-body">
         <h3>chug.sh — this site <span class="hash">e998d45</span></h3>
         <p>chug builds its own public site: eight commits in one evening, every section landed against the verify.sh check gate, GitHub Pages serving a CNAME. You are reading the dogfood.</p>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2026-11-09</div>
-      <div class="tl-rail"><span class="tl-dot"></span></div>
-      <div class="tl-body">
-        <h3>chugd: wedged-listener degrade leg (t340 validator finding 2 — pin the 2s read bound) <span class="hash">(88226735)</span></h3>
-      </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2026-11-09</div>
-      <div class="tl-rail"><span class="tl-dot"></span></div>
-      <div class="tl-body">
-        <h3>session-status mod: typed status file per session for harnesses (no scraping); no-op when unwatched <span class="hash">(e19cfde6)</span></h3>
       </div>
     </div>
     <div class="tl-item">
@@ -608,6 +599,20 @@ footer .attribution{margin:0}
         <h3>orchestrator grind delegation: fixture/gate iteration to glm children; inline bash budget +… <span class="hash">(cf278d59)</span></h3>
       </div>
     </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-11-11</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>T361 flush cut v0.26.0 but never pushed (local-only 9h, silent success claim) — flush must push +… <span class="hash">(28ec5ee2)</span></h3>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-11-11</div>
+      <div class="tl-rail"><span class="tl-dot"></span></div>
+      <div class="tl-body">
+        <h3>release workflow apt resilience: pin archive.ubuntu.com fallback + retry/backoff on DNS failure… <span class="hash">(0b0c7ff4)</span></h3>
+      </div>
+    </div>
 <!-- TIMELINE:END -->
   </div>
   <p class="honest">The quiet patch stays on the chart: zero commits between the last early-cycle landing and loopd's first start. Honest books include the blank pages.</p>
@@ -619,8 +624,10 @@ footer .attribution{margin:0}
   <p class="lede">Every capability below is quoted from the repo's README and FEATURES roadmap — including the phases still deferred with written reasons, because a harness that keeps honest books about what it hasn't done yet is the whole point.</p>
 <!-- SHIPPED:BEGIN -->
 <div class="shipped">
-  <p class="lede">Recently shipped — the newest 20 of 357 done rows in TODO.md, newest first; auto-fed from the loop's own flip record at every sync, never hand-edited:</p>
+  <p class="lede">Recently shipped — the newest 20 of 359 done rows in TODO.md, newest first; auto-fed from the loop's own flip record at every sync, never hand-edited:</p>
   <ul>
+  <li>2026-11-11 · <code>T364</code> · <a href="https://github.com/tampajohn/chug/blob/main/specs/t364-release-apt-resilience.md">release workflow apt resilience: pin archive.ubuntu.com fallback + retry/backoff on DNS failure…</a></li>
+  <li>2026-11-11 · <code>T363</code> · <a href="https://github.com/tampajohn/chug/blob/main/specs/t363-flush-tag-push.md">T361 flush cut v0.26.0 but never pushed (local-only 9h, silent success claim) — flush must push +…</a></li>
   <li>2026-11-11 · <code>T362</code> · <a href="https://github.com/tampajohn/chug/blob/main/specs/t362-orchestrator-grind-delegation.md">orchestrator grind delegation: fixture/gate iteration to glm children; inline bash budget +…</a></li>
   <li>2026-11-10 · <code>T361</code> · <a href="https://github.com/tampajohn/chug/blob/main/specs/t361-dormant-release-flush.md">dormant release flush: tags must not wait on a dormant queue (release-only mechanical cycle when…</a></li>
   <li>2026-11-10 · <code>T360</code> · <a href="https://github.com/tampajohn/chug/blob/main/specs/t360-osc7501-blocked-leg.md">OSC 7501 blocked leg: emission scans newest cycle-*.log for failure patterns (blocked+msg, clears on…</a></li>
@@ -639,9 +646,7 @@ footer .attribution{margin:0}
   <li>2026-11-09 · <code>T347</code> · <a href="https://github.com/tampajohn/chug/blob/main/specs/t347-release-pipeline-cancelled.md">release pipeline: every run since v0.17.28 cancelled; GitHub releases stuck at v0.17.27 — pilots…</a></li>
   <li>2026-11-09 · <code>T346</code> · <a href="https://github.com/tampajohn/chug/blob/main/specs/t346-loader-pin-guard.md">RED-proven guard: every loopd-spawning test harness pins CHUG_LOOPD_ENV/CHUG_PROFILE_ENV to ABSENT…</a></li>
   <li>2026-11-09 · <code>T343</code> · <a href="https://github.com/tampajohn/chug/blob/main/specs/t343-usage-events.md">usage events emitter + model-identity stamping (model_served distinct from requested; additive)</a></li>
-  <li>2026-11-09 · <code>T342</code> · <a href="https://github.com/tampajohn/chug/blob/main/specs/t342-session-status-mod.md">session-status mod: typed status file per session for harnesses (no scraping); no-op when unwatched</a></li>
-  <li>2026-11-09 · <code>T345</code> · <a href="https://github.com/tampajohn/chug/blob/main/specs/t345-wedged-listener-degrade-leg.md">chugd: wedged-listener degrade leg (t340 validator finding 2 — pin the 2s read bound)</a></li>
-  <li>…and 337 earlier shipped items — the full record on the <a href="https://chug.sh/docs.html#shipped">docs page</a></li>
+  <li>…and 339 earlier shipped items — the full record on the <a href="https://chug.sh/docs.html#shipped">docs page</a></li>
   </ul>
   <p class="lede">The curated feature grid below is the flagship list; this feed is the complete shipped record.</p>
 </div>
